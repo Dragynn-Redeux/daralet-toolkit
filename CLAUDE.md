@@ -57,6 +57,17 @@ dotnet test tests/DaraletPlayer.Tests/DaraletPlayer.Tests.csproj
   same game. If any old window kept drawing, it kept asking the server for data while its chat filter was gone, and the
   `DAP1|` replies flooded the chat box. So shutdown disposes each piece on its own (`PluginCore.ShutdownStep`,
   `PlayerHud.Dispose`), and a disposed feed or window does nothing (`PlayerFeed.Request`, `FloatingWindow.Hud_OnRender`).
+- **UtilityBelt can start without the portal dat.** It opens `client_cell_1.dat`, then `client_portal.dat`, by relative path
+  from the game's working folder, and stops at the first that fails. ShadowLauncher starts each game in its own
+  `AppData\Local\ShadowLauncher\Instances\<id>` folder of that server's dats (hard links into `DatSets`, or another dat
+  folder), and a fresh cell dat there left `UBService.PortalDat` null: every `GetIconTexture` threw a
+  NullReferenceException. `ItemIcons.EnsurePortalDat` opens `client_portal.dat` from the same working folder (so it's still
+  that server's dats, custom icons and all) and gives it to UtilityBelt, by reflection, since `PortalDatDatabase` is in
+  `UtilityBelt.Common`, which the plugin doesn't reference.
+- **Decal's WorldFilter.GetByContainer and GetInventory go stale.** An item moved into a bank pack after the bank was
+  opened (a `/bank deposit`) didn't show in GetByContainer until the bank was reopened, though the client and the item's
+  own `LongValueKey.Container` had it. The bank tab groups `WorldFilter.GetAll()` by each object's Container instead
+  (`BankBrowser.Snapshot`, twice a second).
 - **Every Decal event handler and render callback is wrapped in try/catch.** An exception escaping into Decal can crash the
   client.
 - **JSON:** System.Text.Json writes dictionaries as objects; `DataContractJsonSerializer` only reads them with
@@ -127,7 +138,9 @@ creatures in your landblock or the ones around it: vitals, the spell in effect i
 threat table, or `"status":"gone"`). Another player as a target gets only `"status":"player"` and their name: the plugin
 shows the health percentage the client already has (game event `0x01C0`), never their spells or exact vitals. The server
 ignores a request of the same kind sooner than 400ms after the last (`PlayerUi.MinInterval`), and the plugin never asks
-sooner than 500ms (`PlayerFeed.MinInterval`); polling goes through `PlayerFeed.Refresh`.
+sooner than 500ms (`PlayerFeed.MinInterval`); polling goes through `PlayerFeed.Refresh`. `bankwindow` and `lootwindow`
+(`on|off`, answering `{"on":...}`) are described below. The server can also send a reply unasked (`PlayerUiProtocol.Send`),
+which the plugin reads the same as one it asked for.
 
 **Map places indoors:** the game's `GetMapCoords` gives nothing for any indoor cell (0x0100 and up), buildings included.
 But a building's rooms share their landblock's coordinates, so the server places them anyway (`PlayerUiData.GetMapCoords`,
@@ -139,6 +152,19 @@ it asks `position` when you're indoors.
 Decal's WorldFilter has them all, and moving one is the game's own move (`Actions.MoveItem`), which the server checks.
 What the client can't tell is which open container is a bank: `@playerui bank` says (`open` means open and near enough to
 use, like every `/bank` command but balance, log and intro needs) and numbers its packs the way `/bank packs` does.
+
+**The plugin's windows instead of the game's:** a Decal plugin can't stop the client drawing a container's window, but the
+server can leave out what makes it: `GameEventViewContents`. `@playerui bankwindow on|off` and `@playerui lootwindow
+on|off` set `Player.PlayerUiBankWindow` / `PlayerUiLootWindow` (in memory only: the plugin says which it wants each time it
+starts, `PlayerFeed.WantWindow`, every frame until the server agrees). With one on, opening a bank
+(`Storage.SendBankVaultInventory`), or a corpse or chest (`Container.SendInventory`), still sends every item's
+CreateObject, so Decal has them, but no ViewContents, and pushes the `bank` or `corpse` reply unasked instead; closing
+pushes it again (the bank closed, or a corpse with status `closed`). Without ViewContents Decal's `ContainerOpened` doesn't
+fire, which is why the server says. Two things the client normally does go missing with the window: it never sends
+NoLongerViewingContents when you walk away, so the server closes such a container from the player's heartbeat
+(`Player.ClosePlayerUiContainerOutOfReach`); and closing is a Use of the open container (`Actions.UseItem`), which the
+plugin's windows send when they're closed. If the plugin is removed mid-session with these on, the game's windows stay away
+until the next login.
 
 **The market:** a Market Broker is driven by talking to it (`MarketBroker.HandleTalkDirect`: `listings`, `cancel <id>`,
 `claim payouts`, `claim expired`, a price after you give it an item). `@playerui market` sends your listings, sales (last 30
@@ -153,7 +179,11 @@ word (off, idle, queued, watching, defeated, accepting, starting, fighting) and 
 ratings (`ArenaBoards.All`), duels to watch and the latest results. The buttons send the `/arena` commands themselves.
 
 **Loot:** `@playerui corpse <guid>` describes a corpse's items (you have to be allowed to loot it, `Corpse.HasPermission`,
-and near enough to use it); `@playerui describe <guid>...` does the same for up to 20 items you carry (the Loot tab's test);
+and near enough to use it), or a chest's or other world container's while you have it open (`Container.Viewer`,
+`PlayerUiCorpseData.IsLootableContainer`: a Chest or a plain Container, the static dungeon corpses being the latter; the
+bank, house hooks and anything in an inventory are `notcorpse`, which
+the looter drops quietly). The looter asks about any corpse, and any container in the world (not in an inventory) but the
+open bank; `@playerui describe <guid>...` does the same for up to 20 items you carry (the Loot tab's test);
 `@playerui salvage <guid>...` salvages up to 20 carried items with the Ust in your packs, through `Player.HandleSalvaging`
 (so pack space, retained and unstable items are checked as ever; `Player.IsSalvageable` is the per-item check both use).
 Each item is described by the Market API's own code, shared as linked source: `apps/market-api/MarketRepository.Items.cs`
@@ -174,15 +204,51 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   layout, or places land in the wrong spots, and be square (one that isn't is skipped, with a line in chat).
 - **Item tooltips** (`Feed/ItemLines.cs`, `Ui/ItemTooltip.cs`): every stat an item's market description has, as lines in
   sections; the bank, the Loot tab, the Corpse window and market search all draw them, so the layout changes in one place.
+  An item you hold or loot is titled with its own name, which the server sends with its material in front
+  (`NameWithMaterial`; `ItemLines.WithMaterial` adds it if missing), and its value, burden and stack go on the workmanship
+  line.
   The bank asks for descriptions as the mouse passes over items (`PlayerFeed.Describe`, 20 a request; `@playerui describe`
   covers your packs and your open bank). Tiers show as T0-T7 everywhere, the way the Search tab's filter has them.
-- **Loot tab** (`Ui/LootTab.cs`, `Ui/Looter.cs`, `Feed/Loot.cs`): named lists in `SettingsData.Loot`, each character
+  Speed is the weapon's WeaponTime (`MarketListing.WeaponTime`) with attacks a second after it, as "atk/s": 60 / WeaponTime,
+  so 60 is one a second (`WeaponSpeed.GetSecondsPerHit` in daralet-ACE, at 100 Quickness). The Market API's Dps uses
+  the same rule, so DPS and atk/s agree. Casters show no speed. Text is always drawn with `Widgets.Text*`
+  (`TextUnformatted`): ImGui.NET's `Text*` read a "%" as a printf format. Items `@playerui` describes carry `rollQuality`: appraisal's Roll Quality section
+  (`LootGenerationFactory.GetItemRollRanges`) by stat name, which `ItemLines` matches to the line showing the stat
+  (`ItemLine.RollStat`) and `ItemTooltip` draws at the right. Market search has none: the Market API has no live item.
+- **Loot tab** (`Ui/LootTab.cs`, `Ui/Looter.cs`, `Feed/Loot.cs`): named lists (players see them as "loot profiles"; the code
+  still says `LootList`) in `SettingsData.Loot`, each character
   picking one (`LootData.ActiveFor`). A rule is a category, tiers, name words and any of `MarketSearch.Filters`, plus an
   outcome (Keep, Salvage, Notify, Ignore); the first enabled rule that matches decides. `Loot.Matches` compares each filter
   with the same field the API's SQL does, per armor slot where the API is (ward level, armor and clothing mods), with
-  "price" as the item's vendor value. A filter it doesn't know leaves the rule alone. The looter moves one item at a time
-  (`Actions.MoveItem` into the main pack, the next once the last has left the corpse or after 3 seconds), and salvages after.
-  It starts off; there's no way to tell from a plugin whether VirindiTank's looter is on, so the tab just warns.
+  "price" as the item's vendor value. A filter it doesn't know leaves the rule alone. A Salvage rule only takes items with a
+  workmanship (`Loot.Decide`); anything else falls to the rules after it. The looter moves one item at a time
+  (`Actions.MoveItem` into the main pack, the next once the last has left the corpse), and salvages after. The server
+  refuses a pickup that comes while the last is still starting ("You're too busy", `GameEventInventoryServerSaveFailed`,
+  event 0x00A0), which back-to-back looting hits, and a move sent while the last is still going can get no answer at all;
+  the looter sends the same item again 150ms after a refusal, or after silence for 1.5 times the last clean pickup (at
+  least 900ms; a fixed 3 seconds made Loot all take 4 an item), and waits 250ms after each landing before the next, since
+  a move sent the moment the last landed was always dropped unanswered,
+  giving up after 8 seconds (a full pack). The Corpse window shows "Looting..." with Cancel while it works, in every mode
+  but chat. It starts off; there's no way to tell from a plugin whether VirindiTank's looter is on, so the tab just warns.
+  **Loot window** (`SettingsData.LootWindow`) hides the game's corpse and chest window (see above): the Corpse window then
+  lists everything in it (`Looter.Everything`), matched or not, with Loot all, and works with the looter off too. **Grid**
+  (`SettingsData.LootGrid`) shows it as 32-pixel icons, 8 a row (the window sizes itself), in a section per outcome (Keep,
+  Salvage, Notify, Ignore, no rule), with the rule marks and the stack bottom right; Ctrl+click ticks and unticks for
+  Confirm loot. The
+  server's word that one opened can reach the client before its items do, so an item only counts as looted once it's been
+  seen in the corpse and then isn't (`Looter.Left`); before that fix, killed corpses showed empty. `GetCorpse` skips its
+  range check for a container the player has open: a corpse's use radius is small, and the game opens it from where
+  `WithinUseRadius` said "gone". With Loot window on the looter ignores the client's ContainerOpened and follows the server
+  alone, and the window opens for any status, saying why it can't show the items. It logs what it hears to log.txt
+  (`[loot]` lines, `Looter.LogCorpse`).
+  Each "min" filter for a stat that loot rolls (`Loot.RollStats`, by the names appraisal's Roll Quality section and
+  `ItemLines` use) can be switched to a roll quality on its own (`LootRule.RollFilters`, by filter key): its box is then the
+  lowest roll quality, 0 to 100, rounded as the tooltip shows it, and an item without that roll doesn't match. Switching
+  empties the box. A rule can also mark what it decides (`LootMarks`: `LootRule.Highlight`, a frame colour, and `Icon`, a
+  symbol drawn with ImGui shapes in the top left corner, in the frame's colour or gold), drawn by `ItemIcons.DrawMark` in
+  the Corpse window, the Test tab and, with **Loot marks** (`SettingsData.BankLootMarks`), the Inventory tab, which has
+  every listed item described to match it. The first rule that matches decides the mark too, so an earlier rule without
+  one hides a later one's.
 
 - **Arena and Leaderboards tabs** (`Ui/ArenaTab.cs`, `Ui/LeaderboardsTab.cs`, `Feed/ArenaCommands.cs`,
   `Feed/Leaderboards.cs`): the leaderboards are the website's (`leaderboards.js`), read from `/api/leaderboards/...` with
@@ -196,18 +262,67 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
 - **The website's icons** are at `https://play.daralet.ac/images/<iconHex>.png` (13,000 of them, `daralet-website/images`),
   named by the portal.dat icon id, which is what the market listings' `iconHex` and Decal's `LongValueKey.Icon` give.
 
-- **Bank tab** (`Ui/BankTab.cs`, `Ui/BankBrowser.cs`, `Feed/BankCommands.cs`): the bank browser and `/bank` buttons.
+- **Inventory tab** (`Ui/BankTab.cs`, `Ui/BankBrowser.cs`, `Ui/BankCommandBar.cs`, `Feed/BankCommands.cs`): sub tabs Carried
+  (your packs, anywhere) and Bank (the bank's packs, while it's open). The `/bank` buttons are a `BankCommandBar` above the
+  items in each, and in the Bank window: one bar, shared, so its "what" box carries over. Deposit with the box empty
+  is Deposit packs (your "deposit"-tagged packs), with words in it a deposit of those; the bank's views add Withdraw, Sort
+  and Search; the rest are under More. The last command's first reply
+  line shows under the buttons, and hovering it shows the whole reply. Carried and Bank are each a `BankBrowser`
+  (`carried: true` for yours), with their own selected pack and search. **Show my packs** on the Bank view
+  (`SettingsData.BankShowCarried`) lists your packs there too, above the bank's, to drag between them. **Bank window**
+  (`SettingsData.BankWindow`) hides the game's bank window (see above) and opens the plugin's own, a `FloatingWindow` you
+  size yourself (`defaultSize`, its size saved like its position), with its own `BankBrowser`. It opens and closes with the
+  bank, which `BankTab` follows every frame, so it works with the main window closed.
   `PlayerFeed.SendCommand` keeps the System and Help chat (types 5 and 15, Decal's `e.Color`) that comes back within three
-  seconds as the command's reply. Item icons aren't drawn yet: UtilityBelt.Service only exposes an icon loader to its
-  scripts (`ScriptHudManager.GetIconTexture`).
+  seconds as the command's reply. The items show as a list or, with **Grid** (`SettingsData.BankGrid`), as icons only, as
+  many to a row as fit, each with the list's hover, drag and right-click; a stack shows its size in the corner. **Worn**
+  (`SettingsData.BankShowWorn`) slides out a paperdoll of what you're wearing on the right (`BankBrowser.RenderWorn`), laid
+  out as the game's equipment panel by `EquipSlots` (the game's EquipMask bits, one square per slot; an item covering
+  several shows in each; an empty one shows the game's own picture of it, `EquipSlot.EmptyIcon`, found in portal.dat by the
+  bevelled blue frame they share and drawn as it is, `ItemIcons.DrawPlain`). The window grows by the panel's width when
+  Worn is turned on and shrinks when it's off, once per window (`wornShownAs`, by host), and the Worn checkbox is above the
+  packs, where it can't be squeezed out. Its items have the list's hover and right-click; dragging one onto a pack or onto
+  the items takes it off into that pack, and dropping an item on a square wears it (`Actions.UseItem`, the game's own
+  use).
+
+- **Item icons** (`Ui/ItemIcons.cs`, `Feed/IconLayers.cs`): every item list (bank, Loot tab, Corpse window, Market) draws
+  an item's underlay, icon and overlay before its name. UtilityBelt.Service's only icon loader is meant for its scripts
+  (`ScriptHudManager.GetIconTexture`, which reads portal.dat), but a `ScriptHudManager` made with `new` works: its
+  constructor only hooks the UB bar, and its `Dispose` frees every texture it made. At most 8 new textures a frame, so
+  opening a full bank doesn't stall the game. Items the client has come from Decal (`LongValueKey.Icon`, `IconOverlay`,
+  `IconUnderlay`); listings from the Market API's hex ids, and your own listings, sales and expired items from the
+  `icon` `@playerui market` sends (read from each listing's snapshot by the Market API's `Describe`). Underlay tiles by
+  kind, and the outline colour by effect (white outline pixels recoloured, black for none), are the website's
+  (`IconLayers.Underlays`, `OutlineColors`, from market.js). Hovering an icon shows the item's tooltip. **Compact** on the
+  window's top line (`SettingsData.CompactLists`) hides them; a loot mark still shows, on its own.
 
 - **World tab** (`Ui/WorldTab.cs`, `Map/`): the map (Daralet Admin's `dereth-map.png`), the places in
   `Resources/locations.xml` (a `locations.xml` next to the dll wins), you, your fellows, and a destination arrow window.
   The file also has 43 `_Unknown` entries (shops, taverns, halls): every type needs a row in `Locations.Types`, which a
   test checks.
 
+- **Appraisal** (`Ui/Appraisal.cs`, `Ui/AppraisalWindow.cs`, `Feed/ItemCompare.cs`): Appraise and Appraise in new window
+  in an item's right-click menu in the Corpse window or the bank (`Appraisal.MenuItems`; nothing happens until one is
+  picked). Appraise reuses the first window, a new window opens another (up to 6, titles numbered, since UtilityBelt knows
+  a window by its title). Each compares the item with what you're wearing where it goes (`AppraisalWindow.Equipped`:
+  `EquipableSlots` against worn `EquippedSlots`, any weapon for a weapon), with `ItemCompare` saying which way each stat is
+  better; ` describe` covers equipped items for this. A
+  plugin can't open the game's appraisal panel: Decal's `Actions.RequestId` only sends the request, and the client shows
+  only appraisals it started itself. So with **Plugin appraisal** (`SettingsData.AppraiseInPlugin`, on by default, on the
+  window's top line) the plugin's Appraisal window shows it: the icon a size up with the loot rule's mark, the name, kind
+  and tier, what your loot rules make of it, and `ItemLines` with a bar for each roll's quality. A corpse item uses the
+  corpse's description; a carried or banked one is described on request. Off, right-click just selects the item, for the
+  game's appraise key.
+
 - **Floating windows** (`Ui/FloatingWindow.cs`): small auto-sized UB huds that stay on screen (fellowship vitals, target,
-  tracked target). Locked means no title bar and no dragging; right-click one to lock, unlock or hide it.
+  tracked target). Locked means no title bar and no dragging; right-click one to lock, unlock or hide it. Two things decide
+  whether one is drawn, worked out every frame (`Core_RenderFrame`): `Visible`, the saved setting its tab's checkbox and
+  Hide change, and `inUse`, what it's showing now (null for nothing). A window with **Only when needed**
+  (`WindowPlacement.OnlyInUse`) is drawn only while in use; the Corpse and Bank windows always are (`alwaysOnlyInUse`).
+  Those two also have `onClose`: their close button (X), Close in the right-click menu (a locked window has no X) and the Bank window's Close bank close
+  the corpse or bank (a Use of it), and the window stays away until it shows something else (`closedFor`), without touching
+  the setting. Nothing sets `Visible` behind the player's back any more, so Hide holds; Track and a new destination still
+  switch their windows on, as asked for.
 - **Settings** (`Settings.cs`) live in `Documents\Asheron's Call\Daralet\settings.json` (copied once from the
   `Daralet Player` folder they had before the plugin was renamed, `Settings.CarryOver`), shared by every character:
   window positions and visibility, and display options. A DataContract reader skips field initialisers, so new settings

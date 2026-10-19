@@ -348,6 +348,11 @@ namespace DaraletPlayer.Feed {
         /// <summary>ISO time, UTC: DataContractJsonSerializer can't read that as a DateTime, so it's kept as text.</summary>
         [DataMember(Name = "expiresAtUtc")] public string ExpiresAtUtc;
         [DataMember(Name = "iconHex")] public string IconHex;
+        [DataMember(Name = "iconOverlayHex")] public string IconOverlayHex;
+        /// <summary>The kind of tile behind the icon: Weapon, Armor, Misc... (IconLayers.Underlays).</summary>
+        [DataMember(Name = "iconUnderlay")] public string IconUnderlay;
+        /// <summary>What colour the icon's outline is: Fire, Cold, Magical... (IconLayers.OutlineColors).</summary>
+        [DataMember(Name = "iconEffect")] public string IconEffect;
         [DataMember(Name = "itemCategory")] public string ItemCategory;
         [DataMember(Name = "weaponClass")] public string WeaponClass;
         [DataMember(Name = "levelReq")] public int? LevelReq;
@@ -355,10 +360,18 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "reqAttributeAmount")] public int? ReqAttributeAmount;
         [DataMember(Name = "spells")] public List<string> Spells;
         [DataMember(Name = "properties")] public List<string> Properties;
+        /// <summary>The amounts of the Properties that roll, by the same names, as whole percents (Biting Strike: 3 is +3%).</summary>
+        [DataMember(Name = "propertyValues")] public Dictionary<string, double> PropertyValues;
         [DataMember(Name = "imbuedEffects")] public List<string> ImbuedEffects;
         [DataMember(Name = "dps")] public double? Dps;
         [DataMember(Name = "baseDamage")] public int? BaseDamage;
+        /// <summary>"Slashing", or "Slashing/Piercing" for more than one; null from an older Market API.</summary>
+        [DataMember(Name = "damageType")] public string DamageType;
         [DataMember(Name = "speed")] public double? Speed;
+        /// <summary>The weapon's WeaponTime property, lower is faster; null for casters (and from an older Market API).</summary>
+        [DataMember(Name = "weaponTime")] public int? WeaponTime;
+        /// <summary>Attacks, or for casters bolts, a second at 0 Quickness.</summary>
+        [DataMember(Name = "attacksPerSecond")] public double? AttacksPerSecond;
         [DataMember(Name = "armorLevel")] public int? ArmorLevel;
         [DataMember(Name = "wardLevel")] public int? WardLevel;
         [DataMember(Name = "spellcraft")] public int? Spellcraft;
@@ -438,6 +451,10 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "restorationMod")] public double? RestorationMod;
         [DataMember(Name = "elementalDamageBonus")] public int? ElementalDamageBonus;
         [DataMember(Name = "mana")] public int? Mana;
+        /// <summary>Mana used a second while the spells are on, negative (-0.0333 is a point every 30 seconds); null for none.</summary>
+        [DataMember(Name = "manaRate")] public double? ManaRate;
+        /// <summary>The chance a hit casts the weapon's proc spell, 0 to 1; null when it has none.</summary>
+        [DataMember(Name = "procChance")] public double? ProcChance;
         [DataMember(Name = "sockets")] public int? Sockets;
         [DataMember(Name = "otherWieldRequirements")] public List<string> OtherWieldRequirements;
         [DataMember(Name = "armorModVsNether")] public double? ArmorModVsNether;

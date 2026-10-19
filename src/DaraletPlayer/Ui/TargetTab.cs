@@ -30,15 +30,15 @@ namespace DaraletPlayer.Ui {
             this.settings = settings;
 
             tracker = new TargetTracker(feed);
-            selectedWindow = new FloatingWindow("target", "Target", settings, new Vector2(500, 60), RenderSelectedWindow);
-            trackedWindow = new FloatingWindow("tracked", "Tracked Target", settings, new Vector2(740, 60), RenderTrackedWindow, visibleByDefault: false);
+            selectedWindow = new FloatingWindow("target", "Target", settings, new Vector2(500, 60), RenderSelectedWindow, inUse: SelectedInUse);
+            trackedWindow = new FloatingWindow("tracked", "Tracked Target", settings, new Vector2(740, 60), RenderTrackedWindow, visibleByDefault: false, inUse: TrackedInUse);
         }
 
         public void Render() {
             tracker.Refresh();
 
             if (!feed.Supports(PlayerFeed.KindTargets)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old to send target information.");
+                Widgets.TextColored(Colors.Warning, "This server is too old to send target information.");
                 return;
             }
 
@@ -48,7 +48,7 @@ namespace DaraletPlayer.Ui {
             var selected = tracker.Selected;
 
             if (selected == 0) {
-                ImGui.TextDisabled("Select a monster to see its vitals, spells and threat.");
+                Widgets.TextDisabled("Select a monster to see its vitals, spells and threat.");
             }
             else {
                 RenderFull(selected);
@@ -128,16 +128,16 @@ namespace DaraletPlayer.Ui {
             var spells = target.Enchantments ?? new List<EnchantmentInfo>();
 
             ImGui.Spacing();
-            ImGui.Text($"Debuffs ({spells.Count(s => !s.Beneficial)})");
+            Widgets.Text($"Debuffs ({spells.Count(s => !s.Beneficial)})");
             RenderSpellTable($"debuffs-{guid}", spells.Where(s => !s.Beneficial));
 
-            ImGui.Text($"Buffs ({spells.Count(s => s.Beneficial)})");
+            Widgets.Text($"Buffs ({spells.Count(s => s.Beneficial)})");
             RenderSpellTable($"buffs-{guid}", spells.Where(s => s.Beneficial));
 
-            ImGui.Text("Threat");
+            Widgets.Text("Threat");
 
             if (target.Threat == null) {
-                ImGui.TextDisabled("This creature doesn't keep a threat table.");
+                Widgets.TextDisabled("This creature doesn't keep a threat table.");
             }
             else {
                 RenderThreat(target, target.Threat.Count, Widgets.BarWidth * 2);
@@ -149,26 +149,26 @@ namespace DaraletPlayer.Ui {
         /// </summary>
         private bool RenderHeader(uint guid, TargetInfo target, float barWidth, float barHeight = 0) {
             if (target == null) {
-                ImGui.TextDisabled("Loading...");
+                Widgets.TextDisabled("Loading...");
                 return false;
             }
 
             if (target.Status == TargetInfo.StatusGone) {
-                ImGui.TextDisabled(guid == tracker.Tracked ? $"{TrackedName()} is gone or too far away." : "Too far away.");
+                Widgets.TextDisabled(guid == tracker.Tracked ? $"{TrackedName()} is gone or too far away." : "Too far away.");
                 return false;
             }
 
             if (target.IsPlayer) {
-                ImGui.Text(target.Name ?? "");
+                Widgets.Text(target.Name ?? "");
                 var health = feed.ClientHealth(guid);
                 Widgets.Bar(health ?? 0, Colors.Health, health.HasValue ? $"{health.Value * 100:0}%" : "?", barWidth, barHeight);
                 Widgets.Tip("Another player's health, as the game shows it. Their spells and exact vitals aren't sent.");
                 return false;
             }
 
-            ImGui.Text(target.Name ?? "");
+            Widgets.Text(target.Name ?? "");
             ImGui.SameLine();
-            ImGui.TextDisabled($"Lvl {target.Level}  {Display.Distance(target.Distance)}");
+            Widgets.TextDisabled($"Lvl {target.Level}  {Display.Distance(target.Distance)}");
 
             Widgets.VitalBar(target.Health, target.MaxHealth, Colors.Health, barWidth, barHeight);
             Widgets.VitalBar(target.Stamina, target.MaxStamina, Colors.Stamina, barWidth, barHeight);
@@ -176,7 +176,7 @@ namespace DaraletPlayer.Ui {
 
             if (target.AttackTarget.HasValue) {
                 var you = feed.Hello != null && target.AttackTarget.Value == feed.Hello.Guid;
-                ImGui.TextColored(you ? Colors.Danger : Colors.Muted, you ? "Attacking you" : $"Attacking {target.AttackTargetName}");
+                Widgets.TextColored(you ? Colors.Danger : Colors.Muted, you ? "Attacking you" : $"Attacking {target.AttackTargetName}");
             }
 
             return true;
@@ -186,7 +186,7 @@ namespace DaraletPlayer.Ui {
             var list = spells.ToList();
 
             if (list.Count == 0) {
-                ImGui.TextDisabled("None.");
+                Widgets.TextDisabled("None.");
                 return;
             }
 
@@ -209,13 +209,13 @@ namespace DaraletPlayer.Ui {
             foreach (var spell in list) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.TextColored(SpellColor(spell), spell.Name ?? $"Spell {spell.SpellId}");
+                Widgets.TextColored(SpellColor(spell), spell.Name ?? $"Spell {spell.SpellId}");
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(Display.School(spell.School));
+                Widgets.TextDisabled(Display.School(spell.School));
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(spell.Yours ? "You" : spell.CasterName ?? "");
+                Widgets.TextDisabled(spell.Yours ? "You" : spell.CasterName ?? "");
                 ImGui.TableNextColumn();
-                ImGui.Text(Display.TimeLeft(spell.SecondsLeft, since));
+                Widgets.Text(Display.TimeLeft(spell.SecondsLeft, since));
             }
 
             ImGui.EndTable();
@@ -226,7 +226,7 @@ namespace DaraletPlayer.Ui {
         /// </summary>
         private void RenderThreat(TargetInfo target, int rows, float barWidth, float barHeight = 0) {
             if (target.Threat.Count == 0) {
-                ImGui.TextDisabled("No one.");
+                Widgets.TextDisabled("No one.");
                 return;
             }
 
@@ -242,8 +242,20 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip("Who the creature wants to attack, and how much. It picks from those near the top; < marks the one it's attacking.");
 
             if (target.Threat.Count > rows) {
-                ImGui.TextDisabled($"and {target.Threat.Count - rows} more");
+                Widgets.TextDisabled($"and {target.Threat.Count - rows} more");
             }
+        }
+
+        /// <summary>What the Target window shows, or null with nothing selected, for Only when needed.</summary>
+        private object SelectedInUse() {
+            tracker.Refresh();
+            return tracker.Selected != 0 ? (object)tracker.Selected : null;
+        }
+
+        /// <summary>What the Tracked Target window shows, or null with nothing tracked, for Only when needed.</summary>
+        private object TrackedInUse() {
+            tracker.Refresh();
+            return tracker.Tracked != 0 ? (object)tracker.Tracked : null;
         }
 
         private void RenderSelectedWindow() {
@@ -252,7 +264,7 @@ namespace DaraletPlayer.Ui {
             var selected = tracker.Selected;
 
             if (selected == 0) {
-                ImGui.TextDisabled("No target");
+                Widgets.TextDisabled("No target");
                 return;
             }
 
@@ -270,7 +282,7 @@ namespace DaraletPlayer.Ui {
             tracker.Refresh();
 
             if (tracker.Tracked == 0) {
-                ImGui.TextDisabled("Nothing tracked");
+                Widgets.TextDisabled("Nothing tracked");
                 Widgets.Tip("Select a monster and press Track in the Target window or the Target tab.");
                 return;
             }
@@ -329,18 +341,18 @@ namespace DaraletPlayer.Ui {
             var since = SecondsSinceReply();
 
             foreach (var spell in spells.Take(WindowSpellRows)) {
-                ImGui.TextColored(SpellColor(spell), spell.Name ?? $"Spell {spell.SpellId}");
+                Widgets.TextColored(SpellColor(spell), spell.Name ?? $"Spell {spell.SpellId}");
 
                 var left = Display.TimeLeft(spell.SecondsLeft, since);
 
                 if (left.Length > 0) {
                     ImGui.SameLine(width - ImGui.CalcTextSize(left).X);
-                    ImGui.TextDisabled(left);
+                    Widgets.TextDisabled(left);
                 }
             }
 
             if (spells.Count > WindowSpellRows) {
-                ImGui.TextDisabled($"and {spells.Count - WindowSpellRows} more");
+                Widgets.TextDisabled($"and {spells.Count - WindowSpellRows} more");
             }
         }
 

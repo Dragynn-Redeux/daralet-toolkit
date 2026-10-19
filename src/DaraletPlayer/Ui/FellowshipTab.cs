@@ -23,14 +23,14 @@ namespace DaraletPlayer.Ui {
             this.feed = feed;
             this.settings = settings;
 
-            window = new FloatingWindow("fellowship", "Fellowship", settings, new Vector2(20, 200), RenderWindow);
+            window = new FloatingWindow("fellowship", "Fellowship", settings, new Vector2(20, 200), RenderWindow, inUse: FellowshipInUse);
         }
 
         public void Render() {
             Refresh();
 
             if (!feed.Supports(PlayerFeed.KindFellowship)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old to send fellowship vitals.");
+                Widgets.TextColored(Colors.Warning, "This server is too old to send fellowship vitals.");
                 return;
             }
 
@@ -42,13 +42,13 @@ namespace DaraletPlayer.Ui {
             var fellowship = feed.Fellowship;
 
             if (fellowship == null) {
-                ImGui.TextDisabled(feed.FellowshipUpdatedAt == DateTime.MinValue ? "Loading..." : "You aren't in a fellowship.");
+                Widgets.TextDisabled(feed.FellowshipUpdatedAt == DateTime.MinValue ? "Loading..." : "You aren't in a fellowship.");
                 return;
             }
 
-            ImGui.Text(fellowship.Name ?? "");
+            Widgets.Text(fellowship.Name ?? "");
             ImGui.SameLine();
-            ImGui.TextDisabled(Describe(fellowship));
+            Widgets.TextDisabled(Describe(fellowship));
             Widgets.Tip("Sharing XP needs every member within 5 levels of the leader, or all of them level 50 or higher. Even share splits XP equally; otherwise higher levels get more. Open fellowships let any member recruit. Locked ones can't take new members.");
 
             RenderTable(fellowship);
@@ -114,7 +114,7 @@ namespace DaraletPlayer.Ui {
                 MemberName(member, fellowship);
 
                 ImGui.TableNextColumn();
-                ImGui.Text(member.Level.ToString());
+                Widgets.Text(member.Level.ToString());
                 ImGui.TableNextColumn();
                 Widgets.VitalBar(member.Health, member.MaxHealth, Colors.Health);
                 ImGui.TableNextColumn();
@@ -122,9 +122,9 @@ namespace DaraletPlayer.Ui {
                 ImGui.TableNextColumn();
                 Widgets.VitalBar(member.Mana, member.MaxMana, Colors.Mana);
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(Display.Distance(member.Distance));
+                Widgets.TextDisabled(Display.Distance(member.Distance));
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(member.Location ?? "");
+                Widgets.TextDisabled(member.Location ?? "");
             }
 
             ImGui.EndTable();
@@ -136,7 +136,7 @@ namespace DaraletPlayer.Ui {
             var fellowship = feed.Fellowship;
 
             if (fellowship?.Members == null || fellowship.Members.Count == 0) {
-                ImGui.TextDisabled("No fellowship");
+                Widgets.TextDisabled("No fellowship");
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace DaraletPlayer.Ui {
                 ImGui.BeginGroup();
 
                 var far = !member.Distance.HasValue;
-                ImGui.TextColored(far ? Colors.Muted : member.Guid == selected ? Colors.Info : Colors.Text, MemberLabel(member, fellowship));
+                Widgets.TextColored(far ? Colors.Muted : member.Guid == selected ? Colors.Info : Colors.Text, MemberLabel(member, fellowship));
 
                 Widgets.VitalBar(member.Health, member.MaxHealth, Colors.Health, width, height);
 
@@ -215,6 +215,15 @@ namespace DaraletPlayer.Ui {
 
         private static void Select(FellowInfo member) {
             CoreManager.Current.Actions.SelectItem(unchecked((int)member.Guid));
+        }
+
+        /// <summary>
+        /// Whether the window has a fellowship to show, for Only when needed. It asks the server as the window would, since a
+        /// hidden window doesn't draw, and drawing is what asks.
+        /// </summary>
+        private object FellowshipInUse() {
+            Refresh();
+            return feed.Fellowship?.Members?.Count > 0 ? "fellowship" : null;
         }
 
         private void Refresh() {

@@ -79,7 +79,9 @@ namespace DaraletPlayer.Tests {
                 },
             };
 
-            var sword = Loot.Decide(list, Sword());
+            var salvageable = Sword();
+            salvageable.Workmanship = 5;
+            var sword = Loot.Decide(list, salvageable);
             Assert.AreEqual("junk swords", sword.Rule.Name);
             Assert.IsTrue(sword.Loots);
             Assert.AreEqual(LootOutcome.Salvage, sword.Outcome);
@@ -149,6 +151,23 @@ namespace DaraletPlayer.Tests {
             Assert.AreEqual("Martial", item.Item.WeaponClass);
             Assert.AreEqual(1.12, item.Item.WeaponOffense);
             Assert.IsNull(item.Item.Dps);
+        }
+
+        [TestMethod]
+        public void ASalvageRuleOnlyTakesItemsWithAWorkmanship() {
+            var list = new LootList {
+                Rules = {
+                    new LootRule { Name = "Salvage weapons", Category = "Weapon", Outcome = LootOutcome.Salvage },
+                    new LootRule { Name = "Keep weapons", Category = "Weapon", Outcome = LootOutcome.Keep },
+                },
+            };
+
+            var withWorkmanship = Sword();
+            withWorkmanship.Workmanship = 6;
+            var without = Sword();
+
+            Assert.AreEqual("Salvage weapons", Loot.Decide(list, withWorkmanship).Rule.Name);
+            Assert.AreEqual("Keep weapons", Loot.Decide(list, without).Rule.Name, "left to the rules after it");
         }
     }
 }

@@ -39,24 +39,24 @@ namespace DaraletPlayer.Ui {
             feed.Refresh(PlayerFeed.KindArena, arena?.CanLeave == true ? BusyRefresh : IdleRefresh);
 
             if (!feed.Supports(PlayerFeed.KindArena)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old for the Arena tab.");
+                Widgets.TextColored(Colors.Warning, "This server is too old for the Arena tab.");
                 return;
             }
 
             if (arena == null) {
-                ImGui.TextDisabled("Loading...");
+                Widgets.TextDisabled("Loading...");
                 return;
             }
 
             if (!arena.Enabled) {
-                ImGui.TextColored(Colors.Warning, "Arena dueling is turned off right now.");
+                Widgets.TextColored(Colors.Warning, "Arena dueling is turned off right now.");
             }
             else {
-                ImGui.TextColored(arena.CanLeave ? Colors.Info : Colors.Muted, arena.Status ?? "");
+                Widgets.TextColored(arena.CanLeave ? Colors.Info : Colors.Muted, arena.Status ?? "");
             }
 
             if (arena.MinimumLevel > 1) {
-                ImGui.TextDisabled($"Duels need level {arena.MinimumLevel}. Only non-player killers and player killer lites can duel; nobody loses anything by being defeated.");
+                Widgets.TextDisabled($"Duels need level {arena.MinimumLevel}. Only non-player killers and player killer lites can duel; nobody loses anything by being defeated.");
             }
 
             RenderFinding(arena);
@@ -69,7 +69,7 @@ namespace DaraletPlayer.Ui {
         }
 
         private void RenderFinding(ArenaInfo arena) {
-            ImGui.Text("Find a duel");
+            Widgets.Text("Find a duel");
 
             ImGui.Checkbox("Scaled", ref scaled);
             Widgets.Tip("The higher-level fighter is scaled down to the other's level (level 10 and up).");
@@ -115,7 +115,7 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip($"Leaves the queue, calls off or gives up your duel, or stops watching: {ArenaCommands.Leave}.");
 
             if (arena.QueueCount > 0 && arena.QueuePlace == 0) {
-                ImGui.TextDisabled($"{arena.QueueCount} waiting in the queue.");
+                Widgets.TextDisabled($"{arena.QueueCount} waiting in the queue.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace DaraletPlayer.Ui {
             var boards = arena.Boards ?? new List<ArenaBoardInfo>();
 
             if (boards.Count == 0) {
-                ImGui.TextDisabled($"You haven't fought a rated duel yet. Every rating starts at {arena.StartingRating}.");
+                Widgets.TextDisabled($"You haven't fought a rated duel yet. Every rating starts at {arena.StartingRating}.");
             }
             else if (ImGui.BeginTable("arena-boards", 4, Widgets.TableFlags)) {
                 ImGui.TableSetupColumn("Bracket", ImGuiTableColumnFlags.WidthFixed, 110);
@@ -141,13 +141,13 @@ namespace DaraletPlayer.Ui {
 
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
-                    ImGui.Text(board.Name ?? "");
+                    Widgets.Text(board.Name ?? "");
                     ImGui.TableNextColumn();
-                    ImGui.Text(board.Rating.ToString());
+                    Widgets.Text(board.Rating.ToString());
                     ImGui.TableNextColumn();
-                    ImGui.TextDisabled($"{board.Wins} / {board.Losses} / {board.Draws}");
+                    Widgets.TextDisabled($"{board.Wins} / {board.Losses} / {board.Draws}");
                     ImGui.TableNextColumn();
-                    ImGui.TextDisabled(duels > 0 ? $"{100.0 * board.Wins / duels:0}%" : "");
+                    Widgets.TextDisabled(duels > 0 ? $"{100.0 * board.Wins / duels:0}%" : "");
                 }
 
                 ImGui.EndTable();
@@ -171,7 +171,7 @@ namespace DaraletPlayer.Ui {
             }
 
             if (duels.Count == 0) {
-                ImGui.TextDisabled("No duels to watch.");
+                Widgets.TextDisabled("No duels to watch.");
                 return;
             }
 
@@ -184,9 +184,9 @@ namespace DaraletPlayer.Ui {
                 Widgets.Tip($"Watches it unseen: {ArenaCommands.Watch(duel.Id)}. Leave takes you back.");
 
                 ImGui.SameLine();
-                ImGui.Text($"#{duel.Id} {duel.Sides}");
+                Widgets.Text($"#{duel.Id} {duel.Sides}");
                 ImGui.SameLine();
-                ImGui.TextDisabled($"{Bracket(duel.Size, duel.Scaled, duel.Rated)}{(duel.Map != null ? ", " + duel.Map : "")}, {duel.State}");
+                Widgets.TextDisabled($"{Bracket(duel.Size, duel.Scaled, duel.Rated)}{(duel.Map != null ? ", " + duel.Map : "")}, {duel.State}");
             }
         }
 
@@ -198,7 +198,7 @@ namespace DaraletPlayer.Ui {
             }
 
             if (recent.Count == 0) {
-                ImGui.TextDisabled("None since the server started.");
+                Widgets.TextDisabled("None since the server started.");
                 return;
             }
 
@@ -207,9 +207,9 @@ namespace DaraletPlayer.Ui {
             foreach (var result in recent) {
                 var outcome = result.CalledOff ? "called off" : result.Winners != null ? $"{result.Winners} won" : "a draw";
 
-                ImGui.Text($"{result.Sides}: {outcome}");
+                Widgets.Text($"{result.Sides}: {outcome}");
                 ImGui.SameLine();
-                ImGui.TextDisabled($"{Bracket(result.Size, result.Scaled, result.Rated)}, {MarketSearch.Span(result.EndedAgo + since)} ago");
+                Widgets.TextDisabled($"{Bracket(result.Size, result.Scaled, result.Rated)}, {MarketSearch.Span(result.EndedAgo + since)} ago");
             }
         }
 
@@ -252,7 +252,7 @@ namespace DaraletPlayer.Ui {
             ImGui.Separator();
 
             foreach (var line in feed.LastCommandReply) {
-                ImGui.TextWrapped(line);
+                Widgets.TextWrapped(line);
             }
         }
 

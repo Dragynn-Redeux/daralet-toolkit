@@ -13,6 +13,33 @@ namespace DaraletPlayer.Ui {
         /// <summary>How every list in the plugin is drawn: striped rows, column lines, columns as wide as what's in them.</summary>
         public const ImGuiTableFlags TableFlags = ImGuiTableFlags.RowBg | ImGuiTableFlags.BordersInnerV | ImGuiTableFlags.SizingFixedFit;
 
+        // ImGui.NET's Text, TextColored, TextDisabled and TextWrapped take a printf format, so a "%" in what they draw is
+        // read as a format: "+12%" loses its "%", and a name with "%s" in it reads memory that isn't there. These draw
+        // the text as it is; the plugin draws all its text with them.
+
+        public static void Text(string text) {
+            ImGui.TextUnformatted(text ?? "");
+        }
+
+        public static void TextColored(Vector4 color, string text) {
+            ImGui.PushStyleColor(ImGuiCol.Text, color);
+            ImGui.TextUnformatted(text ?? "");
+            ImGui.PopStyleColor();
+        }
+
+        public static void TextDisabled(string text) {
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGui.GetColorU32(ImGuiCol.TextDisabled));
+            ImGui.TextUnformatted(text ?? "");
+            ImGui.PopStyleColor();
+        }
+
+        /// <summary>Text that wraps at the window's edge.</summary>
+        public static void TextWrapped(string text) {
+            ImGui.PushTextWrapPos(0);
+            ImGui.TextUnformatted(text ?? "");
+            ImGui.PopTextWrapPos();
+        }
+
         /// <summary>
         /// Shows text in a hover tooltip for the item drawn just before this, greyed-out ones included.
         /// </summary>
@@ -55,6 +82,72 @@ namespace DaraletPlayer.Ui {
                     Tip(tips[column]);
                 }
             }
+        }
+
+        /// <summary>
+        /// A checkbox for a setting that changes what the game itself shows: ticking it asks first (confirmOn, with Turn on
+        /// and Cancel), and unticking it says what follows (noticeOff, with OK). The popups are opened and drawn here, in the
+        /// same ID scope as the checkbox, which is where ImGui looks for them. Returns true when the value changed.
+        /// </summary>
+        public static bool GuardedCheckbox(string label, ref bool value, string tip, string confirmOn, string noticeOff) {
+            var changed = false;
+            var ticked = value;
+            var confirmId = $"Turn on {label}?##confirm-{label}";
+            var noticeId = $"{label} is off##notice-{label}";
+
+            if (ImGui.Checkbox(label, ref ticked)) {
+                if (ticked) {
+                    // not on until it's confirmed
+                    ImGui.OpenPopup(confirmId);
+                }
+                else {
+                    value = false;
+                    changed = true;
+                    ImGui.OpenPopup(noticeId);
+                }
+            }
+            Tip(tip);
+
+            var open = true;
+
+            if (ImGui.BeginPopupModal(confirmId, ref open, ImGuiWindowFlags.AlwaysAutoResize)) {
+                PopupText(confirmOn);
+
+                if (ImGui.Button("Turn on")) {
+                    value = true;
+                    changed = true;
+                    ImGui.CloseCurrentPopup();
+                }
+
+                ImGui.SameLine();
+
+                if (ImGui.Button("Cancel")) {
+                    ImGui.CloseCurrentPopup();
+                }
+
+                ImGui.EndPopup();
+            }
+
+            open = true;
+
+            if (ImGui.BeginPopupModal(noticeId, ref open, ImGuiWindowFlags.AlwaysAutoResize)) {
+                PopupText(noticeOff);
+
+                if (ImGui.Button("OK")) {
+                    ImGui.CloseCurrentPopup();
+                }
+
+                ImGui.EndPopup();
+            }
+
+            return changed;
+        }
+
+        private static void PopupText(string text) {
+            ImGui.PushTextWrapPos(ImGui.GetFontSize() * 30);
+            ImGui.TextUnformatted(text ?? "");
+            ImGui.PopTextWrapPos();
+            ImGui.Spacing();
         }
 
         /// <summary>

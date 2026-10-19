@@ -51,6 +51,16 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "salvageableOnly")] public bool SalvageableOnly;
         [DataMember(Name = "carvedJewelOnly")] public bool CarvedJewelOnly;
         [DataMember(Name = "values")] public Dictionary<string, string> Values;
+        /// <summary>The colour of the frame round what it decides (LootMarks.Highlights), or "".</summary>
+        [DataMember(Name = "highlight")] public string Highlight;
+        /// <summary>The symbol on what it decides (LootMarks.Icons), or "".</summary>
+        [DataMember(Name = "icon")] public string Icon;
+        /// <summary>
+        /// The filters (by MarketFilter.Key) switched to roll quality, each on its own: that filter's box in Values is the
+        /// lowest roll quality, 0 to 100, rather than the stat itself, and the rule's other filters are as they were. Only a
+        /// "min" filter for a stat that rolls can be (Loot.RollStatsFor).
+        /// </summary>
+        [DataMember(Name = "rollFilters")] public List<string> RollFilters;
 
         public LootRule() {
             SetDefaults();
@@ -74,6 +84,9 @@ namespace DaraletPlayer.Feed {
             MaxTier = "";
             NameContains = "";
             Values = new Dictionary<string, string>();
+            Highlight = "";
+            Icon = "";
+            RollFilters = new List<string>();
         }
     }
 
@@ -173,14 +186,23 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "material")] public string Material;
         [DataMember(Name = "workmanship")] public double? Workmanship;
         [DataMember(Name = "item")] public MarketListing Item;
+        /// <summary>
+        /// Where each rolled stat landed in its range, 0 to 1, by its name in appraisal's Roll Quality section ("Bonus to
+        /// Attack Skill"...); null when nothing on it rolled.
+        /// </summary>
+        [DataMember(Name = "rollQuality")] public Dictionary<string, double> RollQuality;
     }
 
     [DataContract]
     public class CorpseInfo {
         public const string StatusOk = "ok";
+        /// <summary>A container that's neither a corpse nor a chest, such as a house's storage.</summary>
+        public const string StatusNotLootable = "notcorpse";
+        /// <summary>Sent unasked when the open one closes, with Loot window on.</summary>
+        public const string StatusClosed = "closed";
 
         [DataMember(Name = "guid")] public uint Guid;
-        /// <summary>ok, gone (not near enough), denied (someone else's to loot) or notcorpse.</summary>
+        /// <summary>ok, gone (not near enough), denied (a corpse someone else's to loot, or a chest you haven't got open) or notcorpse.</summary>
         [DataMember(Name = "status")] public string Status;
         [DataMember(Name = "name")] public string Name;
         [DataMember(Name = "items")] public List<CorpseItemInfo> Items;
@@ -288,10 +310,87 @@ namespace DaraletPlayer.Feed {
             };
 
         /// <summary>
+        /// The stat each numeric filter compares, by its name in appraisal's Roll Quality section (the names ItemLines puts on
+        /// its lines), for the ones loot rolls: a filter here can be switched to the stat's roll quality. Several names are
+        /// tried in order: a bow's damage roll is its damage modifier.
+        /// </summary>
+        private static readonly Dictionary<string, string[]> RollStats = new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase) {
+            ["BaseDamage"] = new[] { "Damage", "Damage Modifier" },
+            ["AttackMod"] = new[] { "Bonus to Attack Skill" },
+            ["PhysDefMod"] = new[] { "Bonus to Physical Defense" },
+            ["MagicDefMod"] = new[] { "Bonus to Magic Defense" },
+            ["WarMagicMod"] = new[] { "Bonus to War Magic Skill" },
+            ["LifeMagicMod"] = new[] { "Bonus to Life Magic Skill" },
+            ["ArmorLevel"] = new[] { "Armor Level" },
+            ["WardLevel"] = new[] { "Ward Level" },
+            ["ArmorWarMagicMod"] = new[] { "Bonus to War Magic Skill" },
+            ["ArmorLifeMagicMod"] = new[] { "Bonus to Life Magic Skill" },
+            ["ArmorManaRegenMod"] = new[] { "Bonus to Mana Regen" },
+            ["ArmorManaConversionMod"] = new[] { "Bonus to Mana Conversion Skill" },
+            ["ArmorAttackMod"] = new[] { "Bonus to Attack Skill" },
+            ["ArmorShieldMod"] = new[] { "Bonus to Shield Skill" },
+            ["ArmorDualWieldMod"] = new[] { "Bonus to Dual Wield Skill" },
+            ["ArmorThieveryMod"] = new[] { "Bonus to Thievery Skill" },
+            ["ArmorRunMod"] = new[] { "Bonus to Run Skill" },
+            ["ArmorStaminaRegenMod"] = new[] { "Bonus to Stamina Regen" },
+            ["ArmorPhysicalDefMod"] = new[] { "Bonus to Physical Defense" },
+            ["ArmorMagicDefMod"] = new[] { "Bonus to Magic Defense" },
+            ["ArmorTwohandedCombatMod"] = new[] { "Bonus to Two-handed Combat Skill" },
+            ["ArmorHealthRegenMod"] = new[] { "Bonus to Health Regen" },
+            ["ArmorPerceptionMod"] = new[] { "Bonus to Perception Skill" },
+            ["ArmorDeceptionMod"] = new[] { "Bonus to Deception Skill" },
+            ["ArmorHealthMod"] = new[] { "Bonus to Maximum Health" },
+            ["ArmorManaMod"] = new[] { "Bonus to Maximum Mana" },
+            ["ArmorStaminaMod"] = new[] { "Bonus to Maximum Stamina" },
+            ["GearCritDamage"] = new[] { "Crit Damage Rating" },
+            ["GearCritDamageResist"] = new[] { "Crit Damage Resist Rating" },
+            ["GearDamage"] = new[] { "Damage Rating" },
+            ["GearDamageResist"] = new[] { "Damage Resist Rating" },
+            ["GearHealingBoost"] = new[] { "Healing Boost Rating" },
+            ["GearMaxHealth"] = new[] { "Max Health Rating" },
+        };
+
+        /// <summary>
+        /// The roll quality names a filter can be switched to, or null: only a "min" filter, for a stat loot rolls.
+        /// </summary>
+        public static string[] RollStatsFor(MarketFilter filter) {
+            var param = filter?.Param ?? "";
+            return param.StartsWith("min", StringComparison.Ordinal) && RollStats.TryGetValue(param.Substring(3), out var names) ? names : null;
+        }
+
+        /// <summary>Whether the rule has this one filter switched to roll quality (and it's one that can be).</summary>
+        public static bool UsesRoll(LootRule rule, MarketFilter filter) {
+            return rule.RollFilters != null && rule.RollFilters.Contains(filter.Key) && RollStatsFor(filter) != null;
+        }
+
+        /// <summary>
+        /// Switches one filter of the rule between its stat and its roll quality. The box is emptied, since a number typed
+        /// for one means something else for the other.
+        /// </summary>
+        public static void SetUsesRoll(LootRule rule, MarketFilter filter, bool roll) {
+            if (roll == UsesRoll(rule, filter) || (roll && RollStatsFor(filter) == null)) {
+                return;
+            }
+
+            rule.RollFilters = rule.RollFilters ?? new List<string>();
+
+            if (roll) {
+                rule.RollFilters.Add(filter.Key);
+            }
+            else {
+                rule.RollFilters.RemoveAll(k => k == filter.Key);
+            }
+
+            rule.Values?.Remove(filter.Key);
+        }
+
+        /// <summary>
         /// The rule in the list that decides an item: the first enabled one it matches, or none.
         /// </summary>
         public static LootDecision Decide(LootList list, CorpseItemInfo item) {
-            var rule = list?.Rules?.FirstOrDefault(r => r.Enabled && Matches(r, item));
+            // a Salvage rule only ever takes items with a workmanship: salvaging anything else makes nothing, so the item is
+            // left to the rules after it
+            var rule = list?.Rules?.FirstOrDefault(r => r.Enabled && (r.Outcome != LootOutcome.Salvage || item.Workmanship > 0) && Matches(r, item));
             return new LootDecision { Item = item, Rule = rule };
         }
 
@@ -338,6 +437,14 @@ namespace DaraletPlayer.Feed {
                 }
 
                 if (rule.Values == null || !rule.Values.TryGetValue(filter.Key, out var raw)) {
+                    continue;
+                }
+
+                if (UsesRoll(rule, filter)) {
+                    if (!RollHolds(RollStatsFor(filter), raw, item)) {
+                        return false;
+                    }
+
                     continue;
                 }
 
@@ -389,6 +496,25 @@ namespace DaraletPlayer.Feed {
             return true;
         }
 
+        /// <summary>
+        /// Whether the stat rolled at least the typed roll quality (a percentage, 0 to 100). An empty box checks nothing; an
+        /// item without that roll (it doesn't have the stat, or the server sent no roll quality) doesn't match.
+        /// </summary>
+        private static bool RollHolds(string[] names, string raw, CorpseItemInfo item) {
+            if (string.IsNullOrWhiteSpace(raw) || !double.TryParse(raw.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent)) {
+                return true;
+            }
+
+            foreach (var name in names) {
+                if (item.RollQuality != null && item.RollQuality.TryGetValue(name, out var quality)) {
+                    // rounded as the tooltip shows it, so a roll shown as 90% passes a 90 rule
+                    return Math.Round(quality * 100) >= percent;
+                }
+            }
+
+            return false;
+        }
+
         private static bool NameHas(string name, string words) {
             var wanted = (words ?? "").Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             return wanted.All(w => (name ?? "").IndexOf(w, StringComparison.OrdinalIgnoreCase) >= 0);
@@ -420,7 +546,7 @@ namespace DaraletPlayer.Feed {
                 var list = Json.Read<LootList>((text ?? "").Trim());
 
                 if (list?.Rules == null) {
-                    problem = "That isn't a loot list.";
+                    problem = "That isn't a loot profile.";
                     return null;
                 }
 
@@ -428,7 +554,7 @@ namespace DaraletPlayer.Feed {
                 return list;
             }
             catch (Exception ex) {
-                problem = $"That isn't a loot list: {ex.Message}";
+                problem = $"That isn't a loot profile: {ex.Message}";
                 return null;
             }
         }

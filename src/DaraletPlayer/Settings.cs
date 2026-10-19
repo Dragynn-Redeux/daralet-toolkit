@@ -19,11 +19,16 @@ namespace DaraletPlayer {
 
         [DataMember(Name = "x")] public float? X;
         [DataMember(Name = "y")] public float? Y;
+        /// <summary>The size of a window you size yourself (the bank's), or null until it's been drawn.</summary>
+        [DataMember(Name = "width")] public float? Width;
+        [DataMember(Name = "height")] public float? Height;
         [DataMember(Name = "visible")] public bool Visible;
         /// <summary>No title bar, and can't be dragged.</summary>
         [DataMember(Name = "locked")] public bool Locked;
         /// <summary>How big the window's text and bars are drawn: 1 is normal size.</summary>
         [DataMember(Name = "scale")] public float Scale;
+        /// <summary>Shown only while it has something to show (Only when needed).</summary>
+        [DataMember(Name = "onlyInUse")] public bool OnlyInUse;
 
         public WindowPlacement() {
             SetDefaults();
@@ -76,6 +81,41 @@ namespace DaraletPlayer {
         /// <summary>Where the arrow points, or null.</summary>
         [DataMember(Name = "destination")] public Destination Destination;
 
+        /// <summary>Item lists without icons, for shorter rows.</summary>
+        [DataMember(Name = "compactLists")] public bool CompactLists;
+
+        /// <summary>
+        /// Right-clicking an item shows the plugin's Appraisal window; off, it selects the item for the game's own appraisal.
+        /// </summary>
+        [DataMember(Name = "appraiseInPlugin")] public bool AppraiseInPlugin;
+
+        /// <summary>The bank shows its items as a grid of icons rather than a list.</summary>
+        [DataMember(Name = "bankGrid")] public bool BankGrid;
+
+        /// <summary>The Bank view lists the packs you carry too, above the bank's.</summary>
+        [DataMember(Name = "bankShowCarried")] public bool BankShowCarried;
+
+        /// <summary>The Carried and Bank views slide out what you're wearing on the right, as a paperdoll.</summary>
+        [DataMember(Name = "bankShowWorn")] public bool BankShowWorn;
+
+        /// <summary>
+        /// Opening a bank opens the plugin's bank window instead of the game's (the server leaves the game's out, @playerui
+        /// bankwindow).
+        /// </summary>
+        [DataMember(Name = "bankWindow")] public bool BankWindow;
+
+        /// <summary>
+        /// Opening a corpse or a chest shows what's in it in the plugin's Corpse window instead of the game's (@playerui
+        /// lootwindow).
+        /// </summary>
+        [DataMember(Name = "lootWindow")] public bool LootWindow;
+
+        /// <summary>The Corpse window shows its items as a grid of icons, as the game's does, rather than a list.</summary>
+        [DataMember(Name = "lootGrid")] public bool LootGrid;
+
+        /// <summary>The Carried and Bank views mark items the way the active loot list's rules do (LootMarks).</summary>
+        [DataMember(Name = "bankLootMarks")] public bool BankLootMarks;
+
         [DataMember(Name = "loot")] public LootData Loot;
 
         public SettingsData() {
@@ -99,6 +139,8 @@ namespace DaraletPlayer {
             MapShowFellows = true;
             MapShowLabels = true;
             MapTextScale = 1;
+            AppraiseInPlugin = true;
+            BankShowWorn = true;
             Loot = new LootData();
         }
     }

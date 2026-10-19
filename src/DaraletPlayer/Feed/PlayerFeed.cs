@@ -22,6 +22,8 @@ namespace DaraletPlayer.Feed {
         public const string KindTargets = "targets";
         public const string KindPosition = "position";
         public const string KindBank = "bank";
+        public const string KindBankWindow = "bankwindow";
+        public const string KindLootWindow = "lootwindow";
         public const string KindMarket = "market";
         public const string KindBroker = "broker";
         public const string KindArena = "arena";
@@ -91,6 +93,27 @@ namespace DaraletPlayer.Feed {
 
         /// <summary>Your bank, or null before the first reply.</summary>
         public BankInfo Bank { get; private set; }
+
+        /// <summary>
+        /// Whether the server last said it leaves the game's window out for the plugin's, by request (bankwindow,
+        /// lootwindow); missing before it's said.
+        /// </summary>
+        private readonly Dictionary<string, bool> windowSettings = new Dictionary<string, bool>();
+
+        /// <summary>
+        /// Tells the server whether to leave the game's window out for the plugin's (@playerui bankwindow or lootwindow),
+        /// until it says it has. The server forgets at logout, so this is called every frame; it only sends when the server's
+        /// last word differs, and again after a request it ignored (one that came too soon) has timed out.
+        /// </summary>
+        public void WantWindow(string kind, bool wanted) {
+            if (Status != FeedStatus.Ready || !Supports(kind) || IsWaitingFor(kind)) {
+                return;
+            }
+
+            if (!windowSettings.TryGetValue(kind, out var current) || current != wanted) {
+                Request(kind, wanted ? "on" : "off");
+            }
+        }
 
         /// <summary>Your side of the market, or null before the first reply.</summary>
         public MarketInfo Market { get; private set; }
@@ -357,7 +380,12 @@ namespace DaraletPlayer.Feed {
                     MarketUpdatedAt = DateTime.UtcNow;
                     break;
                 case KindBank:
+                    // also sent unasked when the bank opens or closes, with the plugin's bank window on
                     Bank = Json.Read<BankInfo>(json);
+                    break;
+                case KindBankWindow:
+                case KindLootWindow:
+                    windowSettings[kind] = Json.Read<WindowSettingInfo>(json)?.On ?? false;
                     break;
                 case KindPosition:
                     Position = Json.Read<PositionInfo>(json);

@@ -12,6 +12,8 @@ namespace DaraletPlayer.Ui {
     /// </summary>
     internal class PlayerHud : IDisposable {
         private readonly PlayerFeed feed;
+        private readonly Settings settings;
+        private readonly ItemIcons icons;
         private readonly Hud hud;
         private readonly FellowshipTab fellowshipTab;
         private readonly TargetTab targetTab;
@@ -30,22 +32,26 @@ namespace DaraletPlayer.Ui {
 
         public PlayerHud(PlayerFeed feed, Settings settings) {
             this.feed = feed;
+            this.settings = settings;
+            icons = new ItemIcons(settings);
 
             fellowshipTab = new FellowshipTab(feed, settings);
             targetTab = new TargetTab(feed, settings);
             worldTab = new WorldTab(feed, settings);
-            bankTab = new BankTab(feed);
-            marketTab = new MarketTab(feed, api);
+            bankTab = new BankTab(feed, icons, settings);
+            marketTab = new MarketTab(feed, api, icons);
             arenaTab = new ArenaTab(feed, api);
-            lootTab = new LootTab(feed, settings);
+            lootTab = new LootTab(feed, settings, icons);
             leaderboardsTab = new LeaderboardsTab(feed, api);
+
+            Appraisal.Start(feed, settings, icons);
 
             tabs = new List<(string, string, Action)> {
                 ("World", "A map of Dereth with Daralet's towns, dungeons, lifestones and portals, you and your fellowship, and an arrow to point you anywhere on it.", worldTab.Render),
                 ("Fellowship", "Your fellowship's health, stamina and mana, and a vitals window you can place anywhere on screen.", fellowshipTab.Render),
                 ("Target", "Your selected target's vitals, buffs, debuffs and threat table, and a tracked target you can watch alongside it.", targetTab.Render),
-                ("Loot", "Loot rules in named lists you can swap, and what happens when you open a corpse: loot, salvage, or just show what matches.", lootTab.Render),
-                ("Bank", "Your bank's packs and items while it's open, and every /bank command as a button.", bankTab.Render),
+                ("Loot", "Loot rules in named loot profiles you can swap, and what happens when you open a corpse or a chest: loot, salvage, or just show what matches.", lootTab.Render),
+                ("Inventory", "The packs you carry, your bank's packs while it's open, and every /bank command as a button.", bankTab.Render),
                 ("Market", "Your listings, sales and expired items, the Market Broker's actions near the market stand, and a search of everything on the market.", marketTab.Render),
                 ("Arena", "Your arena ratings and where you stand, the /arena commands as buttons, duels to watch, and the top ratings.", arenaTab.Render),
                 ("Leaderboards", "The leaderboards from the Daralet website: level, arena, capstones, deaths and more.", leaderboardsTab.Render),
@@ -104,16 +110,40 @@ namespace DaraletPlayer.Ui {
         private bool RenderStatus() {
             switch (feed.Status) {
                 case FeedStatus.Connecting:
-                    ImGui.TextDisabled("Connecting to the server...");
+                    Widgets.TextDisabled("Connecting to the server...");
                     return false;
                 case FeedStatus.Unsupported:
-                    ImGui.TextColored(Colors.Warning, "This server doesn't have @playerui. This plugin only works on the Daralet server.");
+                    Widgets.TextColored(Colors.Warning, "This server doesn't have @playerui. This plugin only works on the Daralet server.");
                     return false;
             }
 
-            ImGui.TextDisabled(feed.Hello.Name);
+            Widgets.TextDisabled(feed.Hello.Name);
             Widgets.Tip("The character you're on. Type /dap to show or hide this window.");
+
+            RenderCompactToggle();
             return true;
+        }
+
+        /// <summary>The Plugin appraisal and Compact checkboxes, at the right of the top line.</summary>
+        private void RenderCompactToggle() {
+            const string appraisal = "Plugin appraisal";
+            const string label = "Compact";
+            var box = ImGui.GetFrameHeight() + ImGui.GetStyle().ItemInnerSpacing.X;
+            var width = box * 2 + ImGui.CalcTextSize(appraisal).X + ImGui.GetStyle().ItemSpacing.X + ImGui.CalcTextSize(label).X;
+
+            ImGui.SameLine(Math.Max(ImGui.GetCursorPosX(), ImGui.GetWindowContentRegionMax().X - width));
+
+            if (ImGui.Checkbox(appraisal, ref settings.Data.AppraiseInPlugin)) {
+                settings.Changed();
+            }
+            Widgets.Tip("Appraise, in an item's right-click menu in the Corpse window or the bank, shows it in the plugin's Appraisal window: every stat, how well each rolled, what your loot rules make of it and how it compares with what you're wearing. Appraise in new window opens another, to keep several. Off, Appraise selects the item instead, for the game's own appraisal (press your appraise key): a plugin can't open the game's appraisal panel.");
+
+            ImGui.SameLine();
+
+            if (ImGui.Checkbox(label, ref settings.Data.CompactLists)) {
+                settings.Changed();
+            }
+            Widgets.Tip("Hides the item icons in the bank, loot and market lists, for shorter rows.");
         }
 
         private bool disposed;
@@ -127,7 +157,14 @@ namespace DaraletPlayer.Ui {
             hud.OnPreRender -= Hud_OnPreRender;
             hud.OnRender -= Hud_OnRender;
 
-            foreach (var piece in new IDisposable[] { hud, fellowshipTab, targetTab, worldTab, bankTab, marketTab, lootTab, api }) {
+            try {
+                Appraisal.Stop();
+            }
+            catch (Exception ex) {
+                PluginCore.Log(ex);
+            }
+
+            foreach (var piece in new IDisposable[] { hud, fellowshipTab, targetTab, worldTab, bankTab, marketTab, lootTab, api, icons }) {
                 try {
                     piece.Dispose();
                 }

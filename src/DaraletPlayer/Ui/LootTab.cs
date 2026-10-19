@@ -18,13 +18,13 @@ namespace DaraletPlayer.Ui {
             (CorpseMode.AutoLootAutoSalvage, "Auto loot, auto salvage", "Loots what the rules keep or salvage, and salvages the salvage, without asking."),
             (CorpseMode.AutoLootConfirmSalvage, "Auto loot, confirm salvage", "Loots what the rules keep or salvage, then the Corpse window asks before salvaging."),
             (CorpseMode.ConfirmBoth, "Confirm loot and salvage", "The Corpse window lists the matches, with Loot and Loot and salvage buttons."),
-            (CorpseMode.ChatHighlights, "Manual, chat highlights", "Moves nothing; says in chat what on the corpse matches."),
+            (CorpseMode.ChatHighlights, "Manual, chat highlights", "Moves nothing; says in chat what on the corpse or chest matches."),
             (CorpseMode.HighlightPopup, "Manual, highlight popup", "Moves nothing; the Corpse window lists the matches, and clicking one loots it."),
         };
 
         private static readonly (LootOutcome Outcome, string Label, string Tip)[] Outcomes = {
             (LootOutcome.Keep, "Keep", "Loot it."),
-            (LootOutcome.Salvage, "Salvage", "Loot it, then salvage it (needs an Ust in your packs)."),
+            (LootOutcome.Salvage, "Salvage", "Loot it, then salvage it (needs an Ust in your packs). Only items with a workmanship: anything else is left to the rules below."),
             (LootOutcome.Notify, "Notify", "Say so in chat, but leave it."),
             (LootOutcome.Ignore, "Ignore", "Leave it, and stop later rules from matching it."),
         };
@@ -32,22 +32,71 @@ namespace DaraletPlayer.Ui {
         private readonly PlayerFeed feed;
         private readonly Settings settings;
         private readonly Looter looter;
+        private readonly ItemIcons icons;
         private readonly FloatingWindow corpseWindow;
 
         private int selectedRule;
         private string listName = "";
         private string importProblem;
+
+        /// <summary>How long a list action's message (Export, Import) stays under the buttons.</summary>
+        private static readonly TimeSpan ListMessageFor = TimeSpan.FromSeconds(5);
+
+        private string listMessage;
+        private DateTime listMessageAt;
+
+        /// <summary>Says what a list button did, under the buttons, for a few seconds: Export has nothing else to show.</summary>
+        private void ShowListMessage(string message) {
+            listMessage = message;
+            listMessageAt = DateTime.UtcNow;
+        }
         private readonly HashSet<uint> unticked = new HashSet<uint>();
         private uint tickedFor;
         private List<uint> testGuids = new List<uint>();
 
-        public LootTab(PlayerFeed feed, Settings settings) {
+        public LootTab(PlayerFeed feed, Settings settings, ItemIcons icons) {
             this.feed = feed;
             this.settings = settings;
+            this.icons = icons;
 
             looter = new Looter(feed, settings);
-            corpseWindow = new FloatingWindow("corpse", "Corpse", settings, new Vector2(500, 420), RenderCorpseWindow, visibleByDefault: false);
-            looter.Decided += Looter_Decided;
+            corpseWindow = new FloatingWindow("corpse", "Loot", settings, new Vector2(500, 420), RenderCorpseWindow,
+                inUse: CorpseInUse, alwaysOnlyInUse: true, onClose: CloseCorpse);
+        }
+
+        /// <summary>
+        /// The corpse or chest the Corpse window is showing, or null when it has nothing to show: with Loot window on, any
+        /// open one (it's the only window for it); otherwise one the looter has matches on, in a mode that shows them (every
+        /// mode but chat), with the looter on. Its window shows while this isn't null, and goes when it closes.
+        /// </summary>
+        private object CorpseInUse() {
+            var corpse = looter.Corpse;
+
+            if (looter.OpenGuid == 0 || corpse == null) {
+                return null;
+            }
+
+            // the only window for it, so it opens even to say the server wouldn't describe it (and why)
+            if (looter.UsesWindow) {
+                return looter.OpenGuid;
+            }
+
+            if (corpse.Status != CorpseInfo.StatusOk) {
+                return null;
+            }
+
+            var shows = Data.Enabled && Data.Mode != CorpseMode.ChatHighlights && (looter.Busy || looter.Decisions.Any(d => d.Loots));
+            return shows ? (object)looter.OpenGuid : null;
+        }
+
+        /// <summary>
+        /// Closing the Corpse window closes the corpse or chest, as closing the game's window does (using an open one closes
+        /// it); opening it again brings the window back.
+        /// </summary>
+        private void CloseCorpse() {
+            if (looter.OpenGuid != 0) {
+                CoreManager.Current.Actions.UseItem(unchecked((int)looter.OpenGuid), 0);
+            }
         }
 
         private LootData Data => settings.Data.Loot;
@@ -56,7 +105,7 @@ namespace DaraletPlayer.Ui {
 
         public void Render() {
             if (!feed.Supports(PlayerFeed.KindCorpse)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old for the Loot tab.");
+                Widgets.TextColored(Colors.Warning, "This server is too old for the Loot tab.");
                 return;
             }
 
@@ -68,12 +117,12 @@ namespace DaraletPlayer.Ui {
                 return;
             }
 
-            if (Widgets.TabItem("Rules", "The active list's rules, checked top to bottom: the first that matches an item decides.")) {
+            if (Widgets.TabItem("Rules", "The active loot profile's rules, checked top to bottom: the first that matches an item decides.")) {
                 RenderRules();
                 ImGui.EndTabItem();
             }
 
-            if (Widgets.TabItem("Test", "What the active list would do with the items you carry, to check it before trusting it with corpses.")) {
+            if (Widgets.TabItem("Test", "What the active loot profile would do with the items you carry, to check it before trusting it with corpses.")) {
                 RenderTest();
                 ImGui.EndTabItem();
             }
@@ -87,7 +136,7 @@ namespace DaraletPlayer.Ui {
             if (ImGui.Checkbox("Looter on", ref data.Enabled)) {
                 settings.Changed();
             }
-            Widgets.Tip("When you open a corpse, asks the server what's on it and does what the corpse mode says. Turn off VirindiTank's looter while this is on, or the two fight over the same corpse.");
+            Widgets.Tip("When you open a corpse or a chest, asks the server what's in it and does what the corpse mode says. Turn off VirindiTank's looter while this is on, or the two fight over the same corpse.");
 
             ImGui.SameLine();
             ImGui.SetNextItemWidth(220);
@@ -106,10 +155,37 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip(Modes.First(m => m.Mode == data.Mode).Tip);
 
             ImGui.SameLine();
-            corpseWindow.RenderControls("Corpse window", "The window the popup modes show a corpse's matches in.");
+            corpseWindow.RenderControls("Corpse window", "Whether the Corpse window opens at all. When on, it opens by itself when you open a corpse or chest it has something to show for (with Loot window on, every one) and goes when that closes. Unticked, it never opens.");
+
+            if (settings.Data.LootWindow && !corpseWindow.Visible) {
+                Widgets.TextColored(Colors.Warning, "Loot window is on but the Corpse window is off: corpses and chests open with no window at all.");
+                ImGui.SameLine();
+
+                if (ImGui.SmallButton("Turn it on##corpse-window-on")) {
+                    corpseWindow.Visible = true;
+                }
+                Widgets.Tip("Turns the Corpse window on, so it opens with each corpse or chest.");
+            }
+
+            ImGui.BeginDisabled(!feed.Supports(PlayerFeed.KindLootWindow));
+
+            var windowTip = feed.Supports(PlayerFeed.KindLootWindow)
+                ? "Opening a corpse or a chest shows everything in it in the Corpse window instead of the game's window (the server leaves the game's out: @playerui lootwindow on), with what your rules match marked. Click an item to loot it. Closing the window closes the corpse, and walking away closes both. Works with the looter on or off."
+                : "This server is too old for the plugin's own loot window.";
+
+            if (Widgets.GuardedCheckbox("Loot window", ref settings.Data.LootWindow, windowTip, Windows.ConfirmOn("corpses and chests", "Corpse window"), Windows.NoticeOff("corpse and chest"))) {
+                settings.Changed();
+
+                // it's the only window for a corpse now, so it has to be allowed to show
+                if (settings.Data.LootWindow) {
+                    corpseWindow.Visible = true;
+                }
+            }
+
+            ImGui.EndDisabled();
 
             if (data.Enabled) {
-                ImGui.TextColored(Colors.Warning, "If VirindiTank's looter is on too, turn one of them off.");
+                Widgets.TextColored(Colors.Warning, "If VirindiTank's looter is on too, turn one of them off.");
             }
         }
 
@@ -117,7 +193,7 @@ namespace DaraletPlayer.Ui {
             var data = Data;
             var active = looter.ActiveList;
 
-            ImGui.Text("List");
+            Widgets.Text("Loot Profile");
             ImGui.SameLine();
             ImGui.SetNextItemWidth(200);
 
@@ -132,13 +208,13 @@ namespace DaraletPlayer.Ui {
 
                 ImGui.EndCombo();
             }
-            Widgets.Tip($"The loot list {Me} uses. Each character picks their own; swapping takes effect on the next corpse.");
+            Widgets.Tip($"The loot profile {Me} uses: a named set of rules. Each character picks their own; swapping takes effect on the next corpse.");
 
             ImGui.SameLine();
             if (ImGui.SmallButton("New")) {
                 AddList(new LootList { Name = data.UniqueName("My loot") });
             }
-            Widgets.Tip("Makes an empty list and uses it.");
+            Widgets.Tip("Makes an empty loot profile and uses it.");
 
             ImGui.SameLine();
             if (ImGui.SmallButton("Copy")) {
@@ -146,7 +222,7 @@ namespace DaraletPlayer.Ui {
                 copy.Name = data.UniqueName(active.Name);
                 AddList(copy);
             }
-            Widgets.Tip("Makes a copy of this list and uses it, to change without losing the original.");
+            Widgets.Tip("Makes a copy of this loot profile and uses it, to change without losing the original.");
 
             ImGui.SameLine();
             ImGui.BeginDisabled(data.Lists.Count < 2);
@@ -156,13 +232,15 @@ namespace DaraletPlayer.Ui {
                 selectedRule = 0;
             }
             ImGui.EndDisabled();
-            Widgets.Tip("Deletes this list. The last list can't be deleted. Characters that used it go back to the first list.");
+            Widgets.Tip("Deletes this loot profile. The last one can't be deleted. Characters that used it go back to the first.");
 
             ImGui.SameLine();
             if (ImGui.SmallButton("Export")) {
                 ImGui.SetClipboardText(Loot.Export(active));
+                importProblem = null;
+                ShowListMessage($"Copied \"{active.Name}\" ({active.Rules.Count} rule{(active.Rules.Count == 1 ? "" : "s")}) to the clipboard: paste it anywhere to share it.");
             }
-            Widgets.Tip("Copies this list as text, to paste somewhere or give to someone.");
+            Widgets.Tip("Copies this loot profile as text, to paste somewhere or give to someone.");
 
             ImGui.SameLine();
             if (ImGui.SmallButton("Import")) {
@@ -171,12 +249,16 @@ namespace DaraletPlayer.Ui {
                 if (imported != null) {
                     imported.Name = data.UniqueName(imported.Name);
                     AddList(imported);
+                    ShowListMessage($"Imported \"{imported.Name}\" ({imported.Rules.Count} rule{(imported.Rules.Count == 1 ? "" : "s")}), and switched to it.");
                 }
             }
-            Widgets.Tip("Adds a list from text you've copied (an Export).");
+            Widgets.Tip("Adds a loot profile from text you've copied (an Export).");
 
             if (importProblem != null) {
-                ImGui.TextColored(Colors.Warning, importProblem);
+                Widgets.TextColored(Colors.Warning, importProblem);
+            }
+            else if (listMessage != null && DateTime.UtcNow - listMessageAt < ListMessageFor) {
+                Widgets.TextColored(Colors.Good, listMessage);
             }
 
             ImGui.SetNextItemWidth(200);
@@ -190,7 +272,7 @@ namespace DaraletPlayer.Ui {
             if (ImGui.SmallButton("Rename")) {
                 RenameActive(listName.Trim());
             }
-            Widgets.Tip("Renames this list. Characters that use it keep using it.");
+            Widgets.Tip("Renames this loot profile. Characters that use it keep using it.");
         }
 
         private void AddList(LootList list) {
@@ -262,7 +344,7 @@ namespace DaraletPlayer.Ui {
                     RenderRuleEditor(rules, selectedRule);
                 }
                 else {
-                    ImGui.TextDisabled("Add a rule, or pick one to edit.");
+                    Widgets.TextDisabled("Add a rule, or pick one to edit.");
                 }
             }
             ImGui.EndChild();
@@ -324,6 +406,8 @@ namespace DaraletPlayer.Ui {
             }
             ImGui.NewLine();
 
+            changed |= RenderMarkChoices(rule);
+
             ImGui.SetNextItemWidth(140);
             changed |= Widgets.Choice("Category##rule-category", MarketSearch.Categories, ref rule.Category);
             Widgets.Tip("The kind of item, as the market sorts them. Each kind has its own filters below.");
@@ -334,7 +418,7 @@ namespace DaraletPlayer.Ui {
             changed |= Widgets.Choice("##rule-min-tier", MarketSearch.Tiers, ref rule.MinTier);
             Widgets.Tip("The lowest loot tier.");
             ImGui.SameLine();
-            ImGui.TextDisabled("to");
+            Widgets.TextDisabled("to");
             ImGui.SameLine();
             ImGui.SetNextItemWidth(100);
             changed |= Widgets.Choice("##rule-max-tier", MarketSearch.Tiers, ref rule.MaxTier);
@@ -358,6 +442,35 @@ namespace DaraletPlayer.Ui {
         }
 
         /// <summary>
+        /// How the rule marks what it decides (LootMarks), with a sample of the mark on a blank square.
+        /// </summary>
+        private static bool RenderMarkChoices(LootRule rule) {
+            var changed = false;
+
+            ImGui.SetNextItemWidth(110);
+            changed |= Widgets.Choice("Highlight##rule-highlight", LootMarks.HighlightChoices, ref rule.Highlight);
+            Widgets.Tip("A coloured frame round the icon of what this rule decides: in the Corpse window, the Test tab, and the Inventory tab with Loot marks on.");
+
+            ImGui.SameLine();
+            ImGui.SetNextItemWidth(130);
+            changed |= Widgets.Choice("Icon##rule-icon", LootMarks.Icons, ref rule.Icon);
+            Widgets.Tip("A symbol in the top left corner of the icon of what this rule decides, in the highlight's colour (gold without one).");
+
+            if (LootMarks.Marks(rule)) {
+                ImGui.SameLine();
+                var size = ImGui.GetFrameHeight() * 1.5f;
+                var at = ImGui.GetCursorScreenPos();
+                var drawList = ImGui.GetWindowDrawList();
+                drawList.AddRectFilled(at, at + new Vector2(size, size), ImGui.GetColorU32(ImGuiCol.FrameBg));
+                ItemIcons.DrawMark(drawList, rule, at, size);
+                ImGui.Dummy(new Vector2(size, size));
+                Widgets.Tip("How the mark looks on an item's icon.");
+            }
+
+            return changed;
+        }
+
+        /// <summary>
         /// The Search tab's filters for the rule's category (and for all), as boxes. "Price" is the item's vendor value here.
         /// </summary>
         private static bool RenderFilters(LootRule rule) {
@@ -370,12 +483,37 @@ namespace DaraletPlayer.Ui {
 
             foreach (var filter in shown) {
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(filter.Category == null ? filter.Label.Replace("price", "value") : filter.Label);
+
+                // each stat that rolls switches to its roll quality on its own; the rule's other filters stay as they are
+                var canRoll = Loot.RollStatsFor(filter) != null;
+                var roll = canRoll && Loot.UsesRoll(rule, filter);
+
+                Widgets.TextDisabled(roll ? filter.Label.TrimEnd(' ', '%') + " roll %" : filter.Category == null ? filter.Label.Replace("price", "value") : filter.Label);
+
+                if (canRoll) {
+                    ImGui.SameLine();
+                    ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(1, 0));
+
+                    if (ImGui.Checkbox($"roll##roll-{filter.Key}", ref roll)) {
+                        Loot.SetUsesRoll(rule, filter, roll);
+                        changed = true;
+                    }
+
+                    ImGui.PopStyleVar();
+                    Widgets.Tip("Checks how well this stat rolled instead of the stat itself: the lowest roll quality, 0 to 100, as the item's tooltip shows it on the right. Only this filter switches; an item without this stat doesn't match.");
+                }
+
                 ImGui.SetNextItemWidth(-1);
 
                 var value = rule.Values.TryGetValue(filter.Key, out var current) ? current : "";
 
-                if (filter.Kind == FilterKind.Choice) {
+                if (roll) {
+                    if (ImGui.InputTextWithHint($"##{filter.Key}", "roll quality, 0-100", ref value, 10, ImGuiInputTextFlags.CharsDecimal)) {
+                        rule.Values[filter.Key] = value;
+                        changed = true;
+                    }
+                }
+                else if (filter.Kind == FilterKind.Choice) {
                     if (Widgets.Choice($"##{filter.Key}", filter.Options, ref value)) {
                         rule.Values[filter.Key] = value;
                         changed = true;
@@ -390,7 +528,12 @@ namespace DaraletPlayer.Ui {
                     }
                 }
 
-                Widgets.Tip(filter.Category == null ? filter.Tip.Replace("price, in pyreals", "vendor value") : filter.Tip);
+                if (roll) {
+                    Widgets.Tip($"The lowest roll quality for this stat, 0 to 100: where it landed in its range ({string.Join(" or ", Loot.RollStatsFor(filter))} in appraisal's Roll Quality).");
+                }
+                else {
+                    Widgets.Tip(filter.Category == null ? filter.Tip.Replace("price, in pyreals", "vendor value") : filter.Tip);
+                }
             }
 
             if (rule.Category == "Misc") {
@@ -402,9 +545,10 @@ namespace DaraletPlayer.Ui {
 
             if (ImGui.SmallButton("Clear filters##rule")) {
                 rule.Values.Clear();
+                rule.RollFilters.Clear();
                 changed = true;
             }
-            Widgets.Tip("Empties every filter box in this rule.");
+            Widgets.Tip("Empties every filter box in this rule, and switches any roll quality filters back to their stats.");
 
             return changed;
         }
@@ -432,14 +576,14 @@ namespace DaraletPlayer.Ui {
 
             if (testGuids.Count > 0 && described.Count < testGuids.Count) {
                 ImGui.SameLine();
-                ImGui.TextDisabled($"{described.Count} of {testGuids.Count} described...");
+                Widgets.TextDisabled($"{described.Count} of {testGuids.Count} described...");
             }
 
             var list = looter.ActiveList;
             var decisions = described.Select(i => Loot.Decide(list, i)).OrderBy(d => d.Rule == null).ThenBy(d => d.Item.Name).ToList();
 
             if (decisions.Count == 0) {
-                ImGui.TextDisabled("Nothing checked yet.");
+                Widgets.TextDisabled("Nothing checked yet.");
                 return;
             }
 
@@ -456,19 +600,20 @@ namespace DaraletPlayer.Ui {
             foreach (var decision in decisions) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text(decision.Item.Name ?? "");
-                ShowTooltip(decision.Item);
+                var iconHovered = icons.Draw(ItemIcons.Of(decision.Item.Guid, decision.Item.Item), decision.Rule);
+                Widgets.Text(decision.Item.Name ?? "");
+                ShowTooltip(decision.Item, iconHovered);
                 ImGui.TableNextColumn();
 
                 if (decision.Rule == null) {
-                    ImGui.TextDisabled("leave");
+                    Widgets.TextDisabled("leave");
                 }
                 else {
-                    ImGui.TextColored(OutcomeColor(decision.Outcome), decision.Outcome.ToString().ToLowerInvariant());
+                    Widgets.TextColored(OutcomeColor(decision.Outcome), decision.Outcome.ToString().ToLowerInvariant());
                 }
 
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(decision.Rule?.Name ?? "");
+                Widgets.TextDisabled(decision.Rule?.Name ?? "");
             }
 
             ImGui.EndTable();
@@ -479,16 +624,23 @@ namespace DaraletPlayer.Ui {
             var mode = Data.Mode;
 
             if (corpse == null) {
-                ImGui.TextDisabled(Data.Enabled ? "No corpse open" : "The looter is off");
+                Widgets.TextDisabled(Data.Enabled || looter.UsesWindow ? "No corpse or chest open" : "The looter is off");
                 return;
             }
 
             if (corpse.Status != CorpseInfo.StatusOk) {
-                ImGui.TextDisabled(corpse.Status == "denied" ? "Not yours to loot" : "Too far away");
+                Widgets.TextDisabled(corpse.Status == "denied" ? "Not yours to loot" : "Too far away");
                 return;
             }
 
-            ImGui.Text(corpse.Name ?? "Corpse");
+            Widgets.Text(corpse.Name ?? "Corpse");
+
+            ImGui.SameLine();
+
+            if (ImGui.Checkbox("Grid##corpse-grid", ref settings.Data.LootGrid)) {
+                settings.Changed();
+            }
+            Widgets.Tip("Shows the items as icons in rows, as the game's window does, in a section for each outcome (Keep, Salvage, Notify, Ignore, no rule), with each rule's highlight and symbol and the stack size in the bottom right. Hover one for its details, right-click it for the game's appraisal; with Confirm loot, Ctrl+click ticks or unticks one.");
 
             var decisions = looter.Decisions;
 
@@ -500,8 +652,22 @@ namespace DaraletPlayer.Ui {
                 Widgets.Tip("Salvages what the rules said to salvage, now it's looted. Needs an Ust in your packs.");
             }
 
-            if (decisions.Count == 0) {
-                ImGui.TextDisabled("Nothing matches.");
+            if (looter.Busy) {
+                Widgets.TextColored(Colors.Info, $"Looting {looter.MovingName ?? "..."} ({looter.Remaining} left)");
+                ImGui.SameLine();
+
+                if (ImGui.SmallButton("Cancel##looting")) {
+                    looter.Cancel();
+                }
+                Widgets.Tip("Stops looting: nothing more is taken from the corpse, and nothing is salvaged. An item already on its way still lands.");
+            }
+
+            // with Loot window on there's no game window for it, so this lists everything, matched or not
+            var everything = looter.UsesWindow;
+            var shown = everything ? looter.Everything : decisions;
+
+            if (shown.Count == 0) {
+                Widgets.TextDisabled(everything ? "Empty." : "Nothing matches.");
                 return;
             }
 
@@ -511,9 +677,13 @@ namespace DaraletPlayer.Ui {
             }
 
             var scale = corpseWindow.Scale;
-            var confirm = mode == CorpseMode.ConfirmBoth;
+            var confirm = mode == CorpseMode.ConfirmBoth && Data.Enabled;
 
-            foreach (var decision in decisions) {
+            if (settings.Data.LootGrid) {
+                RenderLootGrid(shown, confirm, everything || mode == CorpseMode.HighlightPopup);
+            }
+
+            foreach (var decision in settings.Data.LootGrid ? new List<LootDecision>() : shown) {
                 ImGui.PushID((int)decision.Item.Guid);
 
                 if (confirm && decision.Loots) {
@@ -532,16 +702,36 @@ namespace DaraletPlayer.Ui {
                     ImGui.SameLine();
                 }
 
+                var iconHovered = icons.Draw(ItemIcons.Of(decision.Item.Guid, decision.Item.Item), decision.Rule);
                 var clicked = ImGui.Selectable(decision.Item.Name ?? "", false, ImGuiSelectableFlags.None, new Vector2(200 * scale, 0));
 
-                if (clicked && mode == CorpseMode.HighlightPopup && decision.Loots) {
+                // in the full list any item loots on a click, as in the game's window
+                if (clicked && (everything || (mode == CorpseMode.HighlightPopup && decision.Loots))) {
                     looter.Loot(new[] { decision }, salvage: false);
                 }
 
-                ShowTooltip(decision.Item);
-                ImGui.SameLine();
-                ImGui.TextColored(OutcomeColor(decision.Outcome), decision.Outcome.ToString().ToLowerInvariant());
+                ShowTooltip(decision.Item, iconHovered);
+                ItemMenu(decision);
+
+                if (decision.Rule != null) {
+                    ImGui.SameLine();
+                    Widgets.TextColored(OutcomeColor(decision.Outcome), decision.Outcome.ToString().ToLowerInvariant());
+                }
+
                 ImGui.PopID();
+            }
+
+            if (everything) {
+                ImGui.BeginDisabled(looter.Busy);
+                if (ImGui.Button("Loot all")) {
+                    looter.Loot(shown.ToList(), salvage: false);
+                }
+                ImGui.EndDisabled();
+                Widgets.Tip("Loots everything in it into your main pack, one item at a time. Click an item to loot just that one.");
+
+                if (confirm) {
+                    ImGui.SameLine();
+                }
             }
 
             if (confirm) {
@@ -558,14 +748,138 @@ namespace DaraletPlayer.Ui {
                 ImGui.EndDisabled();
                 Widgets.Tip("Loots the ticked items; Loot and salvage then salvages the ones the rules said to salvage (needs an Ust).");
             }
-            else if (mode == CorpseMode.HighlightPopup) {
-                ImGui.TextDisabled("Click an item to loot it.");
+            else if (mode == CorpseMode.HighlightPopup && !everything) {
+                Widgets.TextDisabled("Click an item to loot it.");
             }
         }
 
+        /// <summary>Icons a row in the Corpse window's grid: the window sizes itself, so the grid sets its width.</summary>
+        private const int LootGridColumns = 8;
+
+        /// <summary>A grid icon's size, in pixels: the game's own, as portal.dat has them.</summary>
+        private const float LootGridIconSize = 32;
+
+        /// <summary>The grid's sections, in order: what the rules decided, then what no rule matched.</summary>
+        private static readonly (LootOutcome? Outcome, string Heading)[] GridSections = {
+            (LootOutcome.Keep, "Keep"),
+            (LootOutcome.Salvage, "Salvage"),
+            (LootOutcome.Notify, "Notify"),
+            (LootOutcome.Ignore, "Ignore"),
+            (null, "No rule"),
+        };
+
+        /// <summary>
+        /// The items as icons in rows, as the game's corpse window has them, in a section for each outcome (Keep, Salvage,
+        /// Notify, Ignore, then what no rule matched), so the outcome isn't drawn over the icon. Empty sections are left out.
+        /// </summary>
+        private void RenderLootGrid(List<LootDecision> shown, bool confirm, bool clickLoots) {
+            foreach (var (outcome, heading) in GridSections) {
+                var items = shown.Where(d => outcome.HasValue ? d.Rule != null && d.Outcome == outcome.Value : d.Rule == null).ToList();
+
+                if (items.Count == 0) {
+                    continue;
+                }
+
+                if (outcome.HasValue) {
+                    Widgets.TextColored(OutcomeColor(outcome.Value), $"{heading} ({items.Count})");
+                }
+                else {
+                    Widgets.TextDisabled($"{heading} ({items.Count})");
+                }
+
+                RenderGridIcons(items, confirm, clickLoots);
+            }
+        }
+
+        /// <summary>
+        /// One section's icons: each with its rule's mark (ItemIcons.DrawMark) and its stack size in the bottom right.
+        /// Clicking one loots it, where the list's click would; right-clicking shows the game's appraisal; with Confirm loot,
+        /// Ctrl+click ticks or unticks it for Loot, and an unticked one is dimmed.
+        /// </summary>
+        private void RenderGridIcons(List<LootDecision> shown, bool confirm, bool clickLoots) {
+            var cell = LootGridIconSize;
+            var drawList = ImGui.GetWindowDrawList();
+
+            for (var i = 0; i < shown.Count; i++) {
+                var decision = shown[i];
+                var item = decision.Item;
+
+                if (i % LootGridColumns != 0) {
+                    ImGui.SameLine();
+                }
+
+                ImGui.InvisibleButton($"loot-grid-{item.Guid}", new Vector2(cell, cell), ImGuiButtonFlags.MouseButtonLeft | ImGuiButtonFlags.MouseButtonRight);
+                var at = ImGui.GetItemRectMin();
+                var corner = ImGui.GetItemRectMax();
+
+                if (!icons.DrawAt(drawList, ItemIcons.Of(item.Guid, item.Item), at, cell)) {
+                    // no icon (yet): the start of its name, so the square isn't blank
+                    var name = item.Name ?? "";
+                    drawList.AddRect(at, corner, ImGui.GetColorU32(ImGuiCol.Border));
+                    drawList.AddText(at + new Vector2(3, 3), ImGui.GetColorU32(ImGuiCol.TextDisabled), name.Length > 3 ? name.Substring(0, 3) : name);
+                }
+
+                ItemIcons.DrawMark(drawList, decision.Rule, at, cell);
+
+                if (item.StackSize > 1) {
+                    ItemIcons.StackCount(drawList, item.StackSize, at, cell);
+                }
+
+                var takes = confirm && decision.Loots;
+                var ticked = takes && !unticked.Contains(item.Guid);
+
+                if (takes && !ticked) {
+                    drawList.AddRectFilled(at, corner, ImGui.GetColorU32(new Vector4(0, 0, 0, 0.6f)));
+                }
+
+                if (ImGui.IsItemHovered()) {
+                    drawList.AddRect(at, corner, ImGui.GetColorU32(ImGuiCol.ButtonHovered), 0, ImDrawFlags.None, 2);
+                }
+
+                var ctrl = ImGui.GetIO().KeyCtrl;
+
+                if (clickLoots && !ctrl && ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
+                    looter.Loot(new[] { decision }, salvage: false);
+                }
+
+                // right-click is the item's menu (appraising it), so ticking for Confirm loot is Ctrl+click
+                if (takes && ctrl && ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
+                    if (ticked) {
+                        unticked.Add(item.Guid);
+                    }
+                    else {
+                        unticked.Remove(item.Guid);
+                    }
+                }
+
+                ShowTooltip(item, iconHovered: false);
+                ItemMenu(decision);
+            }
+        }
+
+        /// <summary>Right-clicking an item in the Corpse window: appraising it, and looting it.</summary>
+        private void ItemMenu(LootDecision decision) {
+            if (!ImGui.BeginPopupContextItem($"loot-item-menu-{decision.Item.Guid}")) {
+                return;
+            }
+
+            Appraisal.MenuItems(decision.Item.Guid, decision.Item);
+            ImGui.Separator();
+
+            if (ImGui.MenuItem("Loot")) {
+                looter.Loot(new[] { decision }, salvage: false);
+            }
+
+            ImGui.EndPopup();
+        }
+
         /// <summary>The item's every stat, as the server described it (ItemLines).</summary>
-        private static void ShowTooltip(CorpseItemInfo item) {
-            ItemTooltip.Show(ItemLines.Build(item));
+        private static void ShowTooltip(CorpseItemInfo item, bool iconHovered) {
+            if (!ImGui.IsItemHovered() && !iconHovered) {
+                return;
+            }
+
+            ItemTooltip.Show(ItemLines.Build(item), iconHovered: true);
         }
 
         private static Vector4 OutcomeColor(LootOutcome outcome) {
@@ -577,20 +891,8 @@ namespace DaraletPlayer.Ui {
             }
         }
 
-        /// <summary>
-        /// Shows the Corpse window when a popup mode has something on the corpse to show.
-        /// </summary>
-        private void Looter_Decided() {
-            var popup = Data.Mode == CorpseMode.ConfirmBoth || Data.Mode == CorpseMode.HighlightPopup || Data.Mode == CorpseMode.AutoLootConfirmSalvage;
-
-            if (popup && looter.Decisions.Any(d => d.Loots)) {
-                corpseWindow.Visible = true;
-            }
-        }
-
         public void Dispose() {
             looter.Dispose();
-            looter.Decided -= Looter_Decided;
             corpseWindow.Dispose();
         }
     }

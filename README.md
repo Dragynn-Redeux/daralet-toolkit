@@ -10,10 +10,14 @@ the game with:
   Click a name to select that member.
 - **Target**: what you're fighting: its health, stamina and mana, every buff and debuff on it, and its threat table (who
   it wants to attack). Has a window that stays on screen too.
-- **Loot**: a looter with loot lists you write yourself, using the same filters as the market search. Each character picks
-  a list, and you can swap lists at any time. When you open a corpse, it can loot automatically, ask first, or just point
-  out what matches. It can also salvage what you tell it to.
-- **Bank**: browse your bank and your packs, and deposit, withdraw, sort and search them without typing `/bank` commands.
+- **Loot**: a looter with loot profiles (sets of rules) you write yourself, using the same filters as the market search. Each character picks
+  a loot profile, and you can swap them at any time. When you open a corpse or a chest, it can loot automatically, ask first, or just point
+  out what matches. It can also salvage what you tell it to. A rule can ask for how well a stat rolled rather than the stat
+  itself, and can mark what it finds with a coloured frame and a symbol. Loot window shows corpses and chests in the
+  plugin's window instead of the game's.
+- **Inventory**: the packs you carry, anywhere, and your bank while it's open, as a list or a grid of icons. Move items
+  between packs, and deposit, withdraw, sort and search without typing `/bank` commands. Bank window opens your bank in
+  the plugin's own window instead of the game's. Loot marks shows which of your items your loot rules would mark.
 - **Market**: your listings, sales and expired items, with buttons for the Market Broker (list, cancel, claim), plus a
   search of the whole market like the website's.
 - **Arena**: queue, challenge, leave and watch duels, with your ratings and the latest results.
@@ -57,13 +61,13 @@ as the same plugin. Then delete `DaraletPlayer.dll`. Your settings are kept.
 
 ## Your settings
 
-Window positions, display options and loot lists are saved in
+Window positions, display options and loot profiles are saved in
 
     Documents\Asheron's Call\Daralet\settings.json
 
 and shared by every character on your computer. To start fresh, close the game and delete that file.
 
-To move your loot lists to another computer, or share them with a friend, use **Export** on the Loot tab and **Import**
+To move your loot profiles to another computer, or share them with a friend, use **Export** on the Loot tab and **Import**
 on the other end.
 
 ## Things to know
