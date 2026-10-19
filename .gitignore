@@ -1,0 +1,14 @@
+# build output
+[Bb]in/
+[Oo]bj/
+TestResults/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.rsuser
+
+# written next to the dll by the plugin and loader
+log.txt

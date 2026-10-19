@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>12</LangVersion>
+    <RootNamespace>DaraletPlayer.Loader</RootNamespace>
+    <AssemblyName>DaraletPlayer.Loader</AssemblyName>
+    <Version>0.1.0</Version>
+    <Product>Daralet hot-reload loader</Product>
+    <OutputPath>..\..\bin\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Decal.Adapter">
+      <HintPath>..\..\deps\Decal.Adapter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Decal.Interop.Core">
+      <HintPath>..\..\deps\Decal.Interop.Core.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

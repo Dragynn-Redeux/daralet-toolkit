@@ -1,0 +1,133 @@
+using System;
+using System.IO;
+using Decal.Adapter;
+using DaraletPlayer.Feed;
+using DaraletPlayer.Ui;
+
+namespace DaraletPlayer {
+    /// <summary>
+    /// The Daralet plugin. Startup() runs when Decal loads the plugin, or when the hot-reload loader (DaraletPlayer.Loader)
+    /// loads a new build, and Shutdown() when it's unloaded. Only CoreManager.Current is used, never PluginBase.Host / Core,
+    /// because a hot-reloaded copy isn't registered with Decal and those are never set up for it.
+    /// </summary>
+    [FriendlyName("Daralet")]
+    public class PluginCore : PluginBase {
+        // System.IO.Path is written out in full in here: PluginBase has a Path property of its own
+        private static string assemblyDirectory;
+
+        private Settings settings;
+        private PlayerFeed feed;
+        private PlayerHud hud;
+
+        /// <summary>
+        /// The folder the plugin dll is in, where log.txt goes. The loader sets this, since a plugin loaded from bytes has no location.
+        /// </summary>
+        public static string AssemblyDirectory {
+            get {
+                if (assemblyDirectory == null) {
+                    try {
+                        assemblyDirectory = System.IO.Path.GetDirectoryName(typeof(PluginCore).Assembly.Location);
+                    }
+                    catch {
+                        assemblyDirectory = Environment.CurrentDirectory;
+                    }
+                }
+
+                return assemblyDirectory;
+            }
+            set {
+                assemblyDirectory = value;
+            }
+        }
+
+        protected override void Startup() {
+            try {
+                settings = new Settings(log: Log);
+                feed = new PlayerFeed();
+                hud = new PlayerHud(feed, settings);
+
+                CoreManager.Current.CommandLineText += Core_CommandLineText;
+                CoreManager.Current.RenderFrame += Core_RenderFrame;
+            }
+            catch (Exception ex) {
+                Log(ex);
+            }
+        }
+
+        /// <summary>
+        /// Each step on its own: the loader swaps builds in a running game, and a step that fails must not leave a feed asking
+        /// the server for data with nothing left to hide the replies from chat.
+        /// </summary>
+        protected override void Shutdown() {
+            ShutdownStep(() => {
+                CoreManager.Current.CommandLineText -= Core_CommandLineText;
+                CoreManager.Current.RenderFrame -= Core_RenderFrame;
+            });
+            ShutdownStep(() => hud?.Dispose());
+            ShutdownStep(() => feed?.Dispose());
+            ShutdownStep(() => settings?.SaveIfChanged());
+        }
+
+        private static void ShutdownStep(Action step) {
+            try {
+                step();
+            }
+            catch (Exception ex) {
+                Log(ex);
+            }
+        }
+
+        private void Core_RenderFrame(object sender, EventArgs e) {
+            try {
+                settings.SaveIfDue();
+            }
+            catch (Exception ex) {
+                Log(ex);
+            }
+        }
+
+        /// <summary>
+        /// /dap (or @dap) shows and hides the window.
+        /// </summary>
+        private void Core_CommandLineText(object sender, ChatParserInterceptEventArgs e) {
+            try {
+                var text = e.Text?.Trim();
+
+                if (string.Equals(text, "/dap", StringComparison.OrdinalIgnoreCase) || string.Equals(text, "@dap", StringComparison.OrdinalIgnoreCase)) {
+                    e.Eat = true;
+                    hud.Toggle();
+                }
+            }
+            catch (Exception ex) {
+                Log(ex);
+            }
+        }
+
+        internal static void Log(Exception ex) {
+            Log(ex.ToString());
+        }
+
+        /// <summary>
+        /// Writes to log.txt only, not to chat: for things about chat itself, which must not add to it.
+        /// </summary>
+        internal static void LogFile(string message) {
+            // logging must never be what crashes the plugin
+            try {
+                File.AppendAllText(System.IO.Path.Combine(AssemblyDirectory, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
+            }
+            catch {
+            }
+        }
+
+        /// <summary>Writes to log.txt and to chat.</summary>
+        internal static void Log(string message) {
+            LogFile(message);
+
+            try {
+                CoreManager.Current.Actions.AddChatText($"[Daralet] {message}", 1);
+            }
+            catch {
+            }
+        }
+    }
+}

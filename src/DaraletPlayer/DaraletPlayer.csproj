@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>12</LangVersion>
+    <RootNamespace>DaraletPlayer</RootNamespace>
+    <AssemblyName>DaraletPlayer</AssemblyName>
+    <Version>0.1.0</Version>
+    <Product>Daralet</Product>
+    <OutputPath>..\..\bin\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- UtilityBelt.Service is built against Decal.Adapter 2.9.8.0 while Decal 2.9.8.3 installs 2.9.7.5. The game only ever
+         has the installed one loaded, so the mismatch doesn't matter. -->
+    <MSBuildWarningsAsMessages>MSB3277</MSBuildWarningsAsMessages>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Decal.Adapter">
+      <HintPath>..\..\deps\Decal.Adapter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <!-- HttpClient, for the Market API (market search, leaderboards) -->
+    <Reference Include="System.Net.Http" />
+    <!-- Managed DirectX, which UtilityBelt.Service needs and so is installed wherever it is. Only needed here so the compiler can
+         tell ManagedTexture's constructors apart. -->
+    <Reference Include="Microsoft.DirectX.Direct3D">
+      <HintPath>$(WINDIR)\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- made by tools/MapGen in Daralet Admin from the server's dat files -->
+    <EmbeddedResource Include="Resources\dereth-map.png" LogicalName="DaraletPlayer.Resources.dereth-map.png" />
+    <!-- GoArrow's locations.xml, Phenyl's Daralet edition; a locations.xml next to the dll is read instead (Map/Locations.cs) -->
+    <EmbeddedResource Include="Resources\locations.xml" LogicalName="DaraletPlayer.Resources.locations.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- UtilityBelt.Service is installed on the client separately, so it's only referenced for compiling. 2.2.12 is the version
+         the current UtilityBelt installer ships. -->
+    <PackageReference Include="UtilityBelt.Service" Version="2.2.12">
+      <ExcludeAssets>runtime; build; contentFiles</ExcludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
