@@ -10,7 +10,10 @@ up to date.
 
 - SDK-style project, `net48`, `PlatformTarget` x86, `LangVersion` 12. No C# records: net48 has no `IsExternalInit`.
 - UI: [UtilityBelt.Service](https://gitlab.com/utilitybelt/utilitybelt.service) 2.2.12 from NuGet, with
-  `ExcludeAssets="runtime; build; contentFiles"`, because it's installed on the client by UtilityBelt. Windows are
+  `ExcludeAssets="runtime; build; contentFiles"`, because it's installed on the client. It's a separate install from
+  UtilityBelt (its own installer, a Decal service under Services, in `C:\Games\DecalPlugins\UtilityBelt.Service`);
+  players who only ran UtilityBelt's installer get "Could not load file or assembly 'UtilityBelt.Service'", so the
+  README links the 2.2.12 installer. 3.x is out but untested here. Windows are
   `UBService.Huds.CreateHud(name)` with `OnRender`, drawn with ImGui (`ImGuiNET`). Images use `ManagedTexture`, made
   lazily the first time it's drawn, once the game's graphics device exists.
 - `deps/` holds `Decal.Adapter.dll` and `Decal.Interop.Core.dll` from Decal 2.9.8.3, referenced with `Private=False`.
