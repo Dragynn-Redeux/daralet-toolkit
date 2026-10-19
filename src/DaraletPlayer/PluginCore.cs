@@ -12,6 +12,7 @@ namespace DaraletPlayer {
     /// </summary>
     [FriendlyName("Daralet")]
     public class PluginCore : PluginBase {
+        // System.IO.Path is written out in full in here: PluginBase has a Path property of its own
         private static string assemblyDirectory;
 
         private Settings settings;
@@ -31,6 +32,7 @@ namespace DaraletPlayer {
                         assemblyDirectory = Environment.CurrentDirectory;
                     }
                 }
+
                 return assemblyDirectory;
             }
             set {
@@ -109,6 +111,7 @@ namespace DaraletPlayer {
         /// Writes to log.txt only, not to chat: for things about chat itself, which must not add to it.
         /// </summary>
         internal static void LogFile(string message) {
+            // logging must never be what crashes the plugin
             try {
                 File.AppendAllText(System.IO.Path.Combine(AssemblyDirectory, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
             }
@@ -116,9 +119,11 @@ namespace DaraletPlayer {
             }
         }
 
+        /// <summary>Writes to log.txt and to chat.</summary>
         internal static void Log(string message) {
+            LogFile(message);
+
             try {
-                File.AppendAllText(System.IO.Path.Combine(AssemblyDirectory, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
                 CoreManager.Current.Actions.AddChatText($"[Daralet] {message}", 1);
             }
             catch {

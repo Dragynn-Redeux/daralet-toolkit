@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using Decal.Adapter;
 using DaraletPlayer.Feed;
@@ -70,7 +71,7 @@ namespace DaraletPlayer.Ui {
         }
 
         private static string Describe(FellowshipInfo fellowship) {
-            var parts = new System.Collections.Generic.List<string>();
+            var parts = new List<string>();
 
             parts.Add(fellowship.ShareXp ? (fellowship.EvenShare ? "sharing XP evenly" : "sharing XP") : "not sharing XP");
 
@@ -107,7 +108,7 @@ namespace DaraletPlayer.Ui {
                 "How far away they are, when they're near enough for the server to say.",
                 "Where they are: a named place or map coordinates, or Indoors.");
 
-            foreach (var member in fellowship.Members ?? new System.Collections.Generic.List<FellowInfo>()) {
+            foreach (var member in fellowship.Members ?? new List<FellowInfo>()) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
                 MemberName(member, fellowship);

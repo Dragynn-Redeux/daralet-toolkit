@@ -226,6 +226,7 @@ namespace DaraletPlayer.Ui {
                 if (ImGui.SmallButton(words[i])) {
                     what = BankCommands.Clean(what + " " + words[i]);
                 }
+                Widgets.Tip($"Adds \"{words[i]}\" to the box above.");
             }
         }
 

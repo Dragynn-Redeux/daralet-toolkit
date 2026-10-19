@@ -3,8 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Threading.Tasks;
+using System.IO;
 using System.Numerics;
+using System.Threading.Tasks;
 using DaraletPlayer.Feed;
 using DaraletPlayer.Ui;
 using ImGuiNET;
@@ -37,12 +38,18 @@ namespace DaraletPlayer.Map {
     /// </summary>
     internal class MapView : IDisposable {
         private const string ImageResource = "DaraletPlayer.Resources.dereth-map.png";
+
+        /// <summary>The file next to the plugin dll that's drawn instead of the built-in map, when it's there.</summary>
+        public const string ImageFileName = "dereth-map.png";
+
         private const string MenuId = "worldMapMenu";
 
         private const float MaxZoom = 40;
         private const float HoverDistance = 7;
 
-        /// <summary>Town names are written on the map from this zoom on (screen pixels per map unit), everything else's from LabelScale.</summary>
+        /// <summary>
+        /// Town names are written on the map from this zoom on (screen pixels per map unit), everything else's from LabelScale.
+        /// </summary>
         private const float TownLabelScale = 3;
         private const float LabelScale = 16;
 
@@ -511,18 +518,15 @@ namespace DaraletPlayer.Map {
             }
         }
 
-        /// <summary>The file next to the plugin dll that's drawn instead of the built-in map, when it's there.</summary>
-        public const string ImageFileName = "dereth-map.png";
-
         /// <summary>
         /// The map image: a dereth-map.png next to the plugin dll if there is one (so an edited map can be tried without a new
         /// build), otherwise the one built in. Either has to be square and laid out like the built-in one (MapProjection: 4
         /// pixels of sea round 2040 of map, at 2048); one that isn't square is skipped.
         /// </summary>
         private Bitmap OpenImage() {
-            var file = System.IO.Path.Combine(PluginCore.AssemblyDirectory ?? "", ImageFileName);
+            var file = Path.Combine(PluginCore.AssemblyDirectory ?? "", ImageFileName);
 
-            if (System.IO.File.Exists(file)) {
+            if (File.Exists(file)) {
                 try {
                     // copied out of the file so the file isn't held open, and can be saved over while the game runs
                     using (var loaded = new Bitmap(file)) {

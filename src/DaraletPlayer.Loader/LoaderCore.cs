@@ -17,6 +17,7 @@ namespace DaraletPlayer.Loader {
     /// </summary>
     [FriendlyName("Daralet Loader")]
     public class LoaderCore : FilterBase {
+        // System.IO.Path is written out in full in here: FilterBase has a Path property of its own
         private const string PluginAssemblyName = "DaraletPlayer.dll";
         private const string PluginTypeName = "DaraletPlayer.PluginCore";
 

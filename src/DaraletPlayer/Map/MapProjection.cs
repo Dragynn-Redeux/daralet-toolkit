@@ -8,7 +8,10 @@ namespace DaraletPlayer.Map {
     /// One map unit is 240 meters, 1.25 landblocks, and 10 pixels of the map image.
     /// </summary>
     public static class MapProjection {
-        /// <summary>The map image is 2048 pixels square: 2040 pixels of map with 4 pixels of sea around it (made by tools/MapGen in Daralet Admin, from the server's dat files).</summary>
+        /// <summary>
+        /// The map image is 2048 pixels square: 2040 pixels of map with 4 pixels of sea around it (made by tools/MapGen in
+        /// Daralet Admin, from the server's dat files).
+        /// </summary>
         public const int ImageSize = 2048;
         public const int Margin = 4;
         public const float PixelsPerUnit = 10;

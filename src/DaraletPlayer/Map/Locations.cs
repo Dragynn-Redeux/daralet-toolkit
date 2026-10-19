@@ -13,8 +13,10 @@ namespace DaraletPlayer.Map {
     public class Location {
         public int Id;
         public string Name;
-        /// <summary>Town, Dungeon, Landmark, Lifestone, Outpost, Bindstone, Vendor, NPC, AllegianceHall, TownPortal,
-        /// WildernessPortal, UndergroundPortal, _Unknown (shops and halls) or Custom.</summary>
+        /// <summary>
+        /// Town, Dungeon, Landmark, Lifestone, Outpost, Bindstone, Vendor, NPC, AllegianceHall, TownPortal, WildernessPortal,
+        /// UndergroundPortal, _Unknown (shops and halls) or Custom.
+        /// </summary>
         public string Type;
         public float X;
         public float Y;
