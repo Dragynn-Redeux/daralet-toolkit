@@ -52,9 +52,9 @@ namespace DaraletPlayer.Ui {
         }
 
         private void RenderBoard(LeaderboardDefinition board) {
-            ImGui.Text(board.Label);
+            Widgets.Text(board.Label);
             ImGui.SameLine();
-            ImGui.TextDisabled(board.Tip);
+            Widgets.TextDisabled(board.Tip);
 
             if (board.Id == "arena") {
                 RenderArenaOptions();
@@ -120,13 +120,13 @@ namespace DaraletPlayer.Ui {
         /// </summary>
         public static void RenderRows(string id, LeaderboardDefinition board, ApiRequest<List<LeaderboardRow>> request, string me, string search, int maxRows) {
             if (request.Error != null) {
-                ImGui.TextColored(Colors.Warning, $"The leaderboard couldn't be loaded: {request.Error}");
+                Widgets.TextColored(Colors.Warning, $"The leaderboard couldn't be loaded: {request.Error}");
             }
 
             var rows = request.Result;
 
             if (rows == null) {
-                ImGui.TextDisabled(request.Busy ? "Loading..." : "");
+                Widgets.TextDisabled(request.Busy ? "Loading..." : "");
                 return;
             }
 
@@ -138,7 +138,7 @@ namespace DaraletPlayer.Ui {
                 .ToList();
 
             if (shown.Count == 0) {
-                ImGui.TextDisabled(rows.Count == 0 ? "Nobody on this board yet." : "Nobody by that name.");
+                Widgets.TextDisabled(rows.Count == 0 ? "Nobody on this board yet." : "Nobody by that name.");
                 return;
             }
 
@@ -172,12 +172,12 @@ namespace DaraletPlayer.Ui {
 
                 if (hasRank) {
                     ImGui.TableNextColumn();
-                    ImGui.TextDisabled(row.Rank.ToString());
+                    Widgets.TextDisabled(row.Rank.ToString());
                 }
 
                 foreach (var (_, cell) in board.Columns) {
                     ImGui.TableNextColumn();
-                    ImGui.Text(cell(row) ?? "");
+                    Widgets.Text(cell(row) ?? "");
                 }
             }
 

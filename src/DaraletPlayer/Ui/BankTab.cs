@@ -1,12 +1,14 @@
 using System;
+using System.Numerics;
 using DaraletPlayer.Feed;
 using Decal.Adapter;
 using ImGuiNET;
 
 namespace DaraletPlayer.Ui {
     /// <summary>
-    /// The Bank tab: your bank as a window of its own (BankBrowser) while it's open, and every /bank command as buttons. The
-    /// server checks everything again: these only send the same commands you could type.
+    /// The Inventory tab: your bank while it's open and the packs you carry, each its own view (BankBrowser) with the /bank
+    /// commands that fit it above (BankCommandBar), and the Bank window. The server checks everything again: these only send
+    /// the same commands you could type.
     /// </summary>
     internal class BankTab : IDisposable {
         /// <summary>How often the server is asked about the bank: quickly at the bank, slowly away from it.</summary>
@@ -14,238 +16,177 @@ namespace DaraletPlayer.Ui {
         private static readonly TimeSpan ClosedRefresh = TimeSpan.FromSeconds(5);
 
         private readonly PlayerFeed feed;
-        private readonly BankBrowser browser;
+        private readonly Settings settings;
+        private readonly BankBrowser bankBrowser;
+        private readonly BankBrowser carriedBrowser;
 
-        private string what = "";
-        private int count;
-        private int logEntries = 20;
+        /// <summary>The bank in a window of its own, with Bank window on: the server leaves the game's out.</summary>
+        private readonly FloatingWindow bankWindow;
+        private readonly BankBrowser windowBrowser;
+
+        /// <summary>The /bank buttons, one bar shared by the Carried and Bank views and the Bank window.</summary>
+        private readonly BankCommandBar commands;
 
         /// <summary>The last container the game opened: asking about the bank with it means a newly opened bank is asked
         /// about straight away (the server doesn't need it).</summary>
         private int openedContainer;
 
-        public BankTab(PlayerFeed feed) {
+        public BankTab(PlayerFeed feed, ItemIcons icons, Settings settings) {
             this.feed = feed;
-            browser = new BankBrowser(feed);
+            this.settings = settings;
+            bankBrowser = new BankBrowser(feed, icons, settings, carried: false, host: "main");
+            carriedBrowser = new BankBrowser(feed, icons, settings, carried: true, host: "main");
+            windowBrowser = new BankBrowser(feed, icons, settings, carried: false, host: "bank-window");
+            commands = new BankCommandBar(feed);
+            bankWindow = new FloatingWindow("bank", "Bank", settings, new Vector2(320, 120), RenderBankWindow,
+                defaultSize: new Vector2(640, 460), inUse: BankInUse, alwaysOnlyInUse: true, onClose: CloseBank);
+
+            // Bank window on the Inventory tab is what turns it on and off: the window itself is always allowed
+            bankWindow.Visible = true;
 
             CoreManager.Current.ContainerOpened += Core_ContainerOpened;
+            CoreManager.Current.RenderFrame += Core_RenderFrame;
         }
+
+        /// <summary>Bank window is on, and the server can do it.</summary>
+        private bool UsesWindow => settings.Data.BankWindow && feed.Supports(PlayerFeed.KindBankWindow);
 
         public void Render() {
             var bank = feed.Bank;
-            feed.Refresh(PlayerFeed.KindBank, bank?.Open == true ? OpenRefresh : ClosedRefresh, openedContainer.ToString());
+            var banking = feed.Supports(PlayerFeed.KindBank);
+            RefreshBank();
 
-            if (!feed.Supports(PlayerFeed.KindBank)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old for the Bank tab.");
-                return;
+            if (banking) {
+                RenderStatus(bank);
+                RenderWindowToggle();
             }
-
-            RenderStatus(bank);
 
             if (!ImGui.BeginTabBar("bank-tabs")) {
                 return;
             }
 
-            if (Widgets.TabItem("Bank", "Your bank's packs and items, and the packs you carry, while your bank is open. Drag items between them.")) {
-                if (bank?.Open != true) {
-                    ImGui.TextDisabled("Open your bank to see what's in it here.");
-                }
-                else if (!bank.Loaded) {
-                    ImGui.TextDisabled("Your bank is opening...");
-                }
-                else {
-                    browser.Render(bank);
-                }
-
+            if (Widgets.TabItem("Carried", "Your main pack and the packs you carry, anywhere. Drag items between packs; right-click one to put it in your open bank. Deposit and the other /bank commands are at the top.")) {
+                commands.Render(bankView: false);
+                carriedBrowser.Render();
                 ImGui.EndTabItem();
             }
 
-            if (Widgets.TabItem("Commands", "Every /bank command: deposit, withdraw, sort, search and more.")) {
-                RenderCommands(bank?.Open == true);
+            if (Widgets.TabItem("Bank", "Your bank's packs and what's in them, while your bank is open. Drag items between packs. Withdraw, sort, search and the other /bank commands are at the top.")) {
+                if (banking) {
+                    commands.Render(bankView: true);
+                }
+
+                if (!banking) {
+                    Widgets.TextColored(Colors.Warning, "This server is too old for the bank here.");
+                }
+                else if (bank?.Open != true) {
+                    Widgets.TextDisabled("Open your bank to see what's in it here.");
+                }
+                else if (!bank.Loaded) {
+                    Widgets.TextDisabled("Your bank is opening...");
+                }
+                else {
+                    bankBrowser.Render(bank);
+                }
+
                 ImGui.EndTabItem();
             }
 
             ImGui.EndTabBar();
         }
 
-        private void RenderStatus(BankInfo bank) {
-            if (bank?.Open == true && bank.Loaded) {
-                ImGui.Text($"{bank.Coins:N0} pyreals");
-                ImGui.SameLine();
-                ImGui.TextDisabled($"and {bank.Notes:N0} in {bank.NoteCount:N0} trade note{(bank.NoteCount == 1 ? "" : "s")}");
-                Widgets.Tip("What's in this bank. /bank balance counts your whole account, and works anywhere.");
-            }
-            else {
-                ImGui.TextDisabled("Your bank isn't open.");
-                Widgets.Tip("Most /bank commands need you at your open bank. Balance, log and intro work anywhere.");
-            }
-
-            if (feed.LastCommand != null) {
-                ImGui.SameLine();
-                ImGui.TextDisabled($"   {feed.LastCommand}");
-            }
+        private void RefreshBank() {
+            feed.Refresh(PlayerFeed.KindBank, feed.Bank?.Open == true ? OpenRefresh : ClosedRefresh, openedContainer.ToString());
         }
 
-        private void RenderCommands(bool open) {
-            ImGui.SetNextItemWidth(260);
-            ImGui.InputTextWithHint("##bank-what", "what: a category, type, tier or item name", ref what, 100);
-            Widgets.Tip("What the buttons below work on: a category (weapons), a type (swords), a tier (t6), any mix (swords t6), or an item's name for withdraw and search.");
+        private void RenderWindowToggle() {
+            ImGui.BeginDisabled(!feed.Supports(PlayerFeed.KindBankWindow));
 
-            ImGui.SameLine();
-            if (ImGui.Button("Pick...")) {
-                ImGui.OpenPopup("bank-words");
+            var tip = feed.Supports(PlayerFeed.KindBankWindow)
+                ? "Opening a bank opens this plugin's bank window instead of the game's (the server leaves the game's out: @playerui bankwindow on). Closing the window closes the bank, and walking away closes both. Right-click the window to lock or resize its text."
+                : "This server is too old for the plugin's own bank window.";
+
+            if (Widgets.GuardedCheckbox("Bank window", ref settings.Data.BankWindow, tip, Windows.ConfirmOn("bank", "bank window"), Windows.NoticeOff("bank"))) {
+                settings.Changed();
             }
-            Widgets.Tip("The words /bank understands.");
-            RenderWordPicker();
 
-            var hasWhat = BankCommands.HasWhat(what);
-
-            ImGui.BeginDisabled(!open || !hasWhat);
-            if (ImGui.Button("Deposit")) {
-                feed.SendCommand(BankCommands.Deposit(what));
-            }
             ImGui.EndDisabled();
-            Widgets.Tip($"Moves those items from your packs into your bank: {BankCommands.Deposit("<what>")}. Packs inscribed \"keep\" are left alone. Needs your bank open.");
-
-            ImGui.SameLine();
-            ImGui.BeginDisabled(!open || !hasWhat);
-            if (ImGui.Button("Withdraw")) {
-                feed.SendCommand(BankCommands.Withdraw(count, what));
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Takes those items out of your bank into your packs, filling named and inscribed packs first: {BankCommands.Withdraw(null, "<what>")}. With a count, takes that many. Stops at your burden limit. Needs your bank open.");
-
-            ImGui.SameLine();
-            ImGui.SetNextItemWidth(90);
-            ImGui.InputInt("how many##bank-count", ref count);
-            count = Math.Max(0, count);
-            Widgets.Tip("How many to withdraw, or 0 for all of them.");
-
-            ImGui.BeginDisabled(!open);
-            if (ImGui.Button("Sort")) {
-                feed.SendCommand(BankCommands.Sort(what));
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Files items into their inscribed packs, combines stacks and puts everything in order: {BankCommands.Sort("[what]")}. Sorts only what's typed above, or everything. Needs your bank open.");
-
-            ImGui.SameLine();
-            ImGui.BeginDisabled(!open || !hasWhat);
-            if (ImGui.Button("Search")) {
-                feed.SendCommand(BankCommands.Search(what));
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Lists matching items in your bank and where they are: {BankCommands.Search("<what>")}. Needs your bank open.");
-
-            ImGui.SameLine();
-            ImGui.BeginDisabled(!open);
-            if (ImGui.Button("Deposit packs")) {
-                feed.SendCommand(BankCommands.DepositPacks);
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Empties the packs you carry inscribed \"deposit\" into your bank: {BankCommands.DepositPacks}. Needs your bank open.");
-
-            ImGui.SameLine();
-            ImGui.BeginDisabled(!open);
-            if (ImGui.Button("Combine salvage")) {
-                feed.SendCommand(BankCommands.Combine);
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Combines salvage bags in your bank with the same material and workmanship: {BankCommands.Combine}. Needs your bank open.");
-
-            ImGui.Separator();
-
-            if (ImGui.Button("Balance")) {
-                feed.SendCommand(BankCommands.Balance);
-            }
-            Widgets.Tip($"The pyreals and trade notes in your bank and across your account: {BankCommands.Balance}. Works anywhere.");
-
-            ImGui.SameLine();
-            if (ImGui.Button("Log")) {
-                feed.SendCommand(BankCommands.Log(logEntries));
-            }
-            Widgets.Tip($"Your account's recent deposits, withdrawals and salvage combines, by any of your characters: {BankCommands.Log(null)} [how many]. Works anywhere.");
-
-            ImGui.SameLine();
-            ImGui.SetNextItemWidth(90);
-            ImGui.InputInt("entries##bank-log", ref logEntries);
-            logEntries = Math.Max(1, Math.Min(100, logEntries));
-
-            ImGui.SameLine();
-            ImGui.BeginDisabled(!open);
-            if (ImGui.Button("Packs")) {
-                feed.SendCommand(BankCommands.Packs);
-            }
-            ImGui.EndDisabled();
-            Widgets.Tip($"Your bank space and how each pack is tagged: {BankCommands.Packs}.");
-
-            ImGui.SameLine();
-            var autoSort = feed.Bank?.AutoSort ?? false;
-            if (ImGui.Checkbox("Autosort", ref autoSort)) {
-                feed.SendCommand(BankCommands.AutoSort(autoSort));
-            }
-            Widgets.Tip($"Sorts your bank after every deposit and withdrawal: {BankCommands.AutoSort(true)} / off.");
-
-            ImGui.SameLine();
-            if (ImGui.Button("Intro")) {
-                feed.SendCommand(BankCommands.Intro);
-            }
-            Widgets.Tip($"Shows the bank's introduction again: {BankCommands.Intro}.");
-
-            ImGui.Separator();
-            RenderReply();
-        }
-
-        private void RenderWordPicker() {
-            if (!ImGui.BeginPopup("bank-words")) {
-                return;
-            }
-
-            ImGui.TextDisabled("Categories");
-            WordButtons(BankCommands.Categories);
-
-            foreach (var (category, types) in BankCommands.Types) {
-                ImGui.TextDisabled(category);
-                WordButtons(types);
-            }
-
-            ImGui.TextDisabled("Tiers (add to the others, or alone for any gear of that tier)");
-            WordButtons(BankCommands.Tiers);
-
-            ImGui.EndPopup();
         }
 
         /// <summary>
-        /// A row of small buttons, each adding its word to the "what" box.
+        /// Every frame, whether or not this tab is showing: tells the server which bank window to use, and opens and closes
+        /// the plugin's with the bank.
         /// </summary>
-        private void WordButtons(string[] words) {
-            for (var i = 0; i < words.Length; i++) {
-                if (i > 0 && i % 7 != 0) {
-                    ImGui.SameLine();
+        private void Core_RenderFrame(object sender, EventArgs e) {
+            try {
+                if (disposed || feed.Status != FeedStatus.Ready || !feed.Supports(PlayerFeed.KindBankWindow)) {
+                    return;
                 }
 
-                if (ImGui.SmallButton(words[i])) {
-                    what = BankCommands.Clean(what + " " + words[i]);
+                feed.WantWindow(PlayerFeed.KindBankWindow, settings.Data.BankWindow);
+
+                if (!UsesWindow) {
+                    return;
                 }
-                Widgets.Tip($"Adds \"{words[i]}\" to the box above.");
+
+                // the server says when the bank opens and closes; asking as well covers a message that went missing
+                RefreshBank();
+            }
+            catch (Exception ex) {
+                PluginCore.Log(ex);
             }
         }
 
-        private void RenderReply() {
-            if (feed.LastCommand == null) {
-                ImGui.TextDisabled("What the server says back shows here.");
+        /// <summary>The open bank the window shows, or null: the window shows only while it's open, with Bank window on.</summary>
+        private object BankInUse() {
+            var bank = feed.Bank;
+            return UsesWindow && bank?.Open == true && bank.Loaded ? (object)bank.Guid : null;
+        }
+
+        /// <summary>
+        /// Closing the bank window closes the bank, as closing the game's does (using an open bank closes it); opening the bank
+        /// again brings the window back.
+        /// </summary>
+        private void CloseBank() {
+            if (feed.Bank?.Open == true) {
+                CoreManager.Current.Actions.UseItem(unchecked((int)feed.Bank.Guid), 0);
+            }
+        }
+
+        private void RenderBankWindow() {
+            var bank = feed.Bank;
+
+            if (bank?.Open != true || !bank.Loaded) {
+                Widgets.TextDisabled(bank?.Open == true ? "Your bank is opening..." : "Your bank isn't open.");
                 return;
             }
 
-            if (!ImGui.BeginChild("bank-reply", new System.Numerics.Vector2(0, 0), true)) {
-                ImGui.EndChild();
-                return;
-            }
+            Widgets.Text($"{bank.Coins:N0} pyreals");
+            ImGui.SameLine();
+            Widgets.TextDisabled($"and {bank.Notes:N0} in {bank.NoteCount:N0} trade note{(bank.NoteCount == 1 ? "" : "s")}");
 
-            foreach (var line in feed.LastCommandReply) {
-                ImGui.TextWrapped(line);
-            }
+            ImGui.SameLine();
 
-            ImGui.EndChild();
+            if (ImGui.SmallButton("Close bank")) {
+                bankWindow.Close();
+            }
+            Widgets.Tip("Closes the bank, and this window with it, as closing the game's bank window does. Opening the bank again brings the window back.");
+
+            commands.Render(bankView: true);
+            windowBrowser.Render(bank);
+        }
+
+        private void RenderStatus(BankInfo bank) {
+            if (bank?.Open == true && bank.Loaded) {
+                Widgets.Text($"{bank.Coins:N0} pyreals");
+                ImGui.SameLine();
+                Widgets.TextDisabled($"and {bank.Notes:N0} in {bank.NoteCount:N0} trade note{(bank.NoteCount == 1 ? "" : "s")}");
+                Widgets.Tip("What's in this bank. /bank balance counts your whole account, and works anywhere.");
+            }
+            else {
+                Widgets.TextDisabled("Your bank isn't open.");
+                Widgets.Tip("Most /bank commands need you at your open bank. Balance, log and intro (under More) work anywhere.");
+            }
         }
 
         private void Core_ContainerOpened(object sender, ContainerOpenedEventArgs e) {
@@ -257,8 +198,13 @@ namespace DaraletPlayer.Ui {
             }
         }
 
+        private bool disposed;
+
         public void Dispose() {
+            disposed = true;
             CoreManager.Current.ContainerOpened -= Core_ContainerOpened;
+            CoreManager.Current.RenderFrame -= Core_RenderFrame;
+            bankWindow.Dispose();
         }
     }
 }

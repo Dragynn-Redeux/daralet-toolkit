@@ -40,7 +40,7 @@ namespace DaraletPlayer.Ui {
             map.DestinationChosen += SetDestination;
             map.Panned += Map_Panned;
 
-            arrowWindow = new FloatingWindow("arrow", "Destination", settings, new Vector2(500, 300), RenderArrowWindow, visibleByDefault: false);
+            arrowWindow = new FloatingWindow("arrow", "Destination", settings, new Vector2(500, 300), RenderArrowWindow, visibleByDefault: false, inUse: () => CurrentDestination());
         }
 
         public void Render() {
@@ -156,10 +156,10 @@ namespace DaraletPlayer.Ui {
             var destination = CurrentDestination();
 
             if (destination == null) {
-                ImGui.TextDisabled("No destination. Right-click the map or a search result to point the arrow somewhere.");
+                Widgets.TextDisabled("No destination. Right-click the map or a search result to point the arrow somewhere.");
             }
             else {
-                ImGui.Text($"Destination: {destination.Name}");
+                Widgets.Text($"Destination: {destination.Name}");
                 ImGui.SameLine();
 
                 if (ImGui.SmallButton("Clear")) {
@@ -189,7 +189,7 @@ namespace DaraletPlayer.Ui {
             var results = Locations.Search(locations, search, SearchResults);
 
             if (results.Count == 0) {
-                ImGui.TextDisabled("No places by that name.");
+                Widgets.TextDisabled("No places by that name.");
                 return;
             }
 
@@ -208,7 +208,7 @@ namespace DaraletPlayer.Ui {
                 SearchResultMenu($"result-{location.Id}", location.Name, location.X, location.Y);
 
                 ImGui.SameLine(260);
-                ImGui.TextDisabled($"{MapView.TypeName(location.Type)}  {MapProjection.Format(location.X, location.Y)}  {location.Notes}");
+                Widgets.TextDisabled($"{MapView.TypeName(location.Type)}  {MapProjection.Format(location.X, location.Y)}  {location.Notes}");
             }
 
             ImGui.EndChild();
@@ -235,11 +235,11 @@ namespace DaraletPlayer.Ui {
             var destination = CurrentDestination();
 
             if (destination == null) {
-                ImGui.TextDisabled("No destination");
+                Widgets.TextDisabled("No destination");
                 return;
             }
 
-            ImGui.Text(destination.Name);
+            Widgets.Text(destination.Name);
 
             if (destination.FellowGuid.HasValue) {
                 // following a fellow needs their position, even with the World tab closed
@@ -247,7 +247,7 @@ namespace DaraletPlayer.Ui {
             }
 
             if (!self.TryGet(out var x, out var y, out _)) {
-                ImGui.TextDisabled("You're in a dungeon, so there's no map position to point from.");
+                Widgets.TextDisabled("You're in a dungeon, so there's no map position to point from.");
                 return;
             }
 
@@ -256,7 +256,7 @@ namespace DaraletPlayer.Ui {
             var bearing = Navigation.Bearing(x, y, destination.X, destination.Y);
 
             if (distance < ArrivedDistance) {
-                ImGui.TextColored(Colors.Good, "You're there.");
+                Widgets.TextColored(Colors.Good, "You're there.");
                 return;
             }
 
@@ -264,9 +264,9 @@ namespace DaraletPlayer.Ui {
 
             ImGui.SameLine();
             ImGui.BeginGroup();
-            ImGui.Text(Navigation.DistanceText(distance));
-            ImGui.TextDisabled($"{Navigation.Compass(bearing)}  {bearing:0}°");
-            ImGui.TextDisabled(MapProjection.Format(destination.X, destination.Y));
+            Widgets.Text(Navigation.DistanceText(distance));
+            Widgets.TextDisabled($"{Navigation.Compass(bearing)}  {bearing:0}°");
+            Widgets.TextDisabled(MapProjection.Format(destination.X, destination.Y));
             ImGui.EndGroup();
         }
 

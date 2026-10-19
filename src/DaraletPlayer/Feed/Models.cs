@@ -84,6 +84,15 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "packs")] public List<BankPackInfo> Packs;
     }
 
+    /// <summary>
+    /// Whether the server leaves the game's window out for you, for the plugin's own (@playerui bankwindow or lootwindow,
+    /// PlayerUiWindowSetting in daralet-ACE).
+    /// </summary>
+    [DataContract]
+    public class WindowSettingInfo {
+        [DataMember(Name = "on")] public bool On;
+    }
+
     [DataContract]
     public class BankPackInfo {
         /// <summary>The pack's number in /bank packs, which /bank inscribe and /bank icon take.</summary>
@@ -125,6 +134,7 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "price")] public int Price;
         /// <summary>Seconds left, as of the reply.</summary>
         [DataMember(Name = "expiresIn")] public double ExpiresIn;
+        [DataMember(Name = "icon")] public ListingIconInfo Icon;
     }
 
     [DataContract]
@@ -138,6 +148,7 @@ namespace DaraletPlayer.Feed {
         /// <summary>The payout has been collected from a broker.</summary>
         [DataMember(Name = "claimed")] public bool Claimed;
         [DataMember(Name = "soldAgo")] public double SoldAgo;
+        [DataMember(Name = "icon")] public ListingIconInfo Icon;
     }
 
     [DataContract]
@@ -147,6 +158,19 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "weenieClassId")] public uint WeenieClassId;
         [DataMember(Name = "price")] public int Price;
         [DataMember(Name = "expiredAgo")] public double ExpiredAgo;
+        [DataMember(Name = "icon")] public ListingIconInfo Icon;
+    }
+
+    /// <summary>
+    /// A listed item's icon (PlayerUiIcon in daralet-ACE): hex portal.dat ids, and the kind of tile behind it, as market
+    /// search has them. Null when the server couldn't read it.
+    /// </summary>
+    [DataContract]
+    public class ListingIconInfo {
+        [DataMember(Name = "icon")] public string Icon;
+        [DataMember(Name = "overlay")] public string Overlay;
+        [DataMember(Name = "underlay")] public string Underlay;
+        [DataMember(Name = "effect")] public string Effect;
     }
 
     [DataContract]

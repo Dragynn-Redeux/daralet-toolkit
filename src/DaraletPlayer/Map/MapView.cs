@@ -324,7 +324,7 @@ namespace DaraletPlayer.Map {
             }
 
             if (menuFellow != null) {
-                ImGui.TextDisabled(menuFellow.Name);
+                Widgets.TextDisabled(menuFellow.Name);
 
                 if (ImGui.MenuItem($"Point the arrow at {menuFellow.Name}")) {
                     DestinationChosen?.Invoke(new Destination {
@@ -334,7 +334,7 @@ namespace DaraletPlayer.Map {
                 Widgets.Tip("The arrow follows them as they move, while they're somewhere on the map.");
             }
             else if (menuLocation != null) {
-                ImGui.TextDisabled($"{menuLocation.Name} ({MapProjection.Format(menuLocation.X, menuLocation.Y)})");
+                Widgets.TextDisabled($"{menuLocation.Name} ({MapProjection.Format(menuLocation.X, menuLocation.Y)})");
 
                 if (ImGui.MenuItem("Point the arrow here")) {
                     DestinationChosen?.Invoke(new Destination { Name = menuLocation.Name, X = menuLocation.X, Y = menuLocation.Y });
@@ -347,7 +347,7 @@ namespace DaraletPlayer.Map {
                 }
             }
             else {
-                ImGui.TextDisabled(MapProjection.Format(menuSpot.X, menuSpot.Y));
+                Widgets.TextDisabled(MapProjection.Format(menuSpot.X, menuSpot.Y));
             }
 
             if (menuFellow == null && menuLocation == null && ImGui.MenuItem("Point the arrow at this spot")) {
@@ -367,24 +367,24 @@ namespace DaraletPlayer.Map {
             ImGui.BeginTooltip();
 
             if (fellow != null) {
-                ImGui.Text(fellow.Name);
-                ImGui.TextDisabled(fellow.InBuilding ? "In a building" : MapProjection.Format(fellow.MapX.Value, fellow.MapY.Value));
+                Widgets.Text(fellow.Name);
+                Widgets.TextDisabled(fellow.InBuilding ? "In a building" : MapProjection.Format(fellow.MapX.Value, fellow.MapY.Value));
                 Widgets.VitalBar(fellow.Health, fellow.MaxHealth, Colors.Health);
             }
             else if (location != null) {
-                ImGui.Text(location.Name);
-                ImGui.TextDisabled($"{TypeName(location.Type)}  {MapProjection.Format(location.X, location.Y)}");
+                Widgets.Text(location.Name);
+                Widgets.TextDisabled($"{TypeName(location.Type)}  {MapProjection.Format(location.X, location.Y)}");
 
                 if (location.Notes.Length > 0) {
-                    ImGui.Text(location.Notes);
+                    Widgets.Text(location.Notes);
                 }
 
                 if (location.IsPortal) {
-                    ImGui.TextDisabled($"Goes to {MapProjection.Format(location.ExitX.Value, location.ExitY.Value)}");
+                    Widgets.TextDisabled($"Goes to {MapProjection.Format(location.ExitX.Value, location.ExitY.Value)}");
                 }
             }
             else {
-                ImGui.TextDisabled(MapProjection.IsInWorld(at.X, at.Y) ? MapProjection.Format(at.X, at.Y) : "Off the map");
+                Widgets.TextDisabled(MapProjection.IsInWorld(at.X, at.Y) ? MapProjection.Format(at.X, at.Y) : "Off the map");
             }
 
             ImGui.EndTooltip();

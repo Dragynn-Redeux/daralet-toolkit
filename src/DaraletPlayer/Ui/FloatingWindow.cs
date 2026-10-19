@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using Decal.Adapter;
 using ImGuiNET;
 using UtilityBelt.Service;
 using UtilityBelt.Service.Views;
@@ -17,28 +18,67 @@ namespace DaraletPlayer.Ui {
         private readonly Vector2 defaultPosition;
         private readonly Action render;
 
+        /// <summary>The size a window you size yourself starts at, or null for one that sizes itself to what's in it.</summary>
+        private readonly Vector2? defaultSize;
+
         /// <summary>The saved position is set once, when the window first draws; after that ImGui keeps it.</summary>
         private bool positioned;
 
-        public FloatingWindow(string id, string title, Settings settings, Vector2 defaultPosition, Action render, bool visibleByDefault = true) {
+        /// <summary>
+        /// What the window is showing now, or null when there's nothing to show (no corpse open, no fellowship...); null
+        /// itself for a window that always has something.
+        /// </summary>
+        private readonly Func<object> inUse;
+
+        /// <summary>The window only ever shows while it's in use (the Corpse and Bank windows), with no choice about it.</summary>
+        private readonly bool alwaysOnlyInUse;
+
+        /// <summary>
+        /// What closing the window does, for a window that's about something you have open (closing a corpse, say), rather
+        /// than hiding the window for good. Null: closing it hides it, as unticking it in its tab does.
+        /// </summary>
+        private readonly Action onClose;
+
+        /// <summary>What the window was showing when it was closed: it stays away until it's showing something else.</summary>
+        private object closedFor;
+
+        /// <param name="defaultSize">For a window whose contents fill it (lists that scroll, like the bank's): you size it
+        /// yourself, starting at this, and its size is kept like its position. Without one, it sizes itself.</param>
+        /// <param name="inUse">What the window shows now (any object that tells one thing from the next, a guid say), or null
+        /// when there's nothing. With it, the window can show only while in use.</param>
+        /// <param name="alwaysOnlyInUse">Only ever shown while in use, not a choice (a window about something you open).</param>
+        /// <param name="onClose">What closing it does instead of hiding it for good; it then comes back for the next thing.</param>
+        public FloatingWindow(string id, string title, Settings settings, Vector2 defaultPosition, Action render, bool visibleByDefault = true,
+            Vector2? defaultSize = null, Func<object> inUse = null, bool alwaysOnlyInUse = false, Action onClose = null) {
             this.id = id;
             this.settings = settings;
             this.defaultPosition = defaultPosition;
             this.render = render;
+            this.defaultSize = defaultSize;
+            this.inUse = inUse;
+            this.alwaysOnlyInUse = alwaysOnlyInUse;
+            this.onClose = onClose;
 
             // made here so a window that starts hidden is saved that way
             settings.Window(id, visibleByDefault);
 
             hud = UBService.Huds.CreateHud(title);
             hud.ShowInBar = false;
-            hud.Visible = Placement.Visible;
+            hud.Visible = false;
             hud.OnPreRender += Hud_OnPreRender;
             hud.OnRender += Hud_OnRender;
             hud.OnHide += Hud_OnHide;
+
+            // whether it's drawn is worked out every frame (Core_RenderFrame), from the setting and whether it's in use
+            CoreManager.Current.RenderFrame += Core_RenderFrame;
         }
 
         private WindowPlacement Placement => settings.Window(id);
 
+        /// <summary>
+        /// Whether the window may show at all, as its tab's checkbox says: saved. It's only drawn when it's also in use, for a
+        /// window that shows only then.
+        /// </summary>
         public bool Visible {
             get => Placement.Visible;
             set {
@@ -47,8 +87,65 @@ namespace DaraletPlayer.Ui {
                 }
 
                 Placement.Visible = value;
-                hud.Visible = value;
                 settings.Changed();
+            }
+        }
+
+        /// <summary>Shown only while in use: always for some windows, by choice (Only when needed) for the rest.</summary>
+        private bool OnlyInUse => inUse != null && (alwaysOnlyInUse || Placement.OnlyInUse);
+
+        /// <summary>
+        /// Closes the window for what it's showing now: onClose (closing the corpse, say), and it stays away until it's
+        /// showing something else. The window's own close button does the same.
+        /// </summary>
+        public void Close() {
+            closedFor = inUse?.Invoke();
+            SetHudVisible(false);
+            onClose?.Invoke();
+        }
+
+        /// <summary>Set while the plugin shows or hides the hud itself, so OnHide can tell that from the close button.</summary>
+        private bool settingVisibility;
+
+        private void SetHudVisible(bool shown) {
+            if (hud.Visible == shown) {
+                return;
+            }
+
+            settingVisibility = true;
+
+            try {
+                hud.Visible = shown;
+            }
+            finally {
+                settingVisibility = false;
+            }
+        }
+
+        /// <summary>Shows or hides the window, from the setting, what it's showing, and whether that was closed.</summary>
+        private void Core_RenderFrame(object sender, EventArgs e) {
+            try {
+                if (disposed) {
+                    return;
+                }
+
+                // a window that's off doesn't ask what it would show (some ask the server)
+                if (!Visible) {
+                    SetHudVisible(false);
+                    return;
+                }
+
+                var showing = inUse?.Invoke();
+
+                // the thing that was closed is over: the next one shows
+                if (closedFor != null && !Equals(showing, closedFor)) {
+                    closedFor = null;
+                }
+
+                SetHudVisible(Visible && (!OnlyInUse || showing != null) && (closedFor == null || !Equals(showing, closedFor)));
+            }
+            catch (Exception ex) {
+                PluginCore.Log(ex);
             }
         }
 
@@ -88,6 +185,8 @@ namespace DaraletPlayer.Ui {
         public void ResetPosition() {
             Placement.X = null;
             Placement.Y = null;
+            Placement.Width = null;
+            Placement.Height = null;
             positioned = false;
             settings.Changed();
         }
@@ -102,6 +201,18 @@ namespace DaraletPlayer.Ui {
                 Visible = visible;
             }
             Widgets.Tip(tip);
+
+            // a window that knows when it's in use can stay away the rest of the time
+            if (inUse != null && !alwaysOnlyInUse) {
+                ImGui.SameLine();
+                var onlyInUse = Placement.OnlyInUse;
+
+                if (ImGui.Checkbox($"Only when needed##{id}-in-use", ref onlyInUse)) {
+                    Placement.OnlyInUse = onlyInUse;
+                    settings.Changed();
+                }
+                Widgets.Tip("Shows the window only while it has something to show, and hides it the rest of the time, instead of leaving it on screen saying there's nothing.");
+            }
 
             ImGui.SameLine();
             var locked = Locked;
@@ -130,8 +241,11 @@ namespace DaraletPlayer.Ui {
 
         private void Hud_OnPreRender(object sender, EventArgs e) {
             try {
-                var flags = ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoFocusOnAppearing
-                    | ImGuiWindowFlags.NoSavedSettings;
+                var flags = ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoFocusOnAppearing | ImGuiWindowFlags.NoSavedSettings;
+
+                if (defaultSize == null) {
+                    flags |= ImGuiWindowFlags.AlwaysAutoResize;
+                }
 
                 if (Locked) {
                     flags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize;
@@ -141,7 +255,16 @@ namespace DaraletPlayer.Ui {
 
                 if (!positioned) {
                     ImGui.SetNextWindowPos(new Vector2(Placement.X ?? defaultPosition.X, Placement.Y ?? defaultPosition.Y), ImGuiCond.Always);
+
+                    if (defaultSize.HasValue) {
+                        ImGui.SetNextWindowSize(new Vector2(Placement.Width ?? defaultSize.Value.X, Placement.Height ?? defaultSize.Value.Y), ImGuiCond.Always);
+                    }
+
                     positioned = true;
+                }
+
+                if (defaultSize.HasValue) {
+                    ImGui.SetNextWindowSizeConstraints(new Vector2(300, 200), new Vector2(float.MaxValue, float.MaxValue));
                 }
 
                 ImGui.SetNextWindowBgAlpha(Locked ? 0.55f : 0.85f);
@@ -169,7 +292,8 @@ namespace DaraletPlayer.Ui {
         }
 
         private void RenderContextMenu() {
-            if (!ImGui.BeginPopupContextWindow($"{id}-menu")) {
+            // not over a button or an item, whose own right-click (the game's appraisal, say) comes first
+            if (!ImGui.BeginPopupContextWindow($"{id}-menu", ImGuiPopupFlags.MouseButtonRight | ImGuiPopupFlags.NoOpenOverItems)) {
                 return;
             }
 
@@ -191,6 +315,10 @@ namespace DaraletPlayer.Ui {
 
             ImGui.Separator();
 
+            if (onClose != null && ImGui.MenuItem("Close")) {
+                Close();
+            }
+
             if (ImGui.MenuItem("Hide")) {
                 Visible = false;
             }
@@ -206,13 +334,34 @@ namespace DaraletPlayer.Ui {
                 Placement.Y = position.Y;
                 settings.Changed();
             }
+
+            if (defaultSize.HasValue) {
+                var size = ImGui.GetWindowSize();
+
+                if (Placement.Width != size.X || Placement.Height != size.Y) {
+                    Placement.Width = size.X;
+                    Placement.Height = size.Y;
+                    settings.Changed();
+                }
+            }
         }
 
         /// <summary>
-        /// The window's own close button hides it, which is kept like hiding it from a tab.
+        /// The window's own close button: Close for a window about something you have open (closing it, and the window
+        /// comes back for the next one), or hiding it, kept like unticking it in its tab, for the rest.
         /// </summary>
         private void Hud_OnHide(object sender, EventArgs e) {
             try {
+                // hidden by Core_RenderFrame or Close, not the close button
+                if (settingVisibility) {
+                    return;
+                }
+
+                if (onClose != null) {
+                    Close();
+                    return;
+                }
+
                 if (Placement.Visible) {
                     Placement.Visible = false;
                     settings.Changed();
@@ -227,6 +376,7 @@ namespace DaraletPlayer.Ui {
 
         public void Dispose() {
             disposed = true;
+            CoreManager.Current.RenderFrame -= Core_RenderFrame;
             hud.OnPreRender -= Hud_OnPreRender;
             hud.OnRender -= Hud_OnRender;
             hud.OnHide -= Hud_OnHide;

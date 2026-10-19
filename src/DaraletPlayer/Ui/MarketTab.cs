@@ -18,6 +18,7 @@ namespace DaraletPlayer.Ui {
 
         private readonly PlayerFeed feed;
         private readonly MarketApi api;
+        private readonly ItemIcons icons;
         private readonly ApiRequest<MarketSearchResult> search = new ApiRequest<MarketSearchResult>();
 
         private string searchText = "";
@@ -34,9 +35,10 @@ namespace DaraletPlayer.Ui {
         private string listItemName;
         private string listPrice = "";
 
-        public MarketTab(PlayerFeed feed, MarketApi api) {
+        public MarketTab(PlayerFeed feed, MarketApi api, ItemIcons icons) {
             this.feed = feed;
             this.api = api;
+            this.icons = icons;
         }
 
         public void Render() {
@@ -61,27 +63,27 @@ namespace DaraletPlayer.Ui {
             feed.Refresh(PlayerFeed.KindMarket, MarketRefresh);
 
             if (!feed.Supports(PlayerFeed.KindMarket)) {
-                ImGui.TextColored(Colors.Warning, "This server is too old for your listings here. Search still works.");
+                Widgets.TextColored(Colors.Warning, "This server is too old for your listings here. Search still works.");
                 return;
             }
 
             var market = feed.Market;
 
             if (market == null) {
-                ImGui.TextDisabled("Loading...");
+                Widgets.TextDisabled("Loading...");
                 return;
             }
 
             var near = market.NearBroker;
 
             if (near) {
-                ImGui.TextColored(Colors.Good, $"{market.BrokerName} is {Display.Distance(market.BrokerDistance)} away.");
+                Widgets.TextColored(Colors.Good, $"{market.BrokerName} is {Display.Distance(market.BrokerDistance)} away.");
             }
             else {
-                ImGui.TextColored(Colors.Warning, "Listing, cancelling and claiming need you at the market stand in Hebian-To, by a Market Broker.");
+                Widgets.TextColored(Colors.Warning, "Listing, cancelling and claiming need you at the market stand in Hebian-To, by a Market Broker.");
             }
 
-            ImGui.TextDisabled($"Fees: {market.PayoutFee * 100:0.#}% of the price when you collect a sale, {market.CancelFee * 100:0.#}% to cancel a listing.");
+            Widgets.TextDisabled($"Fees: {market.PayoutFee * 100:0.#}% of the price when you collect a sale, {market.CancelFee * 100:0.#}% to cancel a listing.");
 
             RenderBrokerButtons(market, near);
             ImGui.Separator();
@@ -132,11 +134,13 @@ namespace DaraletPlayer.Ui {
         /// price, which then asks you to confirm.
         /// </summary>
         private void RenderListItem(MarketInfo market, bool near) {
-            ImGui.Text("List an item");
+            Widgets.Text("List an item");
 
             ImGui.SetNextItemWidth(260);
             if (ImGui.BeginCombo("##market-list-item", listItem == 0 ? "Choose one of your items" : listItemName)) {
                 foreach (var item in Sellable()) {
+                    icons.Draw(item.Icon);
+
                     if (ImGui.Selectable($"{item.Name}##sell-{item.Id}", item.Id == listItem)) {
                         listItem = item.Id;
                         listItemName = item.Name;
@@ -169,7 +173,7 @@ namespace DaraletPlayer.Ui {
 
         private void RenderListings(List<MyListingInfo> listings, bool near, double since) {
             if (listings.Count == 0) {
-                ImGui.TextDisabled("Nothing listed.");
+                Widgets.TextDisabled("Nothing listed.");
                 return;
             }
 
@@ -187,13 +191,14 @@ namespace DaraletPlayer.Ui {
             foreach (var listing in listings) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text(listing.Name ?? "");
+                icons.Draw(IconLayers.Of(listing.Icon));
+                Widgets.Text(listing.Name ?? "");
                 ImGui.TableNextColumn();
-                ImGui.Text(listing.Price.ToString("N0"));
+                Widgets.Text(listing.Price.ToString("N0"));
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(listing.Tier.HasValue ? ItemLines.Tier(listing.Tier.Value) : "");
+                Widgets.TextDisabled(listing.Tier.HasValue ? ItemLines.Tier(listing.Tier.Value) : "");
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(MarketSearch.Span(listing.ExpiresIn - since));
+                Widgets.TextDisabled(MarketSearch.Span(listing.ExpiresIn - since));
                 ImGui.TableNextColumn();
 
                 ImGui.BeginDisabled(!near);
@@ -209,7 +214,7 @@ namespace DaraletPlayer.Ui {
 
         private void RenderSales(List<SaleInfo> sales, double since) {
             if (sales.Count == 0) {
-                ImGui.TextDisabled("Nothing sold in the last 30 days.");
+                Widgets.TextDisabled("Nothing sold in the last 30 days.");
                 return;
             }
 
@@ -227,22 +232,23 @@ namespace DaraletPlayer.Ui {
             foreach (var sale in sales) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text(sale.Name ?? "");
+                icons.Draw(IconLayers.Of(sale.Icon));
+                Widgets.Text(sale.Name ?? "");
                 ImGui.TableNextColumn();
-                ImGui.Text(sale.Price.ToString("N0"));
+                Widgets.Text(sale.Price.ToString("N0"));
                 ImGui.TableNextColumn();
-                ImGui.Text(sale.Payout.ToString("N0"));
+                Widgets.Text(sale.Payout.ToString("N0"));
                 ImGui.TableNextColumn();
 
                 if (sale.Claimed) {
-                    ImGui.TextDisabled("Collected");
+                    Widgets.TextDisabled("Collected");
                 }
                 else {
-                    ImGui.TextColored(Colors.Good, "Waiting");
+                    Widgets.TextColored(Colors.Good, "Waiting");
                 }
 
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(MarketSearch.Span(sale.SoldAgo + since) + " ago");
+                Widgets.TextDisabled(MarketSearch.Span(sale.SoldAgo + since) + " ago");
             }
 
             ImGui.EndTable();
@@ -250,7 +256,7 @@ namespace DaraletPlayer.Ui {
 
         private void RenderExpired(List<ExpiredInfo> expired, double since) {
             if (expired.Count == 0) {
-                ImGui.TextDisabled("Nothing waiting.");
+                Widgets.TextDisabled("Nothing waiting.");
                 return;
             }
 
@@ -266,11 +272,12 @@ namespace DaraletPlayer.Ui {
             foreach (var item in expired) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
-                ImGui.Text(item.Name ?? "");
+                icons.Draw(IconLayers.Of(item.Icon));
+                Widgets.Text(item.Name ?? "");
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(item.Price.ToString("N0"));
+                Widgets.TextDisabled(item.Price.ToString("N0"));
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(MarketSearch.Span(item.ExpiredAgo + since) + " ago");
+                Widgets.TextDisabled(MarketSearch.Span(item.ExpiredAgo + since) + " ago");
             }
 
             ImGui.EndTable();
@@ -284,7 +291,7 @@ namespace DaraletPlayer.Ui {
             ImGui.Separator();
 
             foreach (var line in feed.LastCommandReply) {
-                ImGui.TextWrapped(line);
+                Widgets.TextWrapped(line);
             }
         }
 
@@ -295,6 +302,7 @@ namespace DaraletPlayer.Ui {
         private class SellableItem {
             public int Id;
             public string Name;
+            public IconLayers Icon;
         }
 
         /// <summary>
@@ -304,7 +312,7 @@ namespace DaraletPlayer.Ui {
             return CoreManager.Current.WorldFilter.GetInventory().Cast<WorldObject>()
                 .Where(o => o.ObjectClass != ObjectClass.Container && o.ObjectClass != ObjectClass.Foci
                     && o.Values(LongValueKey.EquippedSlots, 0) == 0 && o.Values(LongValueKey.Wielder, 0) == 0)
-                .Select(o => new SellableItem { Id = o.Id, Name = o.Name ?? "" })
+                .Select(o => new SellableItem { Id = o.Id, Name = o.Name ?? "", Icon = ItemIcons.Of(o) })
                 .OrderBy(i => i.Name, StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }
@@ -342,7 +350,7 @@ namespace DaraletPlayer.Ui {
             Widgets.Choice("##market-min-tier", MarketSearch.Tiers, ref minTier);
             Widgets.Tip("The lowest loot tier, with the level it needs. Salvage has no tier.");
             ImGui.SameLine();
-            ImGui.TextDisabled("to");
+            Widgets.TextDisabled("to");
             ImGui.SameLine();
             ImGui.SetNextItemWidth(100);
             Widgets.Choice("##market-max-tier", MarketSearch.Tiers, ref maxTier);
@@ -379,7 +387,7 @@ namespace DaraletPlayer.Ui {
 
             foreach (var filter in shown) {
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(filter.Label);
+                Widgets.TextDisabled(filter.Label);
                 ImGui.SetNextItemWidth(-1);
 
                 var value = filterValues.TryGetValue(filter.Key, out var current) ? current : "";
@@ -417,17 +425,17 @@ namespace DaraletPlayer.Ui {
 
         private void RenderResults() {
             if (search.Busy) {
-                ImGui.TextDisabled("Searching...");
+                Widgets.TextDisabled("Searching...");
             }
             else if (search.Error != null) {
-                ImGui.TextColored(Colors.Warning, $"The market couldn't be searched: {search.Error}");
+                Widgets.TextColored(Colors.Warning, $"The market couldn't be searched: {search.Error}");
             }
 
             var result = search.Result;
 
             if (result == null) {
                 if (!search.Busy && search.Error == null) {
-                    ImGui.TextDisabled("Search to see what's for sale.");
+                    Widgets.TextDisabled("Search to see what's for sale.");
                 }
                 return;
             }
@@ -435,7 +443,7 @@ namespace DaraletPlayer.Ui {
             var listings = result.Listings ?? new List<MarketListing>();
             var pages = Math.Max(1, (result.TotalCount + MarketSearch.PageSize - 1) / MarketSearch.PageSize);
 
-            ImGui.Text($"{result.TotalCount:N0} listing{(result.TotalCount == 1 ? "" : "s")}");
+            Widgets.Text($"{result.TotalCount:N0} listing{(result.TotalCount == 1 ? "" : "s")}");
             ImGui.SameLine();
 
             ImGui.BeginDisabled(page <= 1 || search.Busy);
@@ -447,7 +455,7 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip("The previous page of results.");
 
             ImGui.SameLine();
-            ImGui.TextDisabled($"page {page} of {pages}");
+            Widgets.TextDisabled($"page {page} of {pages}");
             ImGui.SameLine();
 
             ImGui.BeginDisabled(page >= pages || search.Busy);
@@ -459,7 +467,7 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip("The next page of results.");
 
             if (listings.Count == 0) {
-                ImGui.TextDisabled("Nothing for sale matches.");
+                Widgets.TextDisabled("Nothing for sale matches.");
                 return;
             }
 
@@ -486,21 +494,22 @@ namespace DaraletPlayer.Ui {
             foreach (var listing in listings) {
                 ImGui.TableNextRow();
                 ImGui.TableNextColumn();
+                var iconHovered = icons.Draw(IconLayers.Of(listing));
                 ImGui.Selectable($"{listing.ItemName}##listing-{listing.Id}");
-                ListingTooltip(listing);
+                ListingTooltip(listing, iconHovered);
 
                 ImGui.TableNextColumn();
-                ImGui.Text(listing.ListedPrice.ToString("N0"));
+                Widgets.Text(listing.ListedPrice.ToString("N0"));
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(listing.ItemTier.HasValue ? ItemLines.Tier(listing.ItemTier.Value) : "-");
+                Widgets.TextDisabled(listing.ItemTier.HasValue ? ItemLines.Tier(listing.ItemTier.Value) : "-");
 
                 foreach (var (_, get) in extra) {
                     ImGui.TableNextColumn();
-                    ImGui.TextDisabled(get(listing) ?? "-");
+                    Widgets.TextDisabled(get(listing) ?? "-");
                 }
 
                 ImGui.TableNextColumn();
-                ImGui.TextDisabled(MarketSearch.ExpiresIn(listing.ExpiresAtUtc, now));
+                Widgets.TextDisabled(MarketSearch.ExpiresIn(listing.ExpiresAtUtc, now));
             }
 
             ImGui.EndTable();
@@ -545,10 +554,14 @@ namespace DaraletPlayer.Ui {
         /// <summary>
         /// The listing's every stat (ItemLines), with its price under its name.
         /// </summary>
-        private static void ListingTooltip(MarketListing listing) {
+        private static void ListingTooltip(MarketListing listing, bool iconHovered) {
+            if (!ImGui.IsItemHovered() && !iconHovered) {
+                return;
+            }
+
             var lines = ItemLines.Build(listing);
-            lines.Insert(1, new ItemLine($"{listing.ListedPrice:N0} pyreals", ItemLineStyle.Detail));
-            ItemTooltip.Show(lines);
+            lines.Insert(1, new ItemLine($"Price: {listing.ListedPrice:N0} pyreals", ItemLineStyle.Detail));
+            ItemTooltip.Show(lines, iconHovered: true);
         }
 
         private void StartSearch() {
