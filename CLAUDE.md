@@ -1,9 +1,9 @@
 # Working on this plugin
 
-Daralet (the player plugin: `DaraletPlayer` in code, plain "Daralet" wherever players see a name) is a Decal plugin for
-Asheron's Call, for players on the Daralet server (daralet-ACE). Its sibling, Daralet
-Admin (`../daralet-admin-plugin`), is the staff plugin this one was started from: when something here is unclear, see how
-it's done there. This file is the knowledge that building them took: copy it into any new Daralet Decal plugin and keep it
+Daralet (the player plugin: `Daralet.dll`, `DaraletPlayer` as its namespace in code, plain "Daralet" wherever players see
+a name) is a Decal plugin for Asheron's Call, for players on the Daralet server (daralet-ACE). Its sibling, Daralet Admin
+(`../daralet-admin-plugin`), is the staff plugin this one was started from: when something here is unclear, see how it's
+done there. Until v0.1.0 the dll was `DaraletPlayer.dll`; the assembly guid (what Decal knows it by) didn't change. This file is the knowledge that building them took: copy it into any new Daralet Decal plugin and keep it
 up to date.
 
 ## The stack
@@ -19,7 +19,8 @@ up to date.
 - MSB3277 is suppressed: UtilityBelt.Service was built against Decal.Adapter 2.9.8.0 and Decal installs 2.9.7.5 (assembly
   version). Only the installed one is ever loaded.
 - Based on UtilityBelt's [HotDecalPluginTemplate](https://gitlab.com/utilitybelt/HotDecalPluginTemplate). The loader
-  (`src/DaraletPlayer.Loader`) is a Decal network filter that loads the plugin from bytes and reloads it on every rebuild.
+  (`src/DaraletPlayer.Loader`, built as `Daralet.Loader.dll`) is a Decal network filter that loads `Daralet.dll` from bytes
+  and reloads it on every rebuild.
 
 Build and test:
 
