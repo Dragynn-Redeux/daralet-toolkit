@@ -1,0 +1,1719 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<locations type="CrossroadsOfDereth" updated="639205545108070000">
+    <loc id="1" name="Northern Al-Arqas Outpost" type="Outpost" NS="-28.2" EW="13.9"></loc>
+    <loc id="2" name="Northern Al-Arqas Outpost" type="Lifestone" NS="-28.1" EW="13.8"></loc>
+    <loc id="3" name="Western Al-Arqas Outpost" type="Outpost" NS="-31.3" EW="10.7"></loc>
+    <loc id="4" name="Western Al-Arqas Outpost" type="Lifestone" NS="-31.2" EW="10.8"></loc>
+    <loc id="5" name="Al-Arqas" type="Town" NS="-31.1" EW="13.7">125</loc>
+    <loc id="6" name="Unfinished Temple" type="Landmark" NS="-30.1" EW="9.1" dungeonId="347"></loc>
+    <loc id="7" name="Desert Ruin" type="Dungeon" NS="-31.8" EW="15.8" dungeonId="359"></loc>
+    <loc id="8" name="Recovered Temple" type="Dungeon" NS="6.5" EW="-1.7" dungeonId="322"></loc>
+    <loc id="9" name="Wandering Archmage" type="Vendor" NS="-34.3" EW="14.4"></loc>
+    <loc id="10" name="Rithwic Crypt" type="Dungeon" NS="14" EW="59.1" dungeonId="461"></loc>
+    <loc id="11" name="Twin Cabins Lifestone" type="Lifestone" NS="51.1" EW="21.3"></loc>
+    <loc id="12" name="Old Warehouse" type="Dungeon" NS="8.7" EW="58.1" dungeonId="357"></loc>
+    <loc id="13" name="A Red Rat Lair" type="Dungeon" NS="-21.1" EW="-2.2" dungeonId="473"></loc>
+    <loc id="14" name="G-TN to Cragstone" type="TownPortal" NS="13.7" EW="0.6" exitNS="25.6" exitEW="49.2"></loc>
+    <loc id="15" name="Under Cove Crypt" type="Dungeon" NS="-21.6" EW="-4.1" dungeonId="343"></loc>
+    <loc id="16" name="Lin" type="Town" NS="-54.6" EW="73.2">175</loc>
+    <loc id="17" name="Lin Lich Tower" type="Landmark" NS="-52.6" EW="68.6"></loc>
+    <loc id="18" name="Western Shoushi Outpost Lifestone" type="Lifestone" NS="-33.6" EW="69.9"></loc>
+    <loc id="19" name="Western Shoushi Outpost" type="Outpost" NS="-33.6" EW="69.8"></loc>
+    <loc id="20" name="Shoushi" type="Town" NS="-33.5" EW="72.8">50</loc>
+    <loc id="21" name="Eastern Shoushi Outpost" type="Outpost" NS="-36.6" EW="75.9"></loc>
+    <loc id="22" name="Eastern Shoushi Outpost Lifestone" type="Lifestone" NS="-36.7" EW="75.8"></loc>
+    <loc id="23" name="Abandoned Tower" type="Landmark" NS="-29.7" EW="96.6"></loc>
+    <loc id="24" name="Eastern Yaraq Outpost" type="Outpost" NS="-21.4" EW="1.2"></loc>
+    <loc id="25" name="Eastern Yaraq Outpost Lifestone" type="Lifestone" NS="-21.3" EW="1.3"></loc>
+    <loc id="26" name="Yaraq" type="Town" NS="-21.5" EW="-1.6">50</loc>
+    <loc id="27" name="Northern Yaraq Outpost Lifestone" type="Lifestone" NS="-18.7" EW="-1.6"></loc>
+    <loc id="28" name="Northern Yaraq Outpost" type="Outpost" NS="-18.7" EW="-1.6"></loc>
+    <loc id="29" name="Samsur" type="Town" NS="-2.9" EW="19.5">175</loc>
+    <loc id="30" name="Musansayn's Vaults" type="Dungeon" NS="-1" EW="18.7" dungeonId="341"></loc>
+    <loc id="31" name="Holtburg" type="Town" NS="42.3" EW="33.6">50</loc>
+    <loc id="32" name="Western Holtburg Outpost" type="Outpost" NS="42.3" EW="30.7"></loc>
+    <loc id="33" name="Southern Holtburg Outpost" type="Outpost" NS="39.5" EW="33.3"></loc>
+    <loc id="34" name="Southern Holtburg Outpost Lifestone" type="Lifestone" NS="39.5" EW="33.3"></loc>
+    <loc id="35" name="Western Holtburg Outpost Lifestone" type="Lifestone" NS="42.5" EW="30.8"></loc>
+    <loc id="36" name="Holtburg Healer and Peddler" type="Vendor" NS="42.4" EW="32.2"></loc>
+    <loc id="37" name="Cave of Alabree" type="Landmark" NS="42.3" EW="29.3" dungeonId="354"></loc>
+    <loc id="38" name="Rat's Nest" type="Dungeon" NS="40.2" EW="32.5"></loc>
+    <loc id="39" name="Drudge Hideout" type="Dungeon" NS="41.4" EW="33.3" dungeonId="414"></loc>
+    <loc id="40" name="Rithwic" type="Town" NS="10.6" EW="58.3">175</loc>
+    <loc id="41" name="Southern Rithwic Outpost" type="Outpost" NS="7.5" EW="58.3"></loc>
+    <loc id="42" name="Eastern Rithwic Outpost" type="Outpost" NS="10.3" EW="61.5"></loc>
+    <loc id="43" name="Eastern Rithwic Outpost Lifestone" type="Lifestone" NS="10.4" EW="61.4"></loc>
+    <loc id="44" name="Southern Rithwic Outpost Lifestone" type="Lifestone" NS="7.6" EW="58.5"></loc>
+    <loc id="45" name="Filos' Doom" type="Dungeon" NS="12" EW="62.2" dungeonId="336"></loc>
+    <loc id="46" name="Eastham" type="Town" NS="17.5" EW="63.4">175</loc>
+    <loc id="47" name="Northern Eastham Lifestone" type="Lifestone" NS="18.6" EW="62.8"></loc>
+    <loc id="48" name="Abandoned Farm" type="Landmark" NS="23.4" EW="62.4"></loc>
+    <loc id="49" name="Drudge Tower" type="Landmark" NS="23" EW="62.1"></loc>
+    <loc id="50" name="Merchant Cellar" type="Landmark" NS="26.3" EW="63.9"></loc>
+    <loc id="51" name="Merchant Cellar to High Mountain Valley" type="WildernessPortal" NS="26.3" EW="63.9" exitNS="-65.9" exitEW="59.7"></loc>
+    <loc id="52" name="Merchant" type="Vendor" NS="26.3" EW="63.9"></loc>
+    <loc id="53" name="Arwic" type="Town" NS="33.5" EW="56.8">125</loc>
+    <loc id="54" name="Baishi Lifestone" type="Lifestone" NS="-50.5" EW="59.9"></loc>
+    <loc id="55" name="Tou-Tou Bathhouse Lifestone" type="Lifestone" NS="-30.3" EW="94.7"></loc>
+    <loc id="56" name="Tou-Tou Lich Tower" type="Landmark" NS="-32.5" EW="91.8"></loc>
+    <loc id="57" name="A-TN to Dryreach" type="TownPortal" NS="25.6" EW="49.2" exitNS="-8" exitEW="73.1"></loc>
+    <loc id="58" name="A-TN to Arwic" type="TownPortal" NS="25.6" EW="49.2" exitNS="33.2" exitEW="56.6"></loc>
+    <loc id="59" name="Empyrean Garrison" type="Dungeon" NS="-54.2" EW="81.8" dungeonId="353">Level 30 Capstone</loc>
+    <loc id="60" name="Tou-Tou" type="Town" NS="-28.1" EW="95.7">125</loc>
+    <loc id="61" name="Khayyaban" type="Town" NS="-47.5" EW="24.8">200</loc>
+    <loc id="62" name="Al-Jalima" type="Town" NS="7.4" EW="4.8">175</loc>
+    <loc id="63" name="Zaikhal" type="Town" NS="13.7" EW="0.6">125</loc>
+    <loc id="64" name="Cragstone" type="Town" NS="25.6" EW="49.2">125</loc>
+    <loc id="65" name="Hebian-to" type="Town" NS="-39.1" EW="83.2">125</loc>
+    <loc id="66" name="Qalaba'r" type="Town" NS="-74.4" EW="19.3"></loc>
+    <loc id="67" name="Four Towers Entrance" type="WildernessPortal" NS="12.4" EW="2.3" exitNS="12.2" exitEW="2.4"></loc>
+    <loc id="68" name="Four Towers Keep" type="Landmark" NS="12.1" EW="2.3"></loc>
+	<loc id="69" name="About2" type="Custom" NS="101.9" EW="-101.9">
+	Special Thanks to:
+	Rhaegal, War, and Delasteve
+	Antihealth, Porran, and Vora
+	The Opposite of Special Thanks to:
+	Blode</loc>
+    <loc id="70" name="Four Towers Exit" type="WildernessPortal" NS="12.1" EW="2.3" exitNS="12.4" exitEW="2.1"></loc>
+    <loc id="71" name="Thief Trail" type="Dungeon" NS="-39.7" EW="81.7" dungeonId="443"></loc>
+    <loc id="72" name="Al-Jalima Attunement Device" type="Bindstone" NS="7.3" EW="4.6"></loc>
+    <loc id="73" name="Glenden Wood" type="Town" NS="29.7" EW="27.2">125</loc>
+    <loc id="74" name="Lytelthorpe" type="Town" NS="0.6" EW="51.2">175</loc>
+    <loc id="75" name="Yanshi" type="Town" NS="-12.7" EW="46.4">175</loc>
+    <loc id="76" name="Mountain Shortcut Healer and Peddler" type="Vendor" NS="41.1" EW="56.4"></loc>
+    <loc id="77" name="Banderling Treehouse" type="Landmark" NS="43.9" EW="10.8"></loc>
+    <loc id="78" name="Wilderness Fort" type="Landmark" NS="23.5" EW="-7.7"></loc>
+    <loc id="79" name="Small Banderling Camp" type="Landmark" NS="65" EW="-3.3"></loc>
+    <loc id="80" name="Folthid Cellar" type="Dungeon" NS="-8.6" EW="52.9" dungeonId="315">Level 40 Capstone</loc>
+    <loc id="81" name="Northern Yanshi Outpost" type="Outpost" NS="-9.9" EW="46.7"></loc>
+    <loc id="82" name="Northern Yanshi Outpost Lifestone" type="Lifestone" NS="-9.9" EW="46.7"></loc>
+    <loc id="83" name="Nanto" type="Town" NS="-52.6" EW="81.9">175</loc>
+    <loc id="84" name="Eastern Nanto Outpost" type="Outpost" NS="-52.5" EW="85.4"></loc>
+    <loc id="85" name="Eastern Nanto Outpost Lifestone" type="Lifestone" NS="-52.4" EW="85.4"></loc>
+    <loc id="86" name="Nanto Waterfall Lifestone" type="Lifestone" NS="-52.7" EW="80.2"></loc>
+    <loc id="87" name="Roadside Merchant, Healer, Archmage" type="Vendor" NS="-57.4" EW="80.3"></loc>
+    <loc id="88" name="Mayoi" type="Town" NS="-61.6" EW="82">200</loc>
+    <loc id="89" name="Mayoi Lifestone" type="Lifestone" NS="-61.5" EW="80.1"></loc>
+    <loc id="90" name="Sawato" type="Town" NS="-28.7" EW="59.3">125</loc>
+    <loc id="91" name="Lin Lifestone" type="Lifestone" NS="-55.6" EW="74.1"></loc>
+    <loc id="92" name="Tou-Tou Lighthouse" type="Landmark" NS="-26.4" EW="97"></loc>
+    <loc id="93" name="Tou-Tou Lifestone" type="Lifestone" NS="-27.4" EW="96.6"></loc>
+    <loc id="94" name="Khayyaban Lifestone" type="Lifestone" NS="-47.3" EW="26.5"></loc>
+    <loc id="95" name="Roadside Lifestone" type="Lifestone" NS="-20.6" EW="44.3"></loc>
+    <loc id="96" name="The Estate of Lady Folthid" type="Landmark" NS="-8.8" EW="53.7"></loc>
+    <loc id="97" name="Shattered Dryreach Lifestone" type="Landmark" NS="-7.1" EW="71.6"></loc>
+    <loc id="98" name="Dryreach" type="Town" NS="-8.1" EW="73.1">200</loc>
+    <loc id="99" name="Uziz" type="Town" NS="-25.5" EW="28.2">175</loc>
+    <loc id="100" name="Tufa" type="Town" NS="-14.2" EW="5.4">125</loc>
+    <loc id="101" name="Baishi" type="Town" NS="-49.5" EW="62.5">200</loc>
+    <loc id="102" name="Banderling Tower" type="Landmark" NS="9.3" EW="63.9"></loc>
+    <loc id="103" name="Lytelthorpe to Cragstone" type="TownPortal" NS="0.5" EW="50.9" exitNS="26" exitEW="48.4"></loc>
+    <loc id="104" name="Swamp Temple" type="Landmark" NS="-25.6" EW="46.2"></loc>
+    <loc id="105" name="Numuhdira's Hidden Cottage" type="Landmark" NS="-20.8" EW="22.6"></loc>
+    <loc id="106" name="Folthid Lifestone" type="Lifestone" NS="-8.7" EW="53.8"></loc>
+    <loc id="107" name="Mudlurk Tower" type="Landmark" NS="-18.6" EW="52.3"></loc>
+    <loc id="108" name="Qalaba'r Lifestone" type="Lifestone" NS="-73.3" EW="18.1"></loc>
+    <loc id="109" name="Wandering Bowyer" type="Vendor" NS="-21.7" EW="52.1"></loc>
+    <loc id="110" name="Sho Roadside Weaponsmith and Farmer" type="Vendor" NS="-20.6" EW="44.2"></loc>
+    <loc id="111" name="Archmage and Healer" type="Vendor" NS="-20.6" EW="44.2"></loc>
+    <loc id="112" name="Empyrean Ruin" type="Landmark" NS="-26" EW="56.2"></loc>
+    <loc id="113" name="Swamp Ruin" type="Dungeon" NS="-25.1" EW="52.1" dungeonId="453"></loc>
+    <loc id="114" name="Nanto Attunement Device" type="Bindstone" NS="-52.5" EW="82.1"></loc>
+    <loc id="115" name="Lytaway Dungeon" type="Dungeon" NS="-52.6" EW="86.7" dungeonId="344"></loc>
+    <loc id="116" name="Northern Nanto Outpost" type="Outpost" NS="-49.1" EW="81.7"></loc>
+    <loc id="117" name="Northern Nanto Outpost Lifestone" type="Lifestone" NS="-49.1" EW="81.6"></loc>
+    <loc id="118" name="Merchant Compound" type="Landmark" NS="-48.7" EW="60"></loc>
+    <loc id="119" name="Drunken Madman's Tower" type="Landmark" NS="-53" EW="61"></loc>
+    <loc id="120" name="Empyrean Mountain Shrine" type="Landmark" NS="-50" EW="66.3"></loc>
+    <loc id="121" name="Rocky Crypt" type="Dungeon" NS="-50.9" EW="69.3" dungeonId="437"></loc>
+    <loc id="122" name="Golem Burial Ground" type="Dungeon" NS="-50.9" EW="67.3" dungeonId="436"></loc>
+    <loc id="123" name="Mite House" type="Landmark" NS="38.8" EW="61.4"></loc>
+    <loc id="124" name="Beta Respec Vendor" type="Vendor" NS="-39" EW="83.4"></loc>
+    <loc id="125" name="Wilderness Lifestone" type="Lifestone" NS="-57.4" EW="55.1"></loc>
+    <loc id="126" name="Trialos" type="Dungeon" NS="-58.7" EW="55.3" dungeonId="451"></loc>
+    <loc id="127" name="Portal to Desert Ridge Border" type="WildernessPortal" NS="-65.2" EW="60.4" exitNS="-5.6" exitEW="40"></loc>
+    <loc id="128" name="Golem Shrine" type="Landmark" NS="-58.7" EW="71"></loc>
+    <loc id="129" name="Portal to Bandit Castle" type="WildernessPortal" NS="42.4" EW="60.5" exitNS="65" exitEW="49.3"></loc>
+    <loc id="130" name="Bandit Castle" type="Outpost" NS="66.4" EW="50"></loc>
+    <loc id="131" name="S-TN to Mayoi" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-61.9" exitEW="81.8"></loc>
+    <loc id="132" name="Neydisa Castle" type="Outpost" NS="69.5" EW="17.5"></loc>
+    <loc id="133" name="Coastal Pass" type="Landmark" NS="39.8" EW="68.2"></loc>
+    <loc id="134" name="Western Arwic Lifestone" type="Lifestone" NS="32.5" EW="55.1"></loc>
+    <loc id="135" name="Eastern Arwic Lifestone" type="Lifestone" NS="33.9" EW="58.2"></loc>
+    <loc id="136" name="Leather Trader" type="Vendor" NS="-25.3" EW="28.2">T2</loc>
+    <loc id="137" name="Empyrean Shrine" type="Landmark" NS="41.3" EW="32.4"></loc>
+    <loc id="138" name="Obsidian Enchantress (Holtburg)" type="NPC" NS="40.8" EW="32.6"></loc>
+    <loc id="139" name="Abandoned House" type="Landmark" NS="38.3" EW="31.5"></loc>
+    <loc id="140" name="Hunter's Leap" type="Dungeon" NS="35.7" EW="32.6"></loc>
+    <loc id="141" name="Farmer" type="Vendor" NS="35.8" EW="33.5"></loc>
+    <loc id="142" name="Eldrista the Adventurer" type="Vendor" NS="35.8" EW="33.5"></loc>
+    <loc id="143" name="Banderling Ruin" type="Dungeon" NS="36.1" EW="39.6" dungeonId="480"></loc>
+    <loc id="144" name="Golem Mound" type="Landmark" NS="38.8" EW="36.8"></loc>
+    <loc id="145" name="Holtburg Redoubt" type="Dungeon" NS="40.4" EW="34.4"></loc>
+    <loc id="146" name="Peddler" type="Vendor" NS="40.8" EW="36.5"></loc>
+    <loc id="147" name="Festival Stone of Evensong" type="Landmark" NS="42.5" EW="36.6"></loc>
+    <loc id="148" name="Dungeon Fern" type="Dungeon" NS="43.3" EW="37.2" dungeonId="435"></loc>
+    <loc id="149" name="Glenden Wood Attunement Device" type="Bindstone" NS="29.8" EW="27"></loc>
+    <loc id="150" name="Ivory Trader" type="Vendor" NS="-7.9" EW="73.1">T2</loc>
+    <loc id="151" name="Alfreth Dungeon" type="Dungeon" NS="20.5" EW="13.2" dungeonId="470"></loc>
+    <loc id="152" name="Mage Academy" type="Dungeon" NS="74.7" EW="18.5" dungeonId="313">Level 50 Capstone</loc>
+    <loc id="153" name="Binar Dungeon" type="Dungeon" NS="-6.2" EW="20.1" dungeonId="387"></loc>
+    <loc id="154" name="Halls of Metos" type="Dungeon" NS="-4.4" EW="-0.6" dungeonId="755"></loc>
+    <loc id="155" name="Bone Lair" type="Dungeon" NS="-29.4" EW="7" dungeonId="325"></loc>
+    <loc id="156" name="Leather Trader" type="Vendor" NS="-47.5" EW="24.6">T2</loc>
+    <loc id="157" name="Mayoi Lifestone" type="Lifestone" NS="-61.9" EW="82.3"></loc>
+    <loc id="158" name="Colier Mine" type="Dungeon" NS="56.7" EW="38.5" dungeonId="430">Level 30 Capstone</loc>
+    <loc id="159" name="Crater Caves Dungeon" type="Dungeon" NS="66.7" EW="12.5" dungeonId="410"></loc>
+    <loc id="160" name="Tou-Tou to Hebian-To" type="TownPortal" NS="-28.1" EW="95.6" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="161" name="Frost Haven" type="Outpost" NS="-68.6" EW="25.4"></loc>
+    <loc id="162" name="Daiklos Dungeon" type="Dungeon" NS="33.7" EW="29.2" dungeonId="389"></loc>
+    <loc id="163" name="Damp Caverns" type="Dungeon" NS="-31.7" EW="96.1" dungeonId="333"></loc>
+    <loc id="164" name="G-TN to Samsur" type="TownPortal" NS="13.7" EW="0.6" exitNS="-2.8" exitEW="19.4"></loc>
+    <loc id="165" name="Desert Mines" type="Dungeon" NS="-4.6" EW="26.6" dungeonId="386"></loc>
+    <loc id="166" name="Eastham Sewers" type="Dungeon" NS="18.8" EW="63.4" dungeonId="463"></loc>
+    <loc id="167" name="Enkindled Souls" type="Dungeon" NS="-49.4" EW="26.9" dungeonId="321"></loc>
+    <loc id="168" name="Aun Paritea" type="NPC" NS="26.5" EW="-28.6"></loc>
+    <loc id="169" name="Forbidden Crypts" type="Dungeon" NS="6.5" EW="3" dungeonId="317"></loc>
+    <loc id="170" name="Forking Trail" type="Dungeon" NS="-65.6" EW="16.7" dungeonId="427"></loc>
+    <loc id="171" name="Glenden Wood Dungeon" type="Dungeon" NS="29.9" EW="26.3" dungeonId="483">Level 10 Capstone</loc>
+    <loc id="172" name="North Glenden Prison" type="Dungeon" NS="31.8" EW="25.5" dungeonId="484"></loc>
+    <loc id="173" name="A Mysterious Cave" type="Dungeon" NS="7.7" EW="6.6" dungeonId="330"></loc>
+    <loc id="174" name="Grievous Vault" type="Dungeon" NS="-25.8" EW="27.3" dungeonId="393">Level 30 Capstone</loc>
+    <loc id="175" name="Halls of the Helm" type="Dungeon" NS="18.7" EW="1.6" dungeonId="460">Level 20 Capstone</loc>
+    <loc id="176" name="Hebian-to Sewers" type="Dungeon" NS="-38.8" EW="83.8" dungeonId="458"></loc>
+    <loc id="177" name="Inner Dungeon" type="Dungeon" NS="43.5" EW="-43.4" dungeonId="421"></loc>
+    <loc id="178" name="Ivory Trader" type="Vendor" NS="-39.4" EW="83">T1</loc>
+    <loc id="179" name="Tibri`s Cave" type="Dungeon" NS="24.2" EW="43.2" dungeonId="395"></loc>
+    <loc id="180" name="Lost Garden Ruin" type="Dungeon" NS="-65.9" EW="59.3" dungeonId="433"></loc>
+    <loc id="181" name="Lugian Outpost" type="Dungeon" NS="-80.6" EW="18.1" dungeonId="455"></loc>
+    <loc id="182" name="Lugian Post" type="Dungeon" NS="-71.3" EW="19" dungeonId="456"></loc>
+    <loc id="183" name="Maggreth Dungeon" type="Dungeon" NS="3.7" EW="52.6"></loc>
+    <loc id="184" name="Mattekar Cave" type="Dungeon" NS="65.4" EW="16.7" dungeonId="361"></loc>
+    <loc id="185" name="Dungeon Mei" type="Dungeon" NS="-36.9" EW="70.3" dungeonId="388"></loc>
+    <loc id="186" name="Mite Maze" type="Dungeon" NS="41.1" EW="57.3" dungeonId="504"></loc>
+    <loc id="187" name="Town Crier" type="NPC" NS="-8.1" EW="73"></loc>
+    <loc id="188" name="Mountain Sewers" type="Dungeon" NS="-29.8" EW="93.9" dungeonId="401"></loc>
+    <loc id="189" name="Nevius Passage" type="Dungeon" NS="-45.6" EW="21.6" dungeonId="332"></loc>
+    <loc id="190" name="Old Mine" type="Dungeon" NS="-79.2" EW="27" dungeonId="400"></loc>
+    <loc id="191" name="Lair of Death" type="Dungeon" NS="42" EW="58.1" dungeonId="426"></loc>
+    <loc id="192" name="Phyntos Menace" type="Dungeon" NS="68.1" EW="-20.1" dungeonId="323"></loc>
+    <loc id="193" name="Crystal Mine" type="Dungeon" NS="-49.3" EW="17.9" dungeonId="24905"></loc>
+    <loc id="194" name="Pit Dungeon" type="Dungeon" NS="64.3" EW="-23.4"></loc>
+    <loc id="195" name="Reedshark Lair" type="Dungeon" NS="-12.3" EW="48.3" dungeonId="508"></loc>
+    <loc id="196" name="Saadia`s Retreat" type="Dungeon" NS="-53.6" EW="76.6" dungeonId="319"></loc>
+    <loc id="197" name="Seaside Lair" type="Dungeon" NS="17.2" EW="65.9" dungeonId="432"></loc>
+    <loc id="198" name="Manse of Panderlou" type="Dungeon" NS="21.5" EW="44.1" dungeonId="493">Level 20 Capstone</loc>
+    <loc id="199" name="Shoushi Grotto" type="Dungeon" NS="-34.4" EW="72.8" dungeonId="503"></loc>
+    <loc id="200" name="Fort Nighthawke" type="Landmark" NS="17.8" EW="39.2"></loc>
+    <loc id="201" name="Simple Maze" type="Landmark" NS="-62.6" EW="81.4"></loc>
+    <loc id="202" name="Town Crier" type="NPC" NS="33.5" EW="56.4"></loc>
+    <loc id="203" name="Smuggler's Hideaway" type="Dungeon" NS="-29.5" EW="91.8" dungeonId="334">Level 20 Capstone</loc>
+    <loc id="204" name="Sylsfear Dungeon" type="Dungeon" NS="11" EW="14.7" dungeonId="471"></loc>
+    <loc id="205" name="Syliph Tower" type="Dungeon" NS="12.3" EW="11.5" dungeonId="469"></loc>
+    <loc id="206" name="Dungeon of Tatters" type="Dungeon" NS="-62.1" EW="40.1" dungeonId="442"></loc>
+    <loc id="207" name="Thasali Dungeon" type="Dungeon" NS="-29.3" EW="24.6" dungeonId="452"></loc>
+    <loc id="208" name="Colier Lifestone" type="Lifestone" NS="57.4" EW="38.6"></loc>
+    <loc id="209" name="Empyrean Power Station" type="Landmark" NS="38.6" EW="9.7"></loc>
+    <loc id="210" name="Mountain Retreat" type="Outpost" NS="59.8" EW="-4.2"></loc>
+    <loc id="211" name="Mountain Retreat Lifestone" type="Lifestone" NS="59.8" EW="-4.2"></loc>
+    <loc id="212" name="Portal to Hilltop" type="WildernessPortal" NS="59.7" EW="-4" exitNS="32.8" exitEW="34.7"></loc>
+    <loc id="213" name="Undead Shrine" type="Landmark" NS="51.9" EW="0.6"></loc>
+    <loc id="214" name="Stonehold" type="Town" NS="68.8" EW="-21.5">215?</loc>
+    <loc id="215" name="Fort Witshire" type="Landmark" NS="25" EW="37.8"></loc>
+    <loc id="216" name="Beach Fort Outpost" type="Outpost" NS="76" EW="-49"></loc>
+    <loc id="217" name="Plateau Village" type="Town" NS="44.2" EW="-43.3">215?</loc>
+    <loc id="218" name="Northern Pass Watchtower" type="Landmark" NS="52" EW="3.1"></loc>
+    <loc id="219" name="Northern Pass Watchtower Lifestone" type="Lifestone" NS="52.1" EW="3.1"></loc>
+    <loc id="220" name="Stonehold Lifestone" type="Lifestone" NS="68.5" EW="-21.1"></loc>
+    <loc id="221" name="Trothyr's Rest" type="Dungeon" NS="10.4" EW="54.9" dungeonId="509"></loc>
+    <loc id="222" name="Cragstone Meeting Hall" type="AllegianceHall" NS="26" EW="49.1"></loc>
+    <loc id="223" name="Web Maze" type="Dungeon" NS="-49.4" EW="65.4" dungeonId="434"></loc>
+    <loc id="224" name="Winthura's Garden" type="Dungeon" NS="-43.1" EW="24.7" dungeonId="331"></loc>
+    <loc id="225" name="Yanshi Tunnels" type="Dungeon" NS="-12.1" EW="45.6" dungeonId="464"></loc>
+    <loc id="226" name="Hebian-to Lifestone" type="Lifestone" NS="-40.7" EW="84.9"></loc>
+    <loc id="227" name="Obsidian Enchanter (Samsur)" type="NPC" NS="-3.8" EW="20.6"></loc>
+    <loc id="228" name="Obsidian Enchantress (Hebian-to)" type="NPC" NS="-39.1" EW="81"></loc>
+    <loc id="229" name="Dungeon Muddy" type="Dungeon" NS="-27" EW="71" dungeonId="438">todo</loc>
+    <loc id="230" name="Braid Mansion Ruin" type="Dungeon" NS="-34.3" EW="72" dungeonId="439"></loc>
+    <loc id="231" name="Green Mire Grave" type="Dungeon" NS="-27.8" EW="71.6" dungeonId="485">Level 10 Capstone</loc>
+    <loc id="232" name="Holtburg Lifestone" type="Lifestone" NS="42" EW="34.9"></loc>
+    <loc id="233" name="Four Towers Lifestone" type="Lifestone" NS="12.1" EW="2.4"></loc>
+    <loc id="234" name="Empyrean Landmark" type="Landmark" NS="6.9" EW="2.9"></loc>
+    <loc id="235" name="Al-Jalima Lifestone" type="Lifestone" NS="7.1" EW="3"></loc>
+    <loc id="236" name="Eastham Beach House" type="Landmark" NS="17.9" EW="65.2"></loc>
+    <loc id="237" name="Eastern Eastham Lifestone" type="Lifestone" NS="17.8" EW="64.3"></loc>
+    <loc id="238" name="Guard Tower" type="Landmark" NS="-19.1" EW="75"></loc>
+    <loc id="239" name="Lifestone" type="Lifestone" NS="-25.7" EW="74.8"></loc>
+    <loc id="240" name="Peddler" type="Vendor" NS="-25.7" EW="74.7"></loc>
+    <loc id="241" name="Mosswart Bunker" type="Landmark" NS="-25.4" EW="74.4"></loc>
+    <loc id="242" name="Banderling Fortress" type="Landmark" NS="66.3" EW="-2.2"></loc>
+    <loc id="243" name="Ice Golem Shrine" type="Landmark" NS="61.5" EW="-10.2"></loc>
+    <loc id="244" name="Abandoned House" type="Landmark" NS="-39.2" EW="77.2"></loc>
+    <loc id="245" name="Hebian-to Library Lifestone" type="Lifestone" NS="-39.1" EW="81.6"></loc>
+    <loc id="246" name="Hebian-to Library" type="Landmark" NS="-39.2" EW="81.6"></loc>
+    <loc id="247" name="Rithwic Menhir Ring" type="Landmark" NS="14" EW="59.1"></loc>
+    <loc id="248" name="Roadside Lifestone" type="Lifestone" NS="15.8" EW="2.1"></loc>
+    <loc id="249" name="Crypt of Ashen Tears" type="Dungeon" NS="14.6" EW="3.5" dungeonId="506"></loc>
+    <loc id="250" name="Merchant" type="Vendor" NS="13.4" EW="5.3"></loc>
+    <loc id="251" name="Monouga Stronghold" type="Landmark" NS="8.9" EW="4.3"></loc>
+    <loc id="252" name="Weaponsmith" type="Vendor" NS="38.6" EW="30.4"></loc>
+    <loc id="253" name="Lilly of Glenden Wood" type="NPC" NS="32" EW="27.2"></loc>
+    <loc id="254" name="Farmer's House" type="Vendor" NS="31.8" EW="26.4"></loc>
+    <loc id="255" name="Rat Cave" type="Landmark" NS="-38.5" EW="70.2"></loc>
+    <loc id="256" name="Abandoned Tower" type="Landmark" NS="-31.2" EW="67.9"></loc>
+    <loc id="257" name="Shreth Cave" type="Landmark" NS="-34.5" EW="68.3"></loc>
+    <loc id="258" name="Golem Cave" type="Landmark" NS="-35.4" EW="68.1"></loc>
+    <loc id="259" name="Drudge Houses" type="Landmark" NS="-34.7" EW="70.4"></loc>
+    <loc id="260" name="Rabbit Shrine" type="Landmark" NS="-33.5" EW="71.3"></loc>
+    <loc id="261" name="Drudge Bunker" type="Landmark" NS="-32.2" EW="69.9"></loc>
+    <loc id="262" name="Cragstone to Isle of Tears" type="WildernessPortal" NS="25.3" EW="49.9" exitNS="22.5" exitEW="51.9"></loc>
+    <loc id="263" name="Cragstone Lifestone" type="Lifestone" NS="24.7" EW="49.4"></loc>
+    <loc id="264" name="Festival Stone of Thistledown" type="Landmark" NS="28.4" EW="43.6"></loc>
+    <loc id="265" name="Isle of Tears to Cragstone" type="WildernessPortal" NS="22.3" EW="51.9" exitNS="25.3" exitEW="50"></loc>
+    <loc id="266" name="Tower Lifestone" type="Lifestone" NS="-72.7" EW="15.1"></loc>
+    <loc id="267" name="Tower" type="Landmark" NS="-72.8" EW="15.1"></loc>
+    <loc id="268" name="Rat Tower" type="Landmark" NS="69.6" EW="-21.2"></loc>
+    <loc id="269" name="Qalaba'r Lifestone" type="Lifestone" NS="-73.2" EW="20.3"></loc>
+    <loc id="270" name="Qalaba'r Lifestone" type="Lifestone" NS="-75.8" EW="21.2"></loc>
+    <loc id="271" name="Vendor and Healer" type="Vendor" NS="-80.7" EW="19.7"></loc>
+    <loc id="272" name="Abandoned House" type="Landmark" NS="-16.1" EW="43.3"></loc>
+    <loc id="273" name="Zaikhal Lifestone" type="Lifestone" NS="13.5" EW="1.5"></loc>
+    <loc id="274" name="Dungeon Nye" type="Dungeon" NS="6.2" EW="34.4" dungeonId="385"></loc>
+    <loc id="275" name="Empyrean Shrine" type="Landmark" NS="2.8" EW="46.5"></loc>
+    <loc id="276" name="Lytelthorpe Dairy Farm" type="Landmark" NS="0.1" EW="52.6"></loc>
+    <loc id="277" name="Festival Stone of Seedsow" type="Landmark" NS="0.6" EW="46.6"></loc>
+    <loc id="278" name="Western Lytelthorpe Outpost Lifestone" type="Lifestone" NS="1.1" EW="48.3"></loc>
+    <loc id="279" name="Eastern Lytelthorpe Outpost Lifestone" type="Lifestone" NS="1" EW="54.1"></loc>
+    <loc id="280" name="Lytelthorpe Lifestone" type="Lifestone" NS="2.3" EW="51.7"></loc>
+    <loc id="281" name="Ruined Cave Outpost" type="Dungeon" NS="2.3" EW="48.3" dungeonId="338"></loc>
+    <loc id="282" name="Zaikhal Advanced Tower" type="Landmark" NS="18.6" EW="-1.2"></loc>
+    <loc id="283" name="Cragstone Advanced Tower" type="Landmark" NS="25" EW="43.5"></loc>
+    <loc id="284" name="Forgotten Temple" type="Dungeon" NS="0.9" EW="55.8" dungeonId="337"></loc>
+    <loc id="285" name="Hebian-To Advanced Tower" type="Landmark" NS="-42.6" EW="77.9"></loc>
+    <loc id="286" name="Hebian-To Middle Guard Tower" type="Landmark" NS="-43" EW="74.7"></loc>
+    <loc id="287" name="Western Lytelthorpe Outpost" type="Outpost" NS="1" EW="48.3"></loc>
+    <loc id="288" name="Eastern Lytelthorpe Outpost" type="Outpost" NS="0.9" EW="54.2"></loc>
+    <loc id="289" name="Healer" type="Vendor" NS="44.9" EW="36.4"></loc>
+    <loc id="290" name="Town Crier" type="NPC" NS="-15.6" EW="5.1"></loc>
+    <loc id="291" name="Mosswart Shrine" type="Landmark" NS="-17.8" EW="50.6"></loc>
+    <loc id="292" name="Plateau Village Lifestone" type="Lifestone" NS="44.4" EW="-41.6"></loc>
+    <loc id="293" name="Empyrean Lookout" type="Landmark" NS="71.3" EW="-48.7"></loc>
+    <loc id="294" name="Stone Circle" type="Landmark" NS="-49.8" EW="62"></loc>
+    <loc id="295" name="Portal to a bit more Westward" type="WildernessPortal" NS="68.6" EW="-23.2" exitNS="71.6" exitEW="-29.8"></loc>
+    <loc id="296" name="Lifestone" type="Lifestone" NS="56.8" EW="12.9"></loc>
+    <loc id="297" name="Mosswart Shrine" type="Landmark" NS="-14.7" EW="48"></loc>
+    <loc id="298" name="Peddler" type="Vendor" NS="-73.3" EW="31.9"></loc>
+    <loc id="299" name="Thieves' Galleries" type="Dungeon" NS="-57.7" EW="74.1" dungeonId="329"></loc>
+    <loc id="300" name="Lifestone" type="Lifestone" NS="-84.3" EW="33.7"></loc>
+    <loc id="301" name="Mite Bunker" type="Landmark" NS="41.4" EW="-19.8"></loc>
+    <loc id="302" name="Festival Stone of Midsong" type="Landmark" NS="0.2" EW="0.3"></loc>
+    <loc id="303" name="Baron Nuvillus's Castle" type="Landmark" NS="-24.3" EW="76.8"></loc>
+    <loc id="304" name="Empyrean Tower" type="Landmark" NS="-28.5" EW="78.3"></loc>
+    <loc id="305" name="Lifestone" type="Lifestone" NS="-28.6" EW="78.3"></loc>
+    <loc id="306" name="Festival Stone of Foredawn" type="Landmark" NS="-33.8" EW="76.2"></loc>
+    <loc id="307" name="Farmer" type="Vendor" NS="-37.4" EW="75.5"></loc>
+    <loc id="308" name="Underground Bunker" type="Landmark" NS="-28.6" EW="77.8"></loc>
+    <loc id="309" name="Archmage" type="Vendor" NS="-33.7" EW="79.9"></loc>
+    <loc id="310" name="Archmage Lifestone" type="Lifestone" NS="-33.7" EW="79.9"></loc>
+    <loc id="311" name="Fort Aimaru" type="Landmark" NS="-34.2" EW="80.7"></loc>
+    <loc id="312" name="Grilhud the Hermit" type="Landmark" NS="11.8" EW="33.7"></loc>
+    <loc id="313" name="Kara" type="Town" NS="-83.2" EW="47.1">215</loc>
+    <loc id="314" name="Kara Lifestone" type="Lifestone" NS="-83" EW="46"></loc>
+    <loc id="315" name="Abandoned Tower and Temples" type="Landmark" NS="-36.3" EW="64.9"></loc>
+    <loc id="316" name="Abandoned Sho Outpost" type="Landmark" NS="-34.4" EW="64.7"></loc>
+    <loc id="317" name="Runed Chest" type="Landmark" NS="-36.1" EW="65"></loc>
+    <loc id="318" name="Northwestern Samsur Outpost Lifestone" type="Lifestone" NS="0.1" EW="16.3"></loc>
+    <loc id="319" name="Eastern Samsur Outpost Lifestone" type="Lifestone" NS="-3.1" EW="22.2"></loc>
+    <loc id="320" name="Lifestone" type="Lifestone" NS="60.9" EW="16.6"></loc>
+    <loc id="321" name="Tower" type="Landmark" NS="31.6" EW="16.8"></loc>
+    <loc id="322" name="Festival Stone of Coldeve" type="Landmark" NS="-83" EW="49.2"></loc>
+    <loc id="323" name="Sho Roadside Peddler" type="Vendor" NS="-27.9" EW="68.3"></loc>
+    <loc id="324" name="Small Temple" type="Landmark" NS="-31.8" EW="94.1"></loc>
+    <loc id="325" name="Neydisa Castle Lifestone" type="Lifestone" NS="69.7" EW="17.7"></loc>
+    <loc id="326" name="Khayyaban Lifestone" type="Lifestone" NS="-48.1" EW="23.2"></loc>
+    <loc id="327" name="Bandit Castle Lifestone" type="Lifestone" NS="65.4" EW="49"></loc>
+    <loc id="328" name="Rithwic Lifestone" type="Lifestone" NS="11.2" EW="59.4"></loc>
+    <loc id="329" name="Sawato Lifestone" type="Lifestone" NS="-28.9" EW="60.6"></loc>
+    <loc id="330" name="Lakeside Lifestone" type="Lifestone" NS="23.3" EW="56.2"></loc>
+    <loc id="331" name="Lifestone" type="Lifestone" NS="-67.3" EW="28.3"></loc>
+    <loc id="332" name="Healer and Peddler" type="Vendor" NS="-67.3" EW="28.3"></loc>
+    <loc id="333" name="Portal to Eotensfang" type="WildernessPortal" NS="64.9" EW="49.4" exitNS="42.3" exitEW="60.5"></loc>
+    <loc id="334" name="Mountain Shortcut" type="Landmark" NS="41" EW="56"></loc>
+    <loc id="335" name="Arwic to  Mountain Shortcut" type="WildernessPortal" NS="35" EW="56" exitNS="41" exitEW="56"></loc>
+    <loc id="336" name="Mountain Shortcut to Arwic" type="TownPortal" NS="40.9" EW="55.8" exitNS="33.3" exitEW="57.1"></loc>
+    <loc id="337" name="Glenden Wood Lifestone" type="Lifestone" NS="29.9" EW="25.9"></loc>
+    <loc id="338" name="Sawato Swamp Lifestone" type="Lifestone" NS="-25.8" EW="57.8"></loc>
+    <loc id="339" name="Sawato Swamp Archmage" type="Vendor" NS="-25.6" EW="57.6"></loc>
+    <loc id="340" name="Mosswart Cave" type="Landmark" NS="-18.4" EW="45.4"></loc>
+    <loc id="341" name="Abandoned House" type="Landmark" NS="-17" EW="47.5"></loc>
+    <loc id="342" name="Crater Pathway (lower entrance)" type="Dungeon" NS="60.5" EW="15.7" dungeonId="423"></loc>
+    <loc id="343" name="Twin Cabins" type="Landmark" NS="51.1" EW="21.3"></loc>
+    <loc id="344" name="Lifestone" type="Lifestone" NS="9" EW="43.4"></loc>
+    <loc id="345" name="Lifestone" type="Lifestone" NS="25.7" EW="28.1"></loc>
+    <loc id="346" name="Uziz Eastern Lifestone" type="Lifestone" NS="-25.7" EW="29.9"></loc>
+    <loc id="347" name="Uziz Western Lifestone" type="Lifestone" NS="-25.9" EW="26.6"></loc>
+    <loc id="348" name="Lifestone" type="Lifestone" NS="27.4" EW="63.7"></loc>
+    <loc id="349" name="Lifestone" type="Lifestone" NS="40.8" EW="-18.7"></loc>
+    <loc id="350" name="Lifestone" type="Lifestone" NS="71.5" EW="-29.8"></loc>
+    <loc id="351" name="Lifestone" type="Lifestone" NS="66.6" EW="-26.4"></loc>
+    <loc id="352" name="Yanshi Lifestone" type="Lifestone" NS="-12.8" EW="45.1"></loc>
+    <loc id="353" name="An Archive" type="Dungeon" NS="-63.5" EW="36.8" dungeonId="22086"></loc>
+    <loc id="354" name="Undead Shrine" type="Landmark" NS="55" EW="-3.5"></loc>
+    <loc id="355" name="Empyrean Landmark" type="Landmark" NS="16.5" EW="63.6"></loc>
+    <loc id="356" name="Yaraq to Zaikhal" type="TownPortal" NS="-21.6" EW="-1.8" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="357" name="Abandoned Farm" type="Landmark" NS="20.5" EW="60.7"></loc>
+    <loc id="358" name="Empyrean Landmark" type="Landmark" NS="19" EW="61.8"></loc>
+    <loc id="359" name="Wharf House" type="Landmark" NS="19.7" EW="64"></loc>
+    <loc id="360" name="Jolly Snowman" type="Vendor" NS="-73.2" EW="26.8"></loc>
+    <loc id="361" name="Adventurer`s Haven" type="Dungeon" NS="4.4" EW="35.5"></loc>
+    <loc id="362" name="Shoushi to Holtburg" type="TownPortal" NS="-33.5" EW="72.8" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="363" name="Shoushi to Yaraq" type="TownPortal" NS="-33.5" EW="72.8" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="364" name="Shoushi to Hebian-To" type="TownPortal" NS="-33.5" EW="72.8" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="365" name="Hidden Valley to Desert Ridge Border" type="WildernessPortal" NS="54.3" EW="-4.2" exitNS="-5.6" exitEW="40"></loc>
+    <loc id="366" name="Roaming Bowyer" type="Vendor" NS="10.4" EW="53.5"></loc>
+    <loc id="367" name="A Ruin" type="Dungeon" NS="11.5" EW="55" dungeonId="440"></loc>
+    <loc id="368" name="Farmer" type="Vendor" NS="-11.8" EW="47.5"></loc>
+    <loc id="369" name="Rat Infested House" type="Landmark" NS="-11.4" EW="46.2"></loc>
+    <loc id="370" name="Drudge Cave" type="Landmark" NS="-9.8" EW="48"></loc>
+    <loc id="371" name="Sho Tower" type="Landmark" NS="-8.7" EW="46.5"></loc>
+    <loc id="372" name="Drudge House" type="Landmark" NS="-14" EW="45.3"></loc>
+    <loc id="373" name="Southern Yanshi Outpost" type="Outpost" NS="-15.7" EW="46.4"></loc>
+    <loc id="374" name="Southern Yanshi Outpost Lifestone" type="Lifestone" NS="-15.6" EW="46.5"></loc>
+    <loc id="375" name="Mosswart House" type="Landmark" NS="-17" EW="44.9"></loc>
+    <loc id="376" name="Undead Ruins" type="Landmark" NS="-13.5" EW="49.4"></loc>
+    <loc id="377" name="Mosswart Tower" type="Landmark" NS="-11.6" EW="57.5"></loc>
+    <loc id="378" name="Mosswart Bunker" type="Landmark" NS="-11.6" EW="57.7"></loc>
+    <loc id="379" name="Mosswart Bunker" type="Landmark" NS="-11.6" EW="58"></loc>
+    <loc id="380" name="Ancient Town to High Mountain Valley" type="WildernessPortal" NS="-61.9" EW="40" exitNS="-65.2" exitEW="60.3"></loc>
+    <loc id="381" name="Ancient Town Lifestone" type="Lifestone" NS="-61.8" EW="39.9"></loc>
+    <loc id="382" name="Ancient Town to Heartland" type="WildernessPortal" NS="-61.8" EW="40" exitNS="22.6" exitEW="37.2"></loc>
+    <loc id="383" name="Banderling Tower" type="Landmark" NS="-62" EW="40"></loc>
+    <loc id="384" name="Mines of Despair" type="Dungeon" NS="-75.4" EW="57.3" dungeonId="392">Level 40 Capstone</loc>
+    <loc id="385" name="Merchant Lifestone" type="Lifestone" NS="-4.4" EW="23.5"></loc>
+    <loc id="386" name="3 Towers Merchant" type="Vendor" NS="-4.5" EW="23.5"></loc>
+    <loc id="387" name="Drudge Tower" type="Landmark" NS="-4.6" EW="24.4"></loc>
+    <loc id="388" name="Skeleton Tower" type="Landmark" NS="-5.6" EW="24.8"></loc>
+    <loc id="389" name="Drudge Camp" type="Landmark" NS="-3.7" EW="23.8"></loc>
+    <loc id="390" name="Bank" type="Outpost" NS="13.6" EW="0.7"></loc>
+    <loc id="391" name="Skeleton Tower" type="Landmark" NS="-4.6" EW="25.7"></loc>
+    <loc id="392" name="Lake Lithane Lifestone" type="Lifestone" NS="44.8" EW="-28.6"></loc>
+    <loc id="393" name="Lake Lithane Peddler" type="Vendor" NS="44.8" EW="-28.6"></loc>
+    <loc id="394" name="Cragstone Lifestone" type="Lifestone" NS="24.4" EW="48.3"></loc>
+    <loc id="395" name="Drudge Nest" type="Dungeon" NS="-40.6" EW="83.6"></loc>
+    <loc id="396" name="Underground Forest" type="Dungeon" NS="31.4" EW="20.7" dungeonId="316"></loc>
+    <loc id="397" name="Strange Giant Flower" type="Landmark" NS="-39.4" EW="84.9"></loc>
+    <loc id="398" name="Imuth Maer Doquin" type="Landmark" NS="-11.8" EW="58.2"></loc>
+    <loc id="399" name="Edelbar" type="Landmark" NS="43.4" EW="26.7"></loc>
+    <loc id="400" name="Leikotha`s Crypt" type="Landmark" NS="-10.2" EW="31.3"></loc>
+    <loc id="401" name="Chapel Blackspire" type="Landmark" NS="19.1" EW="46.3"></loc>
+    <loc id="402" name="Le-Ai Rea's House" type="Landmark" NS="-75.9" EW="57.3"></loc>
+    <loc id="403" name="Old Bones Stronghold" type="Landmark" NS="6.7" EW="6.7"></loc>
+    <loc id="404" name="Shadow Castle" type="Landmark" NS="38.2" EW="9.9"></loc>
+    <loc id="405" name="Hebian-To Beach Lifestone" type="Lifestone" NS="-39.2" EW="85.6"></loc>
+    <loc id="406" name="Mayoi Beach Lifestone" type="Lifestone" NS="-61.6" EW="83.3"></loc>
+    <loc id="407" name="Binar Lifestone" type="Lifestone" NS="-5.5" EW="19.9"></loc>
+    <loc id="408" name="Eastern Samsur Outpost" type="Outpost" NS="-3.2" EW="22.2"></loc>
+    <loc id="409" name="Northwestern Samsur Outpost" type="Outpost" NS="0.1" EW="16.3"></loc>
+    <loc id="410" name="Mayoi Hills Archmage" type="Vendor" NS="-63.4" EW="85.9"></loc>
+    <loc id="411" name="Healer" type="Vendor" NS="-26.7" EW="65.1"></loc>
+    <loc id="412" name="Empty Platform" type="Landmark" NS="-25.2" EW="58.3"></loc>
+    <loc id="413" name="Lifestone" type="Lifestone" NS="3.9" EW="70.5"></loc>
+    <loc id="414" name="Wandering Bowyer" type="Vendor" NS="3.9" EW="70.4"></loc>
+    <loc id="415" name="Farmer" type="Vendor" NS="3.8" EW="70.5"></loc>
+    <loc id="416" name="Lich Archmage" type="Vendor" NS="-84.4" EW="25.6"></loc>
+    <loc id="417" name="Lugian Tower" type="Landmark" NS="-59.3" EW="28"></loc>
+    <loc id="418" name="Farmer" type="Vendor" NS="-38.1" EW="68.1"></loc>
+    <loc id="419" name="Banderling Keep" type="Landmark" NS="-49.3" EW="45.6"></loc>
+	<loc id="420" name="About" type="Custom" NS="-101.9" EW="101.9">
+	Adapted from stock GoArrow locations.xml by Phenyl for the Daralet server.
+	Version History:
+	12/31/2024 1.0 Initial Release</loc>
+    <loc id="421" name="Lugian Roadhouse" type="Landmark" NS="-71.4" EW="18.2"></loc>
+    <loc id="422" name="Shelterhouse Lifestone" type="Lifestone" NS="-36.1" EW="44.3"></loc>
+    <loc id="423" name="Empyrean Shelterhouse" type="Landmark" NS="-36" EW="44.3"></loc>
+    <loc id="424" name="Desert Archmage Lifestone" type="Lifestone" NS="-31.5" EW="37"></loc>
+    <loc id="425" name="Desert Archmage" type="Vendor" NS="-31.5" EW="37.1"></loc>
+    <loc id="426" name="Desert Archmage to the Heartland" type="WildernessPortal" NS="-31.4" EW="37" exitNS="22.6" exitEW="37.2"></loc>
+    <loc id="427" name="Peddler" type="Vendor" NS="-31" EW="24.7"></loc>
+    <loc id="428" name="Revitalizing Fountain" type="Landmark" NS="-31" EW="24.7"></loc>
+    <loc id="429" name="Skeleton Cave" type="Landmark" NS="-30.8" EW="24.9"></loc>
+    <loc id="430" name="Bellig Tower Base" type="Dungeon" NS="17.8" EW="16" dungeonId="468"></loc>
+    <loc id="431" name="Tufa East Lifestone" type="Lifestone" NS="-14.3" EW="7"></loc>
+    <loc id="432" name="Tufa West Lifestone" type="Lifestone" NS="-14.3" EW="3.7"></loc>
+    <loc id="433" name="Abandoned Tower" type="Landmark" NS="16.9" EW="14.5"></loc>
+    <loc id="434" name="Abandoned Tower" type="Landmark" NS="17.5" EW="15.1"></loc>
+    <loc id="435" name="Skeleton Tent" type="Landmark" NS="2.1" EW="18.4"></loc>
+    <loc id="436" name="Merchant" type="Vendor" NS="41.7" EW="35.2"></loc>
+    <loc id="437" name="Festival Stone of Leafdawning" type="Landmark" NS="10.5" EW="54.2"></loc>
+    <loc id="438" name="Festival Stone of Morntide" type="Landmark" NS="-53.1" EW="78.6"></loc>
+    <loc id="439" name="Festival Stone of Leafcull" type="Landmark" NS="-12.7" EW="43.2"></loc>
+    <loc id="440" name="Festival Stone of Warmtide" type="Landmark" NS="-20.9" EW="-4.5"></loc>
+    <loc id="441" name="Ma'yad ibn Ibsar's Tent" type="Landmark" NS="-22.5" EW="-0.4"></loc>
+    <loc id="442" name="Sea Temple Catacombs" type="Dungeon" NS="-20.2" EW="-4.4" dungeonId="342"></loc>
+    <loc id="443" name="Cragstone ReinforcementsTower" type="Landmark" NS="26.6" EW="37.8"></loc>
+    <loc id="444" name="Hebian-To ReinforcementsTower" type="Landmark" NS="-44.9" EW="71.5"></loc>
+    <loc id="445" name="Drudge Tower" type="Landmark" NS="-21.3" EW="-4.2"></loc>
+    <loc id="446" name="Backpack" type="Landmark" NS="-33.5" EW="74"></loc>
+    <loc id="447" name="Desert Lifestone" type="Lifestone" NS="-32.5" EW="15.9"></loc>
+    <loc id="448" name="Festival Stone of Solclaim" type="Landmark" NS="-30.8" EW="17.1"></loc>
+    <loc id="449" name="Festival Stone of Verdantine" type="Landmark" NS="-3.5" EW="16"></loc>
+    <loc id="450" name="Roadside Lifestone" type="Lifestone" NS="-4.3" EW="15.9"></loc>
+    <loc id="451" name="Merchant" type="Vendor" NS="-4.1" EW="17.3"></loc>
+    <loc id="452" name="Drudge Cave" type="Landmark" NS="-2.6" EW="17.5"></loc>
+    <loc id="453" name="Drudge House" type="Landmark" NS="-5" EW="17.5"></loc>
+    <loc id="454" name="Drudge House" type="Landmark" NS="-4" EW="18.7"></loc>
+    <loc id="455" name="Festival Stone of Morningthaw" type="Landmark" NS="33.6" EW="54"></loc>
+    <loc id="456" name="Festival Stone of Wintersebb" type="Landmark" NS="-74.4" EW="21.5"></loc>
+    <loc id="457" name="Festival Stone of Harvestgain" type="Landmark" NS="-27.4" EW="29.6"></loc>
+    <loc id="458" name="Uziz Hilltop Lifestone" type="Lifestone" NS="-24.2" EW="27.4"></loc>
+    <loc id="459" name="Skeleton Tomb" type="Landmark" NS="-18.4" EW="21.3"></loc>
+    <loc id="460" name="Weaponsmith" type="Vendor" NS="7" EW="12.6"></loc>
+    <loc id="461" name="Monouga House" type="Landmark" NS="10.3" EW="6"></loc>
+    <loc id="462" name="Desert Archmage" type="Vendor" NS="7.9" EW="8.6"></loc>
+    <loc id="463" name="Suntik Village" type="Landmark" NS="16.2" EW="4.4"></loc>
+    <loc id="464" name="Peddler Lifestone" type="Lifestone" NS="23.2" EW="44"></loc>
+    <loc id="465" name="Drudge Barn" type="Landmark" NS="24.3" EW="45.2"></loc>
+    <loc id="466" name="Undead Compound" type="Landmark" NS="-40.4" EW="79.1"></loc>
+    <loc id="467" name="Wilderness Fort Lifestone" type="Lifestone" NS="23.5" EW="-7.7"></loc>
+    <loc id="468" name="Banderling Fort" type="Landmark" NS="22.5" EW="-10.5"></loc>
+    <loc id="469" name="Wilderness Fort to Hebian-To" type="TownPortal" NS="23.5" EW="-7.7" exitNS="-38.6" exitEW="82.1"></loc>
+    <loc id="470" name="Wilderness Fort to Zaikhal" type="TownPortal" NS="23.5" EW="-7.7" exitNS="14.3" exitEW="1.3"></loc>
+    <loc id="471" name="Undead Village" type="Landmark" NS="21.4" EW="-24.8"></loc>
+    <loc id="472" name="Portal to Plateau Base" type="WildernessPortal" NS="44.4" EW="-43.5" exitNS="45.3" exitEW="-44.3"></loc>
+    <loc id="473" name="Plateau Watchtower" type="Landmark" NS="42.9" EW="-42.3"></loc>
+    <loc id="474" name="Windmills" type="Landmark" NS="40.6" EW="-41.8"></loc>
+    <loc id="475" name="Lugian Quarry Menhir Ring" type="Landmark" NS="-65.4" EW="52"></loc>
+    <loc id="476" name="Portal to Plateau Top" type="WildernessPortal" NS="45.3" EW="-44.2" exitNS="44.4" exitEW="-43.5"></loc>
+    <loc id="477" name="Banderling Fortress Lifestone" type="Lifestone" NS="65.9" EW="-2.6"></loc>
+    <loc id="478" name="Beach Lifestone" type="Lifestone" NS="-31.3" EW="3.6"></loc>
+    <loc id="479" name="Beach Lifestone" type="Lifestone" NS="-47.2" EW="10.6"></loc>
+    <loc id="480" name="Bluff Lifestone" type="Lifestone" NS="35" EW="-17.8"></loc>
+    <loc id="481" name="Glenden Wood Lifestone" type="Lifestone" NS="29.7" EW="26.9"></loc>
+    <loc id="482" name="Lifestone" type="Lifestone" NS="40.9" EW="44.2"></loc>
+    <loc id="483" name="Crater Lair Lifestone" type="Lifestone" NS="75.5" EW="10.5"></loc>
+    <loc id="484" name="Igloo Lifestone" type="Lifestone" NS="70.5" EW="-17.3"></loc>
+    <loc id="485" name="Tufa North Lifestone" type="Lifestone" NS="-12.9" EW="5.9"></loc>
+    <loc id="486" name="Zaikhal Lifestone" type="Lifestone" NS="14.1" EW="-1.3"></loc>
+    <loc id="487" name="Lifestone" type="Lifestone" NS="37.7" EW="-1.3"></loc>
+    <loc id="488" name="Linvak Peddler Lifestone" type="Lifestone" NS="-59.8" EW="48.5"></loc>
+    <loc id="489" name="Lifestone" type="Lifestone" NS="-5" EW="58.3"></loc>
+    <loc id="490" name="Zelina's Cottage Lifestone" type="Lifestone" NS="53.6" EW="24.2"></loc>
+    <loc id="491" name="Lifestone" type="Lifestone" NS="69.1" EW="-51.7"></loc>
+    <loc id="492" name="North Camp Lifestone" type="Lifestone" NS="85" EW="28.5"></loc>
+    <loc id="493" name="Mayoi Hills Lifestone" type="Lifestone" NS="-63.1" EW="82.5"></loc>
+    <loc id="494" name="Lifestone" type="Lifestone" NS="-34.9" EW="60.5"></loc>
+    <loc id="495" name="Lifestone" type="Lifestone" NS="-71" EW="52.4"></loc>
+    <loc id="496" name="Lifestone" type="Lifestone" NS="70.4" EW="-34.5"></loc>
+    <loc id="497" name="Abandoned Tower Lifestone" type="Lifestone" NS="-78.7" EW="48.7"></loc>
+    <loc id="498" name="Lifestone" type="Lifestone" NS="-36.1" EW="33.3"></loc>
+    <loc id="499" name="Al-Arqas Meeting Hall" type="AllegianceHall" NS="-31.2" EW="13.8"></loc>
+    <loc id="500" name="Al-Jalima Meeting Hall" type="AllegianceHall" NS="7.7" EW="4.9"></loc>
+    <loc id="501" name="Arwic Meeting Hall" type="AllegianceHall" NS="33.6" EW="55.8"></loc>
+    <loc id="502" name="Baishi Meeting Hall" type="AllegianceHall" NS="-49.4" EW="62.3"></loc>
+    <loc id="503" name="Cragstone Meeting Hall" type="_Unknown" NS="26" EW="49.1"></loc>
+    <loc id="504" name="Eastham Meeting Hall" type="AllegianceHall" NS="17.6" EW="63.5"></loc>
+    <loc id="505" name="Glenden Wood Meeting Hall" type="AllegianceHall" NS="30" EW="27.4"></loc>
+    <loc id="506" name="Hebian-To Meeting Hall" type="AllegianceHall" NS="-39.3" EW="83.3"></loc>
+    <loc id="507" name="Holtburg Meeting Hall" type="AllegianceHall" NS="42.2" EW="33.9"></loc>
+    <loc id="508" name="Khayyaban Meeting Hall" type="AllegianceHall" NS="-48.2" EW="24.4"></loc>
+    <loc id="509" name="Lin Meeting Hall" type="AllegianceHall" NS="-54.8" EW="73.2"></loc>
+    <loc id="510" name="Lytelthorpe Meeting Hall" type="AllegianceHall" NS="0.8" EW="51.6"></loc>
+    <loc id="511" name="Mayoi Meeting Hall" type="AllegianceHall" NS="-61.4" EW="81.8"></loc>
+    <loc id="512" name="Nanto Meeting Hall" type="AllegianceHall" NS="-52.5" EW="82.5"></loc>
+    <loc id="513" name="Qalaba'r Meeting Hall" type="AllegianceHall" NS="-74.2" EW="19"></loc>
+    <loc id="514" name="Rithwic Meeting Hall" type="AllegianceHall" NS="10.9" EW="58.2"></loc>
+    <loc id="515" name="Samsur Meeting Hall" type="AllegianceHall" NS="-2.9" EW="19.7"></loc>
+    <loc id="516" name="Sawato Meeting Hall" type="AllegianceHall" NS="-28.5" EW="59.3"></loc>
+    <loc id="517" name="Shoushi Meeting Hall" type="AllegianceHall" NS="-33.3" EW="73"></loc>
+    <loc id="518" name="Tou-Tou Meeting Hall" type="AllegianceHall" NS="-28.3" EW="95.3"></loc>
+    <loc id="519" name="Tufa Meeting Hall" type="_Unknown" NS="-14" EW="5"></loc>
+    <loc id="520" name="Uziz Meeting Hall" type="AllegianceHall" NS="-25.2" EW="28.2"></loc>
+    <loc id="521" name="Yanshi Meeting Hall" type="AllegianceHall" NS="-12.4" EW="42.8"></loc>
+    <loc id="522" name="Yaraq Meeting Hall" type="AllegianceHall" NS="-21.8" EW="-1.8"></loc>
+    <loc id="523" name="Zaikhal Meeting Hall" type="AllegianceHall" NS="13.4" EW="0.7"></loc>
+    <loc id="524" name="Obsidian Span" type="Landmark" NS="34.6" EW="41.2"></loc>
+    <loc id="525" name="Festival Stone of Snowreap" type="Landmark" NS="65.4" EW="13.7"></loc>
+    <loc id="526" name="Silencia the Archmage" type="Vendor" NS="64.9" EW="13.5"></loc>
+    <loc id="527" name="Giant Mushroom" type="Landmark" NS="66.1" EW="13.9"></loc>
+    <loc id="528" name="Crater Rim Passage" type="Landmark" NS="65.2" EW="11.1"></loc>
+    <loc id="529" name="Crater Lifestone" type="Lifestone" NS="64.8" EW="13.4"></loc>
+    <loc id="530" name="Crater Pathway (upper entrance)" type="Dungeon" NS="64.8" EW="13.6" dungeonId="423"></loc>
+    <loc id="531" name="Weldub Finol" type="Vendor" NS="64.9" EW="13.5"></loc>
+    <loc id="532" name="Firey Shrine" type="Landmark" NS="65.9" EW="12.4"></loc>
+    <loc id="533" name="Geldeb Finol" type="Vendor" NS="64.9" EW="13.5"></loc>
+    <loc id="534" name="Portal to Sho Roadside" type="WildernessPortal" NS="64.9" EW="13.6" exitNS="-27.9" exitEW="68.4"></loc>
+    <loc id="535" name="Crater to Hilltop" type="WildernessPortal" NS="64.8" EW="13.5" exitNS="32.8" exitEW="34.7"></loc>
+    <loc id="536" name="Mountain Fortress" type="Dungeon" NS="-82.4" EW="19.9" dungeonId="284">Level 50 Capstone</loc>
+    <loc id="537" name="Smuggler's Fort" type="Dungeon" NS="-29" EW="91.7"></loc>
+    <loc id="538" name="Glenden Wood East Lifestone" type="Lifestone" NS="29.7" EW="28.9"></loc>
+    <loc id="539" name="Zefir Cave" type="Landmark" NS="-73" EW="68"></loc>
+    <loc id="540" name="Swamp Cave" type="Landmark" NS="-24.5" EW="47.4"></loc>
+    <loc id="541" name="Igloo" type="Landmark" NS="89.1" EW="-1.8"></loc>
+    <loc id="542" name="Firey Cave" type="Landmark" NS="-15" EW="31.2"></loc>
+    <loc id="543" name="Samsur Crater" type="Landmark" NS="-0.8" EW="22"></loc>
+    <loc id="544" name="Twin Faces" type="Landmark" NS="-3.1" EW="21.4"></loc>
+    <loc id="545" name="Abandoned Tents" type="Landmark" NS="-3" EW="24.2"></loc>
+    <loc id="546" name="Samsur Advocate Tower" type="Landmark" NS="-3.1" EW="18.7"></loc>
+    <loc id="547" name="Empty Lifestone Brackets" type="Landmark" NS="-2.7" EW="20.4"></loc>
+    <loc id="548" name="Empyrean Ruins" type="Landmark" NS="-4.4" EW="19.9"></loc>
+    <loc id="549" name="Apple Grove" type="Landmark" NS="-3.3" EW="19.7"></loc>
+    <loc id="550" name="Revitalizing Fountain" type="Landmark" NS="-4.9" EW="25.1"></loc>
+    <loc id="551" name="Portal to Riverbend" type="WildernessPortal" NS="-11.3" EW="37.5" exitNS="-2.3" exitEW="63.3"></loc>
+    <loc id="552" name="Portal to North Desert Edge" type="WildernessPortal" NS="-11.4" EW="37.5" exitNS="-4.7" exitEW="-3.1"></loc>
+    <loc id="553" name="Abandoned Arena" type="Dungeon" NS="-11.3" EW="37.5" dungeonId="424"></loc>
+    <loc id="554" name="Portal to Desert Ridge Border" type="WildernessPortal" NS="-11.2" EW="37.4" exitNS="-5.6" exitEW="40"></loc>
+    <loc id="555" name="North Desert Edge Peddler" type="Vendor" NS="-4.8" EW="-2.9"></loc>
+    <loc id="556" name="Hilltop Windmill" type="Landmark" NS="16.4" EW="0.9"></loc>
+    <loc id="557" name="Portal to North Desert Edge" type="WildernessPortal" NS="61.6" EW="-10.2" exitNS="-4.7" exitEW="-3.1"></loc>
+    <loc id="558" name="Yanshi Advocate Tower" type="Landmark" NS="-12.5" EW="45.5"></loc>
+    <loc id="559" name="Statue Circle" type="Landmark" NS="-15" EW="49.1"></loc>
+    <loc id="560" name="Pillar Ruins" type="Landmark" NS="-13.7" EW="42.6"></loc>
+    <loc id="561" name="Yanshi Festival Grounds" type="Landmark" NS="-12.8" EW="42.8"></loc>
+    <loc id="562" name="A Small Ruin" type="Dungeon" NS="-53.6" EW="70.8" dungeonId="328"></loc>
+    <loc id="563" name="Tai Wo" type="NPC" NS="-28" EW="95.8"></loc>
+    <loc id="564" name="Abandoned Tent" type="Landmark" NS="17.3" EW="3.7"></loc>
+    <loc id="565" name="Windmill" type="Landmark" NS="15.9" EW="1"></loc>
+    <loc id="566" name="Home of Devana bint Hamudi" type="Landmark" NS="12.9" EW="0.4"></loc>
+    <loc id="567" name="Cursed Swamp" type="Dungeon" NS="-27.3" EW="69.1" dungeonId="264">todo</loc>
+    <loc id="568" name="Hills Citadel" type="Dungeon" NS="-56.5" EW="67"></loc>
+    <loc id="569" name="Murk Warrens" type="Dungeon" NS="26.3" EW="1.9" dungeonId="257"></loc>
+    <loc id="570" name="Lifestone Tower" type="Landmark" NS="-75.2" EW="50"></loc>
+    <loc id="571" name="Fadsahil al-Tashbi" type="Vendor" NS="-40.3" EW="11.2"></loc>
+    <loc id="572" name="Arwic to Northern Olthoi Camp" type="TownPortal" NS="33.8" EW="56.8" exitNS="67.9" exitEW="67"></loc>
+    <loc id="573" name="Butcher" type="Vendor" NS="0.5" EW="51">T2</loc>
+    <loc id="574" name="Empyrean Watcher" type="Landmark" NS="-27.4" EW="71"></loc>
+    <loc id="575" name="Skeleton Bunker" type="Landmark" NS="-15.7" EW="1.1"></loc>
+    <loc id="576" name="Hedged Platform" type="Landmark" NS="37.7" EW="29"></loc>
+    <loc id="577" name="Gharu'ndim Outpost Lifestone" type="Lifestone" NS="19.7" EW="-3.3"></loc>
+    <loc id="578" name="Apple Seller" type="Vendor" NS="13.6" EW="50.7"></loc>
+    <loc id="579" name="Gharu'ndim Outpost" type="Outpost" NS="19.8" EW="-3.2"></loc>
+    <loc id="580" name="Ridge Citadel" type="Dungeon" NS="-70.2" EW="24.3" dungeonId="753"></loc>
+    <loc id="581" name="Abandoned Tent" type="Landmark" NS="7.3" EW="7.7"></loc>
+    <loc id="582" name="Drudge Crypt" type="Landmark" NS="-27.8" EW="12.1"></loc>
+    <loc id="583" name="Danby's Outpost Lifestone" type="Lifestone" NS="24.1" EW="-28.1"></loc>
+    <loc id="584" name="Empyrean Platform" type="Landmark" NS="-29.3" EW="66.7"></loc>
+    <loc id="585" name="Murk Warrens" type="Dungeon" NS="-43.2" EW="67" dungeonId="256"></loc>
+    <loc id="586" name="Abandoned Tower" type="Landmark" NS="-78.1" EW="48.7"></loc>
+    <loc id="587" name="Skeleton Tower" type="Landmark" NS="2.3" EW="27.8"></loc>
+    <loc id="588" name="Hill of Pines" type="Landmark" NS="-41" EW="52.2"></loc>
+    <loc id="589" name="Riverbend Tower" type="Landmark" NS="-2.3" EW="63.7"></loc>
+    <loc id="590" name="Arena" type="Dungeon" NS="-18.5" EW="3.7" dungeonId="738"></loc>
+    <loc id="591" name="Dueling Arena Lifestone" type="Lifestone" NS="-18.5" EW="3.7"></loc>
+    <loc id="592" name="Mu-Miyah Temple" type="Landmark" NS="-5" EW="1.7"></loc>
+    <loc id="593" name="Tou-Tou Bathhouse" type="Landmark" NS="-30.4" EW="94.8"></loc>
+    <loc id="594" name="Ancient Town to Hilltop" type="WildernessPortal" NS="-61.9" EW="40.2" exitNS="32.8" exitEW="34.7"></loc>
+    <loc id="595" name="Zelina's Cottage" type="Landmark" NS="53.7" EW="24.1"></loc>
+    <loc id="596" name="Incomplete Lifestone" type="Landmark" NS="54.5" EW="22.6"></loc>
+    <loc id="597" name="Cabbage Farmer" type="Vendor" NS="-6.6" EW="70.7"></loc>
+    <loc id="598" name="Tumerok Tower" type="Landmark" NS="-6.3" EW="73.6"></loc>
+    <loc id="599" name="Nanto to Hebian-To" type="TownPortal" NS="-52.6" EW="82.4" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="600" name="Jibril ibn Rashid, Gemstone Armorer" type="NPC" NS="7.1" EW="3"></loc>
+    <loc id="601" name="Woodland Peddler" type="Vendor" NS="31.2" EW="19.8"></loc>
+    <loc id="602" name="Zaikhal Menhir Ring" type="Landmark" NS="16" EW="1.8"></loc>
+    <loc id="603" name="Linvak Peddler" type="Vendor" NS="-59.7" EW="48.5"></loc>
+    <loc id="604" name="Empyrean Tower" type="Landmark" NS="-5.5" EW="40"></loc>
+    <loc id="605" name="Fallen Suntik Messenger" type="Landmark" NS="26.9" EW="7.7"></loc>
+    <loc id="606" name="Mosswart Cave" type="Landmark" NS="-36.4" EW="61.2"></loc>
+    <loc id="607" name="Gharu'ndim Outpost to North Desert Edge" type="WildernessPortal" NS="19.6" EW="-3.2" exitNS="-4.7" exitEW="-3.1"></loc>
+    <loc id="608" name="Peddler" type="Vendor" NS="-35.1" EW="60.6"></loc>
+    <loc id="609" name="Healer" type="Vendor" NS="-34.7" EW="59.7"></loc>
+    <loc id="610" name="Mosswart Tower" type="Landmark" NS="-27.1" EW="57.7"></loc>
+    <loc id="611" name="Empyrean Pillar" type="Landmark" NS="-25.9" EW="49.9"></loc>
+    <loc id="612" name="Mosswart Bunker" type="Landmark" NS="-23.8" EW="49.6"></loc>
+    <loc id="613" name="Mushroom Ring" type="Landmark" NS="-25.8" EW="59"></loc>
+    <loc id="614" name="Swamp Rat Bunker" type="Landmark" NS="-26.2" EW="57.8"></loc>
+    <loc id="615" name="Rat Cave" type="Landmark" NS="21.4" EW="-5"></loc>
+    <loc id="616" name="Archmage" type="Vendor" NS="-9.7" EW="-2.3"></loc>
+    <loc id="617" name="Shadow Spire Geyser" type="Landmark" NS="-26.4" EW="98"></loc>
+    <loc id="618" name="Paul the Monouga" type="Landmark" NS="84.1" EW="-22.2"></loc>
+    <loc id="619" name="Cellar" type="Landmark" NS="-71.2" EW="52.3"></loc>
+    <loc id="620" name="Butcher" type="Vendor" NS="-41.7" EW="16.3">T2</loc>
+    <loc id="621" name="Cragstone Middle Guard Tower" type="Landmark" NS="25.5" EW="39.9"></loc>
+    <loc id="622" name="Zaikhal Middle Guard Tower" type="Landmark" NS="22.1" EW="-1"></loc>
+    <loc id="623" name="Watcher Monument" type="Landmark" NS="30.7" EW="26.4"></loc>
+    <loc id="624" name="Combat Focus Trainer" type="Vendor" NS="-39.1" EW="83.4"></loc>
+    <loc id="625" name="Fenmalain Crystal Circle" type="Landmark" NS="-46.9" EW="55.2" dungeonId="731"></loc>
+    <loc id="626" name="Caulnalain Vestibule" type="Landmark" NS="68.5" EW="5.5" dungeonId="732"></loc>
+    <loc id="627" name="Caulnalain Menhir Ring" type="Landmark" NS="82.7" EW="21"></loc>
+    <loc id="628" name="Banderling Conquest Dungeon" type="Dungeon" NS="-29" EW="50.5" dungeonId="712"></loc>
+    <loc id="629" name="Nen Ai's House" type="Landmark" NS="-34.8" EW="71.2"></loc>
+    <loc id="630" name="Drudge Cave" type="Landmark" NS="-33.4" EW="68"></loc>
+    <loc id="631" name="Chosen of Asheron, Cragstone" type="NPC" NS="23.6" EW="49.1"></loc>
+    <loc id="632" name="Shreth Hive" type="Dungeon" NS="-32.4" EW="71" dungeonId="339"></loc>
+    <loc id="633" name="Baishi Attunement Device" type="Bindstone" NS="-49.7" EW="62.6"></loc>
+    <loc id="634" name="Drudge Temple" type="Landmark" NS="-36.6" EW="77.6"></loc>
+    <loc id="635" name="Ufet, Prophet of Blades" type="NPC" NS="13.9" EW="0.7"></loc>
+    <loc id="636" name="Mosswart Maze" type="Dungeon" NS="-25.2" EW="19.4" dungeonId="714"></loc>
+    <loc id="637" name="Xarabydun" type="Town" NS="-41.9" EW="16.2">200</loc>
+    <loc id="638" name="Aino Lunnan-Shin, Gem Crafter" type="NPC" NS="-41.7" EW="16.1"></loc>
+    <loc id="639" name="Archmage and Peddler" type="Vendor" NS="-82.1" EW="63.7"></loc>
+    <loc id="640" name="Lifestone" type="Lifestone" NS="-82.1" EW="63.7"></loc>
+    <loc id="641" name="Strange Landfill" type="Landmark" NS="-84" EW="66.2"></loc>
+    <loc id="642" name="Catacombs of the Forgotten" type="Dungeon" NS="17.3" EW="32.8" dungeonId="742"></loc>
+    <loc id="643" name="Zaikhal ReinforcementsTower" type="Landmark" NS="27.1" EW="-5.3"></loc>
+    <loc id="644" name="Eternal Flame" type="Landmark" NS="39" EW="35.6"></loc>
+    <loc id="645" name="Murk Warrens" type="Dungeon" NS="67.5" EW="-29.3" dungeonId="258"></loc>
+    <loc id="646" name="Barnar the Tinker" type="NPC" NS="68.9" EW="-21.6"></loc>
+    <loc id="647" name="Trophy Collector" type="NPC" NS="25.5" EW="49.2"></loc>
+    <loc id="648" name="Zefir Tower" type="Landmark" NS="72.2" EW="-36.1"></loc>
+    <loc id="649" name="Stone Platform" type="Landmark" NS="66.5" EW="-26.7"></loc>
+    <loc id="650" name="Igloo Archmage" type="Vendor" NS="70.4" EW="-17.3"></loc>
+    <loc id="651" name="Hilltop Drudge Tower" type="Landmark" NS="32.7" EW="34.7"></loc>
+    <loc id="652" name="Empyrean Cloister" type="Dungeon" NS="-23.4" EW="5.8" dungeonId="685"></loc>
+    <loc id="653" name="Uziz Attunement Device" type="Bindstone" NS="-25.1" EW="28.3"></loc>
+    <loc id="654" name="Olthoi Hunter" type="NPC" NS="30.9" EW="56.3"></loc>
+    <loc id="655" name="North Road Watchtower" type="Landmark" NS="72" EW="38"></loc>
+    <loc id="656" name="North Road Lifestone" type="Lifestone" NS="71.9" EW="38"></loc>
+    <loc id="657" name="North Road Vendors" type="Vendor" NS="71.8" EW="38"></loc>
+    <loc id="658" name="Yi Yo-Jin the Leather Crafter" type="NPC" NS="69.5" EW="17.6"></loc>
+    <loc id="659" name="Arcane Geysers" type="Landmark" NS="6.5" EW="-3.6" dungeonId="682"></loc>
+    <loc id="660" name="Essence of Strife" type="Landmark" NS="73.5" EW="-3.2"></loc>
+    <loc id="661" name="Eastham to Cragstone" type="TownPortal" NS="17.6" EW="63.2" exitNS="26" exitEW="48.4"></loc>
+    <loc id="662" name="Garold's Gully Lifestone" type="Lifestone" NS="79.2" EW="-15.7"></loc>
+    <loc id="663" name="Garold's Gully Vendors" type="Vendor" NS="79.2" EW="-15.6"></loc>
+    <loc id="664" name="Dizah ibn Nadqab" type="NPC" NS="12.2" EW="2.4"></loc>
+    <loc id="665" name="Impious Temple" type="Dungeon" NS="12.3" EW="2.5" dungeonId="350"></loc>
+    <loc id="666" name="Arwic Healer" type="Vendor" NS="31.1" EW="56.2"></loc>
+    <loc id="667" name="Lugian Mines" type="Dungeon" NS="-73.9" EW="39" dungeonId="745">Level 50 Capstone</loc>
+    <loc id="668" name="Lugian Quarry" type="Dungeon" NS="-64.5" EW="55.6" dungeonId="744"></loc>
+    <loc id="669" name="Faruza ibn Salaq" type="NPC" NS="76" EW="-49"></loc>
+    <loc id="670" name="Gervena the Oblique" type="Vendor" NS="-24.4" EW="28.7"></loc>
+    <loc id="671" name="Gerloc the Defender" type="Vendor" NS="-24.4" EW="28.7"></loc>
+    <loc id="672" name="Gersan the Sureshot" type="Vendor" NS="-24.4" EW="28.7"></loc>
+    <loc id="673" name="Gillian the Poacher" type="NPC" NS="66.3" EW="49.9"></loc>
+    <loc id="674" name="Essence of Artifice" type="Landmark" NS="-86.7" EW="10.4"></loc>
+    <loc id="675" name="Uziz to Zaikhal" type="TownPortal" NS="-25.1" EW="28.2" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="676" name="South Tumerok Vanguard Outpost" type="Dungeon" NS="-45.9" EW="14.2" dungeonId="676"></loc>
+    <loc id="677" name="Hasina bint Rira" type="Vendor" NS="-9.7" EW="0.7"></loc>
+    <loc id="678" name="Peddler" type="Vendor" NS="-61.5" EW="52.8"></loc>
+    <loc id="679" name="Lifestone" type="Lifestone" NS="-61.5" EW="52.9"></loc>
+    <loc id="680" name="Arcane Whirlwind" type="Landmark" NS="-18.7" EW="6.8"></loc>
+    <loc id="681" name="Three Stones" type="Landmark" NS="-77.3" EW="38.8"></loc>
+    <loc id="682" name="Ya-Bint-Al-Hawa" type="NPC" NS="-13.3" EW="5.1"></loc>
+    <loc id="683" name="Anid Al-Fadee" type="NPC" NS="-13.3" EW="5.1"></loc>
+    <loc id="684" name="Renselm" type="NPC" NS="-2.5" EW="16.4"></loc>
+    <loc id="685" name="Hahnain" type="NPC" NS="-2.5" EW="16.4"></loc>
+    <loc id="686" name="Saelar" type="NPC" NS="-2.5" EW="16.4"></loc>
+    <loc id="687" name="Mnemosyne Collection Site" type="Landmark" NS="-2.5" EW="16.4"></loc>
+    <loc id="688" name="Drudge Camp" type="Landmark" NS="29" EW="58.8"></loc>
+    <loc id="689" name="Farmer" type="Vendor" NS="32.6" EW="55"></loc>
+    <loc id="690" name="Barkeep Fo Ya-Un" type="Vendor" NS="-39.1" EW="83.4"></loc>
+    <loc id="691" name="Linvak Tukal" type="Outpost" NS="-77.2" EW="28.5"></loc>
+    <loc id="692" name="Butcher" type="Vendor" NS="-25.7" EW="28.3">T2</loc>
+    <loc id="693" name="Hebian-To Advocate/Sentinel Monument" type="Landmark" NS="-40.3" EW="84.5"></loc>
+    <loc id="694" name="Lugian Camp" type="Landmark" NS="-64" EW="25.6"></loc>
+    <loc id="695" name="Gredaline Consulate" type="Dungeon" NS="-61.6" EW="29.3" dungeonId="667">Level 40 Capstone</loc>
+    <loc id="696" name="Zaikhal Advocate/Sentinel Monument" type="Landmark" NS="14.4" EW="1.3"></loc>
+    <loc id="697" name="Cragstone Advocate/Sentinel Monument" type="Landmark" NS="24.3" EW="48.6"></loc>
+    <loc id="698" name="Aluvian Casino" type="Landmark" NS="40.8" EW="33.6"></loc>
+    <loc id="699" name="Gharu'ndim Casino" type="Landmark" NS="-21.5" EW="-0.8"></loc>
+    <loc id="700" name="Kara Menhir Ring" type="Landmark" NS="-83.3" EW="47.1"></loc>
+    <loc id="701" name="Sand Shallow" type="Dungeon" NS="-11.5" EW="0.7" dungeonId="672">Level 10 Capstone</loc>
+    <loc id="702" name="Portal to Rivermouth" type="WildernessPortal" NS="28.8" EW="6.7" exitNS="55.9" exitEW="-52.2"></loc>
+    <loc id="703" name="Farmer" type="Vendor" NS="-1.4" EW="71.9"></loc>
+    <loc id="704" name="Portal to Danby's Outpost" type="TownPortal" NS="16.7" EW="-1.6" exitNS="23.2" exitEW="-29.9"></loc>
+    <loc id="705" name="Danby's Outpost" type="Outpost" NS="23.3" EW="-28.7"></loc>
+    <loc id="706" name="Larry the Rabbit Master" type="NPC" NS="2" EW="41.6"></loc>
+    <loc id="707" name="Rabbit Master Lifestone" type="Lifestone" NS="1.9" EW="41.7"></loc>
+    <loc id="708" name="Essence of Enchantment" type="Landmark" NS="52.8" EW="62.4"></loc>
+    <loc id="709" name="Northern Point Lifestone" type="Lifestone" NS="93.7" EW="7.7"></loc>
+    <loc id="710" name="Northern Point Vendors" type="Vendor" NS="93.8" EW="7.8"></loc>
+    <loc id="711" name="Nerezi ibn Risad" type="Vendor" NS="-73.9" EW="19.1"></loc>
+    <loc id="712" name="Naba Ko-Zin" type="Vendor" NS="-53.9" EW="74.4"></loc>
+    <loc id="713" name="Saoirse, Master of Provoke" type="Vendor" NS="29.4" EW="27.2"></loc>
+    <loc id="714" name="Jaizen Tan" type="NPC" NS="-53.9" EW="74.4"></loc>
+    <loc id="715" name="Skeleton Cave" type="Landmark" NS="-24.8" EW="18.7"></loc>
+    <loc id="716" name="Zombie Cave" type="Landmark" NS="-55.8" EW="73.6"></loc>
+    <loc id="717" name="Swamp Gardens" type="Dungeon" NS="-22.6" EW="45.8" dungeonId="655"></loc>
+    <loc id="718" name="Tomb of the Dead" type="Dungeon" NS="-18.4" EW="9.3" dungeonId="499"></loc>
+    <loc id="719" name="Portal to Northern Point" type="WildernessPortal" NS="-45.9" EW="90.8" exitNS="93.5" exitEW="7.7"></loc>
+    <loc id="720" name="Dwynna's Hut" type="Landmark" NS="-77" EW="29.9"></loc>
+    <loc id="721" name="Flaming Pillars" type="Landmark" NS="-69.2" EW="48.6"></loc>
+    <loc id="722" name="Riverside Vendors" type="Vendor" NS="54.4" EW="-38.3"></loc>
+    <loc id="723" name="Riverside Lifestone" type="Lifestone" NS="54.4" EW="-38.3"></loc>
+    <loc id="724" name="G-TN to Al-Arqas" type="TownPortal" NS="13.7" EW="0.6" exitNS="-31.2" exitEW="13.7"></loc>
+    <loc id="725" name="North Camp Platform" type="Landmark" NS="85" EW="28.8"></loc>
+    <loc id="726" name="North Camp" type="Landmark" NS="85.1" EW="28.6"></loc>
+    <loc id="727" name="Bank" type="Outpost" NS="25.6" EW="49.4"></loc>
+    <loc id="728" name="Landrew, the Dabbler, Master of Spellcrafting" type="NPC" NS="25.8" EW="49.4">Master Spellcrafter</loc>
+    <loc id="729" name="Leather Trader" type="Vendor" NS="25.8" EW="49.2">T1</loc>
+    <loc id="730" name="Ivory Trader" type="Vendor" NS="25.8" EW="49.2">T1</loc>
+    <loc id="731" name="Fazyad ibn Raymar" type="NPC" NS="-41.8" EW="16.2"></loc>
+    <loc id="732" name="Frozen Valley Menhir Ring" type="Landmark" NS="86.5" EW="-3.3"></loc>
+    <loc id="733" name="Southern Infiltrator Keep" type="Dungeon" NS="-52.3" EW="24.9" dungeonId="930"></loc>
+    <loc id="734" name="Northern Infiltrator Keep" type="Dungeon" NS="15.5" EW="4.9" dungeonId="931"></loc>
+    <loc id="735" name="S-TN to Yanshi" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-12.5" exitEW="46.5"></loc>
+    <loc id="736" name="West Coast Vendors" type="Vendor" NS="29.4" EW="-52.2"></loc>
+    <loc id="737" name="West Coast Lifestone" type="Lifestone" NS="29.4" EW="-52"></loc>
+    <loc id="738" name="S-TN to Tou-Tou" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-28.1" exitEW="95.4"></loc>
+    <loc id="739" name="Southern Landbridge Vendors" type="Vendor" NS="-86.5" EW="5.4"></loc>
+    <loc id="740" name="S-TN to Lin" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-54.3" exitEW="73.1"></loc>
+    <loc id="741" name="S-TN to Shoushi" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-33.5" exitEW="72.8"></loc>
+    <loc id="742" name="S-TN to Kara" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-83.3" exitEW="47.2"></loc>
+    <loc id="743" name="Terese the Herbalist" type="NPC" NS="-22.6" EW="45.8"></loc>
+    <loc id="744" name="Rithwic to Cragstone" type="TownPortal" NS="10.6" EW="58.1" exitNS="26" exitEW="48.4"></loc>
+    <loc id="745" name="Singular Chorizite Repository" type="Dungeon" NS="-77.3" EW="51.6" dungeonId="928"></loc>
+    <loc id="746" name="Ivory Trader" type="Vendor" NS="-25.3" EW="28.2">T2</loc>
+    <loc id="747" name="Janda Sulifiya" type="NPC" NS="7.4" EW="4.6"></loc>
+    <loc id="748" name="Alexander the Deft" type="NPC" NS="17.4" EW="63.5"></loc>
+    <loc id="749" name="Tsua Kagemata" type="NPC" NS="-28.8" EW="59.4"></loc>
+    <loc id="750" name="Abandoned Shops Portal" type="Dungeon" NS="-32.3" EW="12.7" dungeonId="345"></loc>
+    <loc id="751" name="Jubei's Apprentice" type="Vendor" NS="-39.4" EW="82.8"></loc>
+    <loc id="752" name="Steiner's Apprentice" type="Vendor" NS="24.6" EW="47.1"></loc>
+    <loc id="753" name="Jubei Minawoto" type="NPC" NS="-39.4" EW="82.8"></loc>
+    <loc id="754" name="Bartholomew Steiner" type="NPC" NS="24.6" EW="47.1"></loc>
+    <loc id="755" name="Ro Bi-Jor, Apprentice Tailor" type="Vendor" NS="-28.5" EW="59.2"></loc>
+    <loc id="756" name="Lytelthorpe Attunement Device" type="Bindstone" NS="0.7" EW="51.6"></loc>
+    <loc id="757" name="Mosswart Camp" type="Landmark" NS="-28.9" EW="53.4"></loc>
+    <loc id="758" name="S-TN to Cragstone" type="TownPortal" NS="-39.1" EW="83.2" exitNS="25.6" exitEW="49.2"></loc>
+    <loc id="759" name="S-TN to Zaikhal" type="TownPortal" NS="-39.1" EW="83.2" exitNS="13.7" exitEW="0.6"></loc>
+    <loc id="760" name="Sentry" type="NPC" NS="39.3" EW="33.1"></loc>
+    <loc id="761" name="Holtburg South Training Academy" type="Dungeon" NS="39.3" EW="33.4" dungeonId="867"></loc>
+    <loc id="762" name="Holtburg West Training Academy" type="Dungeon" NS="42.3" EW="30.6" dungeonId="868"></loc>
+    <loc id="763" name="Sentry" type="NPC" NS="42.4" EW="30.4"></loc>
+    <loc id="764" name="Jaque the Woodsman" type="Vendor" NS="28.8" EW="27.5"></loc>
+    <loc id="765" name="Sandy Armoredillo Lair" type="Landmark" NS="11" EW="21.1"></loc>
+    <loc id="766" name="S-TN to Baishi" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-49.3" exitEW="62.7"></loc>
+    <loc id="767" name="S-TN to Sawato" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-28.9" exitEW="59.1"></loc>
+    <loc id="768" name="Amiantos Bethel" type="Dungeon" NS="-16.3" EW="35.1" dungeonId="275"></loc>
+    <loc id="769" name="Celcynd the Dour" type="NPC" NS="10.7" EW="58.1"></loc>
+    <loc id="770" name="Sentry" type="NPC" NS="-18.9" EW="-1.2"></loc>
+    <loc id="771" name="Sentry" type="NPC" NS="-21.7" EW="0.9"></loc>
+    <loc id="772" name="Yaraq North Training Academy" type="Dungeon" NS="-18.7" EW="-1.7" dungeonId="872"></loc>
+    <loc id="773" name="Nasun ibn Tifar" type="NPC" NS="-18.6" EW="-1.4"></loc>
+    <loc id="774" name="Ahyara" type="NPC" NS="-21.3" EW="1.1"></loc>
+    <loc id="775" name="Yaraq East Training Academy" type="Dungeon" NS="-21.5" EW="1.3" dungeonId="871"></loc>
+    <loc id="776" name="Butcher" type="Vendor" NS="-21.4" EW="-1.6">T1</loc>
+    <loc id="777" name="Mara al-Luq" type="NPC" NS="-21.7" EW="-1.6"></loc>
+    <loc id="778" name="Corpse of Admim ibn Ibsar" type="Landmark" NS="-22.3" EW="-4.7"></loc>
+    <loc id="779" name="Lubziklan al-Luq" type="NPC" NS="-22.4" EW="-1.9"></loc>
+    <loc id="780" name="Ivory Trader" type="Vendor" NS="42.6" EW="33.5">T1</loc>
+    <loc id="781" name="Festival Stone of Frostfell" type="Landmark" NS="69.4" EW="-25"></loc>
+    <loc id="782" name="Snowman" type="Vendor" NS="-70.4" EW="54.5"></loc>
+    <loc id="783" name="Combat Ability Trainer" type="Vendor" NS="25.7" EW="48.8"></loc>
+    <loc id="784" name="Aun Aulakhe" type="NPC" NS="82.7" EW="21.2"></loc>
+    <loc id="785" name="Aun Tikakhe" type="NPC" NS="82.7" EW="21"></loc>
+    <loc id="786" name="S-TN to Nanto" type="TownPortal" NS="-39.1" EW="83.2" exitNS="-52.5" exitEW="82.4"></loc>
+    <loc id="787" name="G-TN to Qalaba'r" type="TownPortal" NS="13.7" EW="0.6" exitNS="-74.5" exitEW="19.4"></loc>
+    <loc id="788" name="Balthazar, Royal Guard" type="NPC" NS="-54.8" EW="74.4"></loc>
+    <loc id="789" name="Leather Trader" type="Vendor" NS="42.6" EW="33.5">T1</loc>
+    <loc id="790" name="Brontynn Marshid" type="NPC" NS="-10.3" EW="57.6"></loc>
+    <loc id="791" name="Standing Stone" type="Landmark" NS="66.1" EW="51.4"></loc>
+    <loc id="792" name="Standing Stone" type="Landmark" NS="69.2" EW="15.3"></loc>
+    <loc id="793" name="Standing Stone" type="Landmark" NS="72" EW="-22"></loc>
+    <loc id="794" name="Brontynn Marshad's Cottage" type="Landmark" NS="15.5" EW="65.6"></loc>
+    <loc id="795" name="Swamp Lifestone" type="Lifestone" NS="-19.8" EW="47.9"></loc>
+    <loc id="796" name="Swamp Temple" type="Dungeon" NS="-23.3" EW="47.9" dungeonId="418"></loc>
+    <loc id="797" name="Zombie Camp" type="Landmark" NS="-24.9" EW="49.4"></loc>
+    <loc id="798" name="Gelidite Library" type="Dungeon" NS="69.2" EW="-17.2" dungeonId="21604"></loc>
+    <loc id="799" name="Wedding Trials Dungeon" type="Dungeon" NS="32.8" EW="55.2" dungeonId="21097"></loc>
+    <loc id="800" name="Edlebar Lifestone" type="Lifestone" NS="43.2" EW="25.9"></loc>
+    <loc id="801" name="Archmage" type="Vendor" NS="37.7" EW="-1.2"></loc>
+    <loc id="802" name="Skeleton Tent" type="Landmark" NS="-18.6" EW="12"></loc>
+    <loc id="803" name="Skeleton Tent" type="Landmark" NS="-18.4" EW="12.6"></loc>
+    <loc id="804" name="Lia Tze" type="NPC" NS="-49.4" EW="62.4"></loc>
+    <loc id="805" name="Yu Vuo-Ki" type="NPC" NS="-6.6" EW="70.7"></loc>
+    <loc id="806" name="Simple Tower Portal" type="Dungeon" NS="17.4" EW="62.5" dungeonId="413"></loc>
+    <loc id="807" name="Igloo" type="Landmark" NS="73.8" EW="-13.7"></loc>
+    <loc id="808" name="Lifestone" type="Lifestone" NS="86" EW="-27.7"></loc>
+    <loc id="809" name="Small Cottage" type="Landmark" NS="-77" EW="29.9"></loc>
+    <loc id="810" name="A Mosswart Ruin" type="Landmark" NS="-20.2" EW="47.8"></loc>
+    <loc id="811" name="Stranger in Town" type="NPC" NS="-23.7" EW="-2.8"></loc>
+    <loc id="812" name="Roaming Bowyer" type="Vendor" NS="86" EW="-27.7"></loc>
+    <loc id="813" name="Southeast Camp" type="Outpost" NS="46.2" EW="70.8"></loc>
+    <loc id="814" name="Cragstone Bind Stone" type="Bindstone" NS="26" EW="49.1"></loc>
+    <loc id="815" name="A-TN to Rithwic" type="TownPortal" NS="25.6" EW="49.2" exitNS="10.8" exitEW="59.3"></loc>
+    <loc id="816" name="A-TN to Glenden Wood" type="TownPortal" NS="25.6" EW="49.2" exitNS="29.7" exitEW="26.8"></loc>
+    <loc id="817" name="Emmisary of Asheron" type="NPC" NS="17.8" EW="64.3"></loc>
+    <loc id="818" name="Arcanum Researcher" type="NPC" NS="26" EW="47"></loc>
+    <loc id="819" name="Coron Usgin" type="Vendor" NS="13.7" EW="0.7"></loc>
+    <loc id="820" name="Ciandra, Arcanum Alchemist" type="NPC" NS="-41.8" EW="15.8"></loc>
+    <loc id="821" name="Bhab, Arcanum Tinkerer" type="NPC" NS="-41.6" EW="15.8"></loc>
+    <loc id="822" name="Hiro, Arcanum Artificer" type="NPC" NS="-41.6" EW="15.8"></loc>
+    <loc id="823" name="Arcanum Researcher" type="NPC" NS="13.9" EW="0.1"></loc>
+    <loc id="824" name="Kuyazi bint Zayi the Translator" type="NPC" NS="13.9" EW="0.1"></loc>
+    <loc id="825" name="Diyas al-Yat" type="NPC" NS="13.8" EW="0.1"></loc>
+    <loc id="826" name="Butcher" type="Vendor" NS="7.6" EW="4.8">T2</loc>
+    <loc id="827" name="Combat Focus Trainer" type="Vendor" NS="25.7" EW="48.8"></loc>
+    <loc id="828" name="Loom" type="Landmark" NS="69.5" EW="17.6"></loc>
+    <loc id="829" name="Spinning Wheel" type="Landmark" NS="-24.3" EW="76.8"></loc>
+    <loc id="830" name="Empty Cabin" type="Landmark" NS="3.9" EW="44.8"></loc>
+    <loc id="831" name="Precarious Sojourn" type="Landmark" NS="2.3" EW="-0.8" exitNS="-38.1" exitEW="-60.3"></loc>
+    <loc id="832" name="Verdentine Magnan" type="NPC" NS="75.8" EW="-20.3"></loc>
+    <loc id="833" name="Grievver Caves Portal" type="Dungeon" NS="75.9" EW="-19" dungeonId="21590"></loc>
+    <loc id="834" name="Martine`s Retreat" type="Dungeon" NS="10.6" EW="58.3" dungeonId="22112"></loc>
+    <loc id="835" name="Leather Trader" type="Vendor" NS="-21.4" EW="-1.6">T1</loc>
+    <loc id="836" name="Frest Greevling's Mansion" type="Landmark" NS="6.5" EW="44"></loc>
+    <loc id="837" name="Frest Greevling" type="NPC" NS="6" EW="43.7"></loc>
+    <loc id="838" name="Ivory Trader" type="Vendor" NS="7.5" EW="4.7">T2</loc>
+    <loc id="839" name="Leather Trader" type="Vendor" NS="7.5" EW="4.7">T2</loc>
+    <loc id="840" name="Xarabydun Lifestone Portal" type="Dungeon" NS="-42" EW="15.9"></loc>
+    <loc id="841" name="Xarabydun to Zaikhal" type="TownPortal" NS="-41.9" EW="16" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="842" name="Holtburg to Cragstone" type="TownPortal" NS="42.3" EW="33.3" exitNS="26" exitEW="48.4"></loc>
+    <loc id="843" name="Holtburg to Shoushi" type="TownPortal" NS="42.3" EW="33.3" exitNS="-33.6" exitEW="72.8"></loc>
+    <loc id="844" name="Holtburg to Yaraq" type="TownPortal" NS="42.3" EW="33.3" exitNS="-21.5" exitEW="-1.8"></loc>
+    <loc id="845" name="Jourgensson" type="NPC" NS="66.3" EW="50"></loc>
+    <loc id="846" name="MacDugal" type="NPC" NS="66.4" EW="49.9"></loc>
+    <loc id="847" name="Gwillim, the Apprentice" type="NPC" NS="66.4" EW="49.9"></loc>
+    <loc id="848" name="G-TN to Hebian-To" type="TownPortal" NS="13.7" EW="0.6" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="849" name="Mountain Retreat Collector" type="NPC" NS="59.7" EW="-4.1"></loc>
+    <loc id="850" name="Chest of Camping Mastery" type="Landmark" NS="66.2" EW="-2.3"></loc>
+    <loc id="851" name="Guardian of the Temple of Forgetfulness" type="Landmark" NS="88.8" EW="0"></loc>
+    <loc id="852" name="Tornash" type="NPC" NS="46.8" EW="30.5"></loc>
+    <loc id="853" name="Ivory Trader" type="Vendor" NS="0.6" EW="51.5">T2</loc>
+    <loc id="854" name="Blind Snowman" type="NPC" NS="46.7" EW="48.9"></loc>
+    <loc id="855" name="Lich House" type="Landmark" NS="41.4" EW="26.3"></loc>
+    <loc id="856" name="Bandit Camp" type="Landmark" NS="43.9" EW="25.1"></loc>
+    <loc id="857" name="Combat Ability Trainer" type="Vendor" NS="-39.1" EW="83.4"></loc>
+    <loc id="858" name="Lartorus" type="NPC" NS="42.6" EW="62.4"></loc>
+    <loc id="859" name="G-TN to Tufa" type="TownPortal" NS="13.7" EW="0.6" exitNS="-13.9" exitEW="5.4"></loc>
+    <loc id="860" name="Runed Chest" type="Landmark" NS="-25.2" EW="74.4"></loc>
+    <loc id="861" name="Runed Chest" type="Landmark" NS="-29.3" EW="66.7"></loc>
+    <loc id="862" name="A-TN to Hebian-To" type="TownPortal" NS="25.6" EW="49.2" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="863" name="Kayna bint Iswas" type="NPC" NS="-1.6" EW="36.6"></loc>
+    <loc id="864" name="Skeleton Bunker" type="Landmark" NS="-24.7" EW="19.7"></loc>
+    <loc id="865" name="Zabool Tower" type="Dungeon" NS="21.7" EW="19.4"></loc>
+    <loc id="866" name="Leather Trader" type="Vendor" NS="10.4" EW="58.2">T2</loc>
+    <loc id="867" name="Delton Hardor" type="NPC" NS="10.8" EW="59.4"></loc>
+    <loc id="868" name="Tian Li Quan" type="Vendor" NS="-54.4" EW="73.1"></loc>
+    <loc id="869" name="Tower Base Dungeon" type="Dungeon" NS="-34.7" EW="33.6" dungeonId="22087"></loc>
+    <loc id="870" name="Mysterious Empyrean Tower" type="Landmark" NS="-35.1" EW="33.6"></loc>
+    <loc id="871" name="Zabool Tower Base" type="Dungeon" NS="21.7" EW="19.4" dungeonId="467"></loc>
+    <loc id="872" name="Top of Zabool Tower" type="Dungeon" NS="21.1" EW="18.5"></loc>
+    <loc id="873" name="Zabool Lifestone" type="Lifestone" NS="21" EW="18.6"></loc>
+    <loc id="874" name="South Zabool" type="WildernessPortal" NS="19.7" EW="17.8" exitNS="20.8" exitEW="18.5"></loc>
+    <loc id="875" name="Base of Mt. Alphus" type="WildernessPortal" NS="19.5" EW="17.5" exitNS="19.6" exitEW="17"></loc>
+    <loc id="876" name="Mt. Alphus Valley" type="WildernessPortal" NS="19.5" EW="16.9" exitNS="20.3" exitEW="15.8"></loc>
+    <loc id="877" name="Base of Mt. Alphus" type="WildernessPortal" NS="20.2" EW="15" exitNS="19.6" exitEW="17"></loc>
+    <loc id="878" name="Bellig Tower" type="Dungeon" NS="17.5" EW="16.1"></loc>
+    <loc id="879" name="North Gemm" type="WildernessPortal" NS="17.3" EW="16" exitNS="16.3" exitEW="14.7"></loc>
+    <loc id="880" name="South Bellig" type="WildernessPortal" NS="16.3" EW="14.7" exitNS="17.3" exitEW="16"></loc>
+    <loc id="881" name="North Dalt" type="WildernessPortal" NS="15.7" EW="14.2" exitNS="14.6" exitEW="13.2"></loc>
+    <loc id="882" name="South Gemm" type="WildernessPortal" NS="14.6" EW="13.2" exitNS="15.7" exitEW="14.2"></loc>
+    <loc id="883" name="North Syliph" type="WildernessPortal" NS="14.1" EW="12.7" exitNS="12.7" exitEW="11.8"></loc>
+    <loc id="884" name="South Dalt" type="WildernessPortal" NS="12.7" EW="11.8" exitNS="14.1" exitEW="12.7"></loc>
+    <loc id="885" name="Mt. Syliph Plain" type="WildernessPortal" NS="11.6" EW="12.3" exitNS="11.2" exitEW="12.2"></loc>
+    <loc id="886" name="Base of Mt. Syliph" type="WildernessPortal" NS="11.2" EW="12.2" exitNS="11.6" exitEW="12.3"></loc>
+    <loc id="887" name="Iron Golem Guardian Camp" type="Landmark" NS="-62.8" EW="36.6"></loc>
+    <loc id="888" name="Harlune the Misanthrope" type="NPC" NS="41.4" EW="57.3" dungeonId="504"></loc>
+    <loc id="889" name="Ivory Trader" type="Vendor" NS="29.9" EW="27.1">T1</loc>
+    <loc id="890" name="Maere the Dyepot Peddlar" type="Vendor" NS="18.6" EW="62.8"></loc>
+    <loc id="891" name="Gormling the Sneaky Seneschal" type="NPC" NS="69.5" EW="17.5"></loc>
+    <loc id="892" name="Lady Tallial" type="NPC" NS="69.5" EW="17.5"></loc>
+    <loc id="893" name="Nelvaine the Brewer" type="Vendor" NS="69.5" EW="17.5"></loc>
+    <loc id="894" name="Lifestone" type="Lifestone" NS="40.6" EW="12.5"></loc>
+    <loc id="895" name="Lifestone" type="Lifestone" NS="48.3" EW="57.4"></loc>
+    <loc id="896" name="Lifestone" type="Lifestone" NS="50.2" EW="73.1"></loc>
+    <loc id="897" name="Lifestone" type="Lifestone" NS="70.2" EW="65.5"></loc>
+    <loc id="898" name="Lifestone" type="Lifestone" NS="32.2" EW="-38.5"></loc>
+    <loc id="899" name="River Bridge Portal" type="WildernessPortal" NS="27.2" EW="47.3" exitNS="28.5" exitEW="48"></loc>
+    <loc id="900" name="River Bridge Portal" type="WildernessPortal" NS="28.5" EW="48" exitNS="27.1" exitEW="47.4"></loc>
+    <loc id="901" name="Lifestone" type="Lifestone" NS="-51.3" EW="40.3"></loc>
+    <loc id="902" name="Small Building" type="Landmark" NS="-51.3" EW="40.4"></loc>
+    <loc id="903" name="Mage Syltyn Rillon" type="NPC" NS="27.8" EW="24.7"></loc>
+    <loc id="904" name="Tackle Master" type="Vendor" NS="-32.2" EW="74.2"></loc>
+    <loc id="905" name="Tackle Master" type="Vendor" NS="43" EW="34.1"></loc>
+    <loc id="906" name="Tackle Master" type="Vendor" NS="10.7" EW="58.7"></loc>
+    <loc id="907" name="Tackle Master" type="Vendor" NS="-22" EW="-2.2"></loc>
+    <loc id="908" name="Tackle Master" type="Vendor" NS="29" EW="43.9"></loc>
+    <loc id="909" name="Olcris, Nuhmudira's Student" type="NPC" NS="68.7" EW="-21.6"></loc>
+    <loc id="910" name="Tazal al-Ashfai" type="NPC" NS="6.1" EW="3.5"></loc>
+    <loc id="911" name="Zefir Cave" type="Landmark" NS="-59.9" EW="75.5"></loc>
+    <loc id="912" name="Jahannan Vault" type="Dungeon" NS="-49.8" EW="15" dungeonId="283"></loc>
+    <loc id="913" name="Artifex Vault" type="Dungeon" NS="24.5" EW="8" dungeonId="311"></loc>
+    <loc id="914" name="Caervannon" type="NPC" NS="41.9" EW="33.3"></loc>
+    <loc id="915" name="Igloo" type="Landmark" NS="42.7" EW="49.8"></loc>
+    <loc id="916" name="A-TN to Holtburg" type="TownPortal" NS="25.6" EW="49.2" exitNS="42.1" exitEW="33.6"></loc>
+    <loc id="917" name="A-TN to Eastham" type="TownPortal" NS="25.6" EW="49.2" exitNS="17.2" exitEW="63.3"></loc>
+    <loc id="918" name="A-TN to Lytelthorpe" type="TownPortal" NS="25.6" EW="49.2" exitNS="0.9" exitEW="51.6"></loc>
+    <loc id="919" name="A-TN to Plateau" type="TownPortal" NS="25.6" EW="49.2" exitNS="44.2" exitEW="-43.3"></loc>
+    <loc id="920" name="Jeweler Xao Wu" type="Vendor" NS="-12.9" EW="46.4"></loc>
+    <loc id="921" name="Renegade Garrison" type="Dungeon" NS="44.4" EW="52" dungeonId="24649"></loc>
+    <loc id="922" name="Renegade Camp" type="Landmark" NS="17.1" EW="-4.8"></loc>
+    <loc id="923" name="Snowman" type="Vendor" NS="71.4" EW="-22.2"></loc>
+    <loc id="924" name="Town Crier" type="NPC" NS="-12.8" EW="46.5"></loc>
+    <loc id="925" name="Town Crier" type="NPC" NS="-12.1" EW="46.5"></loc>
+    <loc id="926" name="Roaming Bowyer" type="Vendor" NS="68.9" EW="-51.6"></loc>
+    <loc id="927" name="Small Beachside Farmstead" type="Landmark" NS="68.8" EW="-51.6"></loc>
+    <loc id="928" name="Lai Lin" type="NPC" NS="58.6" EW="51.7"></loc>
+    <loc id="929" name="Lifestone" type="Lifestone" NS="58.7" EW="51.7"></loc>
+    <loc id="930" name="Western Camp Attunement Device" type="Bindstone" NS="58.6" EW="51.7"></loc>
+    <loc id="931" name="Northern Camp" type="Outpost" NS="67.9" EW="67.1"></loc>
+    <loc id="932" name="Hemmik the Sly" type="NPC" NS="34" EW="39.7"></loc>
+    <loc id="933" name="Mount Ingot" type="Dungeon" NS="-67.8" EW="25.5" dungeonId="25672"></loc>
+    <loc id="934" name="Frank (melted snowman)" type="Landmark" NS="-68.5" EW="25.5"></loc>
+    <loc id="935" name="Nip" type="NPC" NS="-68.6" EW="25.4"></loc>
+    <loc id="936" name="Numb" type="NPC" NS="-68.6" EW="25.4"></loc>
+    <loc id="937" name="Sam" type="NPC" NS="-68.6" EW="25.4"></loc>
+    <loc id="938" name="Elijah" type="NPC" NS="-68.5" EW="25.5"></loc>
+    <loc id="939" name="Robert" type="NPC" NS="-68.6" EW="25.5"></loc>
+    <loc id="940" name="The Mayor" type="NPC" NS="-68.7" EW="25.4"></loc>
+    <loc id="941" name="Emma" type="NPC" NS="-68.6" EW="25.3"></loc>
+    <loc id="942" name="Chef Pleist" type="NPC" NS="-68.5" EW="25.3"></loc>
+    <loc id="943" name="Sign" type="Landmark" NS="13.5" EW="0.7"></loc>
+    <loc id="944" name="Sign" type="Landmark" NS="25.4" EW="49.2"></loc>
+    <loc id="945" name="Sign" type="Landmark" NS="-39" EW="82.9"></loc>
+    <loc id="946" name="Tou-Tou Attunement Device" type="Bindstone" NS="-28.1" EW="95.5"></loc>
+    <loc id="947" name="Alaine the Apprentice" type="NPC" NS="-41.7" EW="15.8"></loc>
+    <loc id="948" name="Han Rin-Jo, Jojii Adherent" type="NPC" NS="-28" EW="95.5"></loc>
+    <loc id="949" name="Jojii Shrine and Scrawled Note" type="Landmark" NS="-28.3" EW="95.8"></loc>
+    <loc id="950" name="Ikomi Ra, Jojii Adherent" type="NPC" NS="-49.1" EW="81.7"></loc>
+    <loc id="951" name="Sawato Attunement Device" type="Bindstone" NS="-28.7" EW="59.2"></loc>
+    <loc id="952" name="Unicorn's Grace" type="Dungeon" NS="-38" EW="60.2" dungeonId="25673"></loc>
+    <loc id="953" name="Leather Trader" type="Vendor" NS="-83.3" EW="47.2">T3</loc>
+    <loc id="954" name="Shoushi Lifestone" type="Lifestone" NS="-33.5" EW="72.8"></loc>
+    <loc id="955" name="Runed Chest" type="Landmark" NS="-34.5" EW="64.8"></loc>
+    <loc id="956" name="Jojii Shrine" type="Landmark" NS="-54.3" EW="73.1"></loc>
+    <loc id="957" name="Magrom the Red, Barkeep" type="Vendor" NS="25.7" EW="48.8"></loc>
+    <loc id="958" name="Dragon's Power" type="Dungeon" NS="-82.3" EW="41.4" dungeonId="25673"></loc>
+    <loc id="959" name="Honshu Takeda" type="NPC" NS="-77.7" EW="59.2"></loc>
+    <loc id="960" name="Abandoned Sho Outpost Lifestone" type="Lifestone" NS="-33.9" EW="64.9"></loc>
+    <loc id="961" name="Meditation Area with Old Note" type="Landmark" NS="-34.2" EW="71.6"></loc>
+    <loc id="962" name="Ancient Watchers" type="Landmark" NS="-31.3" EW="70.3"></loc>
+    <loc id="963" name="Banderling Camp" type="Landmark" NS="-31.7" EW="70.1"></loc>
+    <loc id="964" name="Lou Ka" type="NPC" NS="-33.5" EW="69.9"></loc>
+    <loc id="965" name="Mystical Floating Bottle" type="Landmark" NS="-52.6" EW="81.9"></loc>
+    <loc id="966" name="Samuel, Former Guardian" type="NPC" NS="17.7" EW="63.2"></loc>
+    <loc id="967" name="Qalaba'r to Zaikhal" type="TownPortal" NS="-74.3" EW="19.4" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="968" name="Shoushi Southeast Training Academy" type="Dungeon" NS="-36.7" EW="76" dungeonId="869"></loc>
+    <loc id="969" name="Shoushi West Training Academy" type="Dungeon" NS="-33.7" EW="69.7" dungeonId="870"></loc>
+    <loc id="970" name="Mayoi Attunement Device" type="Bindstone" NS="-61.8" EW="81.9"></loc>
+    <loc id="971" name="Mosswart Bunker" type="Landmark" NS="-21.7" EW="47.7"></loc>
+    <loc id="972" name="Grearrk, Mosswart Emissary" type="NPC" NS="-29" EW="58.2"></loc>
+    <loc id="973" name="Yaraq Lifestone" type="Lifestone" NS="-21.5" EW="-1.8"></loc>
+    <loc id="974" name="Drudge Camp" type="Landmark" NS="-21.9" EW="0.1"></loc>
+    <loc id="975" name="Green Mire Camp" type="Landmark" NS="-27.5" EW="71"></loc>
+    <loc id="976" name="Tumerok Camp" type="Landmark" NS="-17.9" EW="-3.6"></loc>
+    <loc id="977" name="Corpse with Rumor" type="Landmark" NS="-23.5" EW="-1.2"></loc>
+    <loc id="978" name="Undead Encampment" type="Landmark" NS="-25.5" EW="3.4"></loc>
+    <loc id="979" name="Adara al-Rajin" type="NPC" NS="-31" EW="13.7"></loc>
+    <loc id="980" name="Holtburg Menhir Ring" type="Landmark" NS="41.9" EW="33.3"></loc>
+    <loc id="981" name="Former home of Fadsahil al-Tashbi" type="Landmark" NS="-40.8" EW="11.8"></loc>
+    <loc id="982" name="Holtburg Lifestone" type="Lifestone" NS="42.1" EW="33.6"></loc>
+    <loc id="983" name="Linvak Tukal Lifestone" type="Lifestone" NS="-77.4" EW="28.2"></loc>
+    <loc id="984" name="Hebian-To Bind Stone" type="Bindstone" NS="-39.3" EW="83.3"></loc>
+    <loc id="985" name="Rkos and Ry'zir's Metalworks" type="_Unknown" NS="-87.4" EW="-67.3"></loc>
+    <loc id="986" name="Zaikhal Bind Stone" type="Bindstone" NS="13.4" EW="0.8"></loc>
+    <loc id="987" name="Samsur Lifestone" type="Lifestone" NS="-3" EW="19.3"></loc>
+    <loc id="988" name="Danby's Outpost Lifestone" type="Lifestone" NS="23.5" EW="-28.7"></loc>
+    <loc id="989" name="Aun Tiulerea" type="NPC" NS="16.5" EW="63.6"></loc>
+    <loc id="990" name="Arwic Lifestone" type="Lifestone" NS="33.6" EW="56.8"></loc>
+    <loc id="991" name="Zaikal Lifestone" type="Lifestone" NS="13.8" EW="0.5"></loc>
+    <loc id="992" name="Qalaba'r Lifestone" type="Lifestone" NS="-74.5" EW="19.5"></loc>
+    <loc id="993" name="Hebian-To Lifestone" type="Lifestone" NS="-39" EW="83.1"></loc>
+    <loc id="994" name="Nanto Lifestone" type="Lifestone" NS="-52.2" EW="81.6"></loc>
+    <loc id="995" name="Lin Lifestone" type="Lifestone" NS="-54.5" EW="73.1"></loc>
+    <loc id="996" name="Cragstone Lifestone" type="Lifestone" NS="25.6" EW="49.1"></loc>
+    <loc id="997" name="Al Jalima Lifestone" type="Lifestone" NS="7.3" EW="4.7"></loc>
+    <loc id="998" name="Tou-Tou Lifestone" type="Lifestone" NS="-30.3" EW="94.8"></loc>
+    <loc id="999" name="Lytelthorpe Lifestone" type="Lifestone" NS="0.6" EW="51.4"></loc>
+    <loc id="1000" name="Khayyaban Lifestone" type="Lifestone" NS="-47.4" EW="24.9"></loc>
+    <loc id="1001" name="Uziz Lifestone" type="Lifestone" NS="-24.9" EW="28.2"></loc>
+    <loc id="1002" name="Baishi Lifestone" type="Lifestone" NS="-49.6" EW="62.4"></loc>
+    <loc id="1003" name="Al-Arqas Lifestone" type="Lifestone" NS="-31.3" EW="13.6"></loc>
+    <loc id="1004" name="Lifestone" type="Lifestone" NS="-14" EW="5.4"></loc>
+    <loc id="1005" name="Xarabydun Lifestone Portal" type="UndergroundPortal" NS="-41.9" EW="16.2"></loc>
+    <loc id="1006" name="Stonehold Lifestone" type="Lifestone" NS="68.9" EW="-21.8"></loc>
+    <loc id="1007" name="Sawato Lifestone" type="Lifestone" NS="-28.8" EW="59.3"></loc>
+    <loc id="1008" name="Bandit Castle Lifestone" type="Lifestone" NS="66.4" EW="49.8"></loc>
+    <loc id="1009" name="Plateau Village Lifestone" type="Lifestone" NS="43.9" EW="-43.3"></loc>
+    <loc id="1010" name="Kara Lifestone" type="Lifestone" NS="-83.3" EW="47.1"></loc>
+    <loc id="1011" name="Renegade Stronghold" type="Dungeon" NS="71.3" EW="-28.6" dungeonId="25161"></loc>
+    <loc id="1012" name="Town Crier" type="NPC" NS="-12.8" EW="45.6"></loc>
+    <loc id="1013" name="Banderling Hovel" type="Dungeon" NS="-32" EW="72.8" dungeonId="378"></loc>
+    <loc id="1014" name="Hidden Entrance" type="Dungeon" NS="-24.3" EW="46.3" dungeonId="381"></loc>
+    <loc id="1015" name="Sleepless Sentinels" type="Landmark" NS="-20.9" EW="14"></loc>
+    <loc id="1016" name="Northern Power Forge" type="Dungeon" NS="18.4" EW="-22.8" dungeonId="4"></loc>
+    <loc id="1017" name="Town Crier" type="NPC" NS="25.6" EW="48.8"></loc>
+    <loc id="1018" name="Akyafi ibn Sumwar" type="NPC" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1019" name="Barkeep Jubal al-Baljad" type="Vendor" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1020" name="Lugian Lifestone" type="Lifestone" NS="-77.3" EW="28.3"></loc>
+    <loc id="1021" name="G-TN to Khayyaban" type="TownPortal" NS="13.7" EW="0.6" exitNS="-47.4" exitEW="25.1"></loc>
+    <loc id="1022" name="Kara Attunement Device" type="Bindstone" NS="-83.3" EW="47"></loc>
+    <loc id="1023" name="Ivory Trader" type="Vendor" NS="-47.5" EW="24.6">T2</loc>
+    <loc id="1024" name="Qalaba'r Attunement Device" type="Bindstone" NS="-74.5" EW="19.3"></loc>
+    <loc id="1025" name="Khayyaban Attunement Device" type="Bindstone" NS="-47.4" EW="25.1"></loc>
+    <loc id="1026" name="Lightless Tunnels" type="Dungeon" NS="-41.9" EW="16.2" dungeonId="710"></loc>
+    <loc id="1027" name="Lost Coastal Archive" type="Dungeon" NS="37.4" EW="67"></loc>
+    <loc id="1028" name="Lost Desert Archive" type="Landmark" NS="4" EW="-2.4"></loc>
+    <loc id="1029" name="The Fazenda Caves" type="Dungeon" NS="49.8" EW="7.7"></loc>
+    <loc id="1030" name="Blue Coral Reef" type="Landmark" NS="75.6" EW="46.9"></loc>
+    <loc id="1031" name="Skeleton Fort" type="Landmark" NS="32.8" EW="65.9"></loc>
+    <loc id="1032" name="Drozer" type="NPC" NS="68.9" EW="-21.4"></loc>
+    <loc id="1033" name="Leather Trader" type="Vendor" NS="-28" EW="95.7">T1</loc>
+    <loc id="1034" name="Xarabydun Town Crier" type="NPC" NS="-41.9" EW="16.1"></loc>
+    <loc id="1035" name="Archmage Zarri ibn Khaybi" type="Vendor" NS="-41.9" EW="16.1"></loc>
+    <loc id="1036" name="Town Crier" type="NPC" NS="-41.8" EW="16.1"></loc>
+    <loc id="1037" name="Barkeep Anarn" type="Vendor" NS="-41.7" EW="16"></loc>
+    <loc id="1038" name="Jeweler Jurraf al-Djiqidh" type="Vendor" NS="-41.7" EW="16.1"></loc>
+    <loc id="1039" name="Sifida bint Naril the Scribe" type="Vendor" NS="-41.9" EW="16.1"></loc>
+    <loc id="1040" name="Farmer Kao" type="NPC" NS="51.4" EW="7.5"></loc>
+    <loc id="1041" name="Base of Mount Zabool" type="UndergroundPortal" NS="21.8" EW="19.5" exitNS="21.8" exitEW="19.5"></loc>
+    <loc id="1042" name="Mount Alphus" type="WildernessPortal" NS="20.8" EW="18.5" exitNS="19.7" exitEW="17.8"></loc>
+    <loc id="1043" name="Zalphoos the Shopkeeper" type="Vendor" NS="19.3" EW="17.6"></loc>
+    <loc id="1044" name="Abia bint Huda the Archmage" type="Vendor" NS="23.3" EW="-28.7"></loc>
+    <loc id="1045" name="Acina Hilmad the Grocer" type="Vendor" NS="25.7" EW="48.5"></loc>
+    <loc id="1046" name="Aderma the Lapidary" type="Vendor" NS="17.9" EW="63.3"></loc>
+    <loc id="1047" name="Adraha bint Safsan the Appraiser" type="Vendor" NS="-25.9" EW="28.2"></loc>
+    <loc id="1048" name="Afsan ibn Kusain the Barkeep" type="Vendor" NS="-13.8" EW="5.5"></loc>
+    <loc id="1049" name="Ai Konaji the Jeweler" type="Vendor" NS="-33.2" EW="72.7"></loc>
+    <loc id="1050" name="Aldera Brunall Weaponsmith" type="Vendor" NS="-39.5" EW="83.3"></loc>
+    <loc id="1051" name="Almina bint Atwab the Weaponsmith" type="Vendor" NS="-74.4" EW="19.2"></loc>
+    <loc id="1052" name="Sawato Archmage" type="Vendor" NS="-25.6" EW="57.6"></loc>
+    <loc id="1053" name="Hebian-To Archmage" type="Vendor" NS="-33.7" EW="79.9"></loc>
+    <loc id="1054" name="Al-Arqas Archmage" type="Vendor" NS="-34.3" EW="14.4"></loc>
+    <loc id="1055" name="Archmage" type="Vendor" NS="-52.1" EW="51"></loc>
+    <loc id="1056" name="Archmage" type="Vendor" NS="22.5" EW="44"></loc>
+    <loc id="1057" name="Archmage" type="Vendor" NS="23.6" EW="63.3"></loc>
+    <loc id="1058" name="Archmage" type="Vendor" NS="79.2" EW="-15.6"></loc>
+    <loc id="1059" name="Archmage Anyao Zai" type="Vendor" NS="-38.9" EW="83.2"></loc>
+    <loc id="1060" name="Archmage Asaina al-Arqis" type="Vendor" NS="13.9" EW="0.1"></loc>
+    <loc id="1061" name="Archmage Bendrew Efrith" type="Vendor" NS="-8.2" EW="73"></loc>
+    <loc id="1062" name="Yu-Tien, Archmage's Apprentice" type="Vendor" NS="-33.8" EW="72.6"></loc>
+    <loc id="1063" name="Archmage Cindrue" type="Vendor" NS="42.6" EW="33.9"></loc>
+    <loc id="1064" name="Archmage Cortorl" type="Vendor" NS="29.8" EW="25.9"></loc>
+    <loc id="1065" name="Archmage Dakila bint Ma`liz" type="Vendor" NS="-15.2" EW="5.4"></loc>
+    <loc id="1066" name="Archmage Den Ou" type="Vendor" NS="0.7" EW="51"></loc>
+    <loc id="1067" name="Archmage Geltruma" type="Vendor" NS="29.7" EW="28.9"></loc>
+    <loc id="1068" name="Archmage Inyamkaya bint Ruz" type="Vendor" NS="-21.6" EW="-1.6"></loc>
+    <loc id="1069" name="Archmage Jiz ibn Ijfai" type="Vendor" NS="-31" EW="14"></loc>
+    <loc id="1070" name="Archmage Jo Ji-Shen" type="Vendor" NS="-52.3" EW="81.6"></loc>
+    <loc id="1071" name="Archmage Kiko of Kara" type="Vendor" NS="-83.2" EW="47"></loc>
+    <loc id="1072" name="Archmage Mah bint Dirid" type="Vendor" NS="-0.4" EW="0.5"></loc>
+    <loc id="1073" name="Archmage Marnai ibn Ayyar" type="Vendor" NS="7.2" EW="4.6"></loc>
+    <loc id="1074" name="Archmage Nulsymber" type="Vendor" NS="10.8" EW="59.3"></loc>
+    <loc id="1075" name="Archmage Philomon" type="Vendor" NS="69.5" EW="17.7"></loc>
+    <loc id="1076" name="Archmage Sammam al-Ashiz" type="Vendor" NS="-25" EW="28.4"></loc>
+    <loc id="1077" name="Archmage Shikiru Nohon" type="Vendor" NS="-38.9" EW="83"></loc>
+    <loc id="1078" name="Archmage Ta Ban-Yu" type="Vendor" NS="-54.4" EW="73.5"></loc>
+    <loc id="1079" name="Archmage Ta Ri" type="Vendor" NS="69" EW="-21.7"></loc>
+    <loc id="1080" name="Archmage Tawa Matema" type="Vendor" NS="-28.4" EW="59.6"></loc>
+    <loc id="1081" name="Archmage Yuzai Zhen" type="Vendor" NS="-61.4" EW="82.5"></loc>
+    <loc id="1082" name="Archmage Zarri ibn Khaybi" type="Vendor" NS="-41.9" EW="16.1"></loc>
+    <loc id="1083" name="Arina of the Arms" type="Vendor" NS="-0.5" EW="0.4"></loc>
+    <loc id="1084" name="Arlad ibn Mulud the Tailor" type="Vendor" NS="-21.4" EW="-1.6"></loc>
+    <loc id="1085" name="Armorer" type="Vendor" NS="-83.4" EW="47.1"></loc>
+    <loc id="1086" name="Armorer Hinfiya bint Ju" type="Vendor" NS="-47.4" EW="25"></loc>
+    <loc id="1087" name="Armorer Talam ibn Tarish" type="Vendor" NS="-2.9" EW="19.5"></loc>
+    <loc id="1088" name="Armorer Xao Fen" type="Vendor" NS="-28" EW="95.9"></loc>
+    <loc id="1089" name="Arsitha Trell the Grocer" type="Vendor" NS="29.8" EW="27.4"></loc>
+    <loc id="1090" name="Avalenne Hilmad the Healer" type="Vendor" NS="25.7" EW="48.5"></loc>
+    <loc id="1091" name="Avorgild the Shopkeeper" type="Vendor" NS="44.3" EW="-43.4"></loc>
+    <loc id="1092" name="Bai-Nu Ru the Weaponsmith" type="Vendor" NS="-28" EW="95.9"></loc>
+    <loc id="1093" name="Barkeep Bai Yao Feng" type="Vendor" NS="-11.9" EW="42.6"></loc>
+    <loc id="1094" name="Barkeep Gorth" type="Vendor" NS="66.4" EW="49.9"></loc>
+    <loc id="1095" name="Barkeep Jubal al-Baljad" type="Vendor" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1096" name="Barkeep Mausin ibn Hi" type="Vendor" NS="-47.6" EW="24.6"></loc>
+    <loc id="1097" name="Barkeep Mordmor" type="Vendor" NS="-8.1" EW="73.1"></loc>
+    <loc id="1098" name="Barkeep Ricetha" type="Vendor" NS="10.7" EW="58.1"></loc>
+    <loc id="1099" name="Barkeeper Chon Nuo" type="Vendor" NS="-39.2" EW="83.4"></loc>
+    <loc id="1100" name="Barkeeper Wilomine" type="Vendor" NS="42.2" EW="33.7"></loc>
+    <loc id="1101" name="Barshid al-Juhir the Scribe" type="Vendor" NS="-25.9" EW="28.2"></loc>
+    <loc id="1102" name="Bashkiya the Scribe" type="Vendor" NS="-31" EW="14"></loc>
+    <loc id="1103" name="Belbeca the Archmage" type="Vendor" NS="17.3" EW="63.4"></loc>
+    <loc id="1104" name="Belbeca the Weaponsmith" type="Vendor" NS="29.9" EW="25.8"></loc>
+    <loc id="1105" name="Blacksmith Ton Wing" type="Vendor" NS="-52.8" EW="82.3"></loc>
+    <loc id="1106" name="Bowyer Bronwin" type="Vendor" NS="17.3" EW="63.2"></loc>
+    <loc id="1107" name="Bowyer Hanra ibn Zarib" type="Vendor" NS="-41.7" EW="16.4"></loc>
+    <loc id="1108" name="Bowyer Jyi Zhente" type="Vendor" NS="-49.7" EW="62.4"></loc>
+    <loc id="1109" name="Bowyer Shurida bint Zaud" type="Vendor" NS="-14" EW="5.5"></loc>
+    <loc id="1110" name="Brenica the Jeweler" type="Vendor" NS="44.1" EW="-43.5"></loc>
+    <loc id="1111" name="Brisin the Healer" type="Vendor" NS="10.8" EW="58.4"></loc>
+    <loc id="1112" name="Brother Gonun the Scribe" type="Vendor" NS="-33.7" EW="73.1"></loc>
+    <loc id="1113" name="Brother Jarviso" type="Vendor" NS="69.7" EW="17.5"></loc>
+    <loc id="1114" name="Bu-Chi Long the Armorer" type="Vendor" NS="-54.6" EW="73.2"></loc>
+    <loc id="1115" name="Bukai Fu-ya the Bowyer" type="Vendor" NS="-28.6" EW="59.4"></loc>
+    <loc id="1116" name="Buray ibn Tamsa the Blacksmith" type="Vendor" NS="-21.5" EW="-1.6"></loc>
+    <loc id="1117" name="Busbawasa the Smith" type="Vendor" NS="7.4" EW="4.6"></loc>
+    <loc id="1118" name="Byrdara the Barkeeper" type="Vendor" NS="17.7" EW="63.2"></loc>
+    <loc id="1119" name="Glenden Wood to Cragstone" type="TownPortal" NS="29.9" EW="27.2" exitNS="26" exitEW="48.4"></loc>
+    <loc id="1120" name="Cemcera the Shopkeeper" type="Vendor" NS="0.5" EW="51.2"></loc>
+    <loc id="1121" name="Chueh Kaigin the Jeweler" type="Vendor" NS="-28.8" EW="59.4"></loc>
+    <loc id="1122" name="Culthea Ironshaper" type="Vendor" NS="25.8" EW="49.2"></loc>
+    <loc id="1123" name="Cynsela the Tailor" type="Vendor" NS="17.5" EW="63.5"></loc>
+    <loc id="1124" name="Da'hir ibn Khayzur the Archmage" type="Vendor" NS="-2.9" EW="19.3"></loc>
+    <loc id="1125" name="Dafrida the Tailor" type="Vendor" NS="0.7" EW="51.2"></loc>
+    <loc id="1126" name="Danifa Gondmad the Healer" type="Vendor" NS="29.9" EW="27.3"></loc>
+    <loc id="1127" name="Denki Sokuto the Scribe" type="Vendor" NS="-49.6" EW="62.5"></loc>
+    <loc id="1128" name="Djusufa bint Huqis the Jeweler" type="Vendor" NS="13.7" EW="0.7"></loc>
+    <loc id="1129" name="Djuyat ibn Fisa the Armorer" type="Vendor" NS="-13.9" EW="5"></loc>
+    <loc id="1130" name="Dortold the Tailor" type="Vendor" NS="10.4" EW="58.2"></loc>
+    <loc id="1131" name="Dou In the Shopkeeper" type="Vendor" NS="-9.9" EW="46.6"></loc>
+    <loc id="1132" name="Drawohan the Gem Seller" type="Vendor" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1133" name="Ecutha the Tailor" type="Vendor" NS="42.6" EW="33.5"></loc>
+    <loc id="1134" name="Eldrista the Adventurer" type="Vendor" NS="35.7" EW="33.4"></loc>
+    <loc id="1135" name="Elthina the Shady" type="Vendor" NS="-0.1" EW="0.4"></loc>
+    <loc id="1136" name="Erludd the Cur the Barkeeper" type="Vendor" NS="10.8" EW="59.4"></loc>
+    <loc id="1137" name="Esteca the Bowyer" type="Vendor" NS="-8" EW="73"></loc>
+    <loc id="1138" name="Estorl the Ox, Weaponsmith" type="Vendor" NS="25.8" EW="49.2"></loc>
+    <loc id="1139" name="Fadsahil al-Tashbi the Master Archmage" type="Vendor" NS="-40.2" EW="11.3"></loc>
+    <loc id="1140" name="Farmer" type="Vendor" NS="-11.8" EW="47.5"></loc>
+    <loc id="1141" name="Farmer" type="Vendor" NS="-38.1" EW="68.1"></loc>
+    <loc id="1142" name="Farmer" type="Vendor" NS="-55.6" EW="74.1"></loc>
+    <loc id="1143" name="Farmer" type="Vendor" NS="31.8" EW="26.3"></loc>
+    <loc id="1144" name="Farmer" type="Vendor" NS="35.7" EW="33.3"></loc>
+    <loc id="1145" name="Farmer" type="Vendor" NS="68.7" EW="-21.6"></loc>
+    <loc id="1146" name="Farmer Khurah al-Rujarkir" type="Vendor" NS="-41.9" EW="16.3"></loc>
+    <loc id="1147" name="Farnum the Provisioner" type="Vendor" NS="17.8" EW="63.5"></loc>
+    <loc id="1148" name="Fazlim ibn Masay the Tailor" type="Vendor" NS="-74.5" EW="19.3"></loc>
+    <loc id="1149" name="Fen Hau-Lai the Armorer" type="Vendor" NS="-61.8" EW="82.2"></loc>
+    <loc id="1150" name="Fenza Tan the Scribe" type="Vendor" NS="-39.3" EW="82.9"></loc>
+    <loc id="1151" name="Fertroth the Healer" type="Vendor" NS="29.6" EW="28.7"></loc>
+    <loc id="1152" name="Fispur Ansel the Grocer" type="Vendor" NS="42.2" EW="33.6"></loc>
+    <loc id="1153" name="Fletcher Peldin Yewbender" type="Vendor" NS="29.9" EW="26.9"></loc>
+    <loc id="1154" name="Fyrdina Ellic the Weaponsmith" type="Vendor" NS="29.9" EW="27.1"></loc>
+    <loc id="1155" name="Gailadu the Scribe" type="Vendor" NS="-0.5" EW="0.5"></loc>
+    <loc id="1156" name="Geldeb Finol the Weaponsmith" type="Vendor" NS="64.9" EW="13.5"></loc>
+    <loc id="1157" name="Gerhi, Bowyer of Stonehold" type="Vendor" NS="68.9" EW="-21.6"></loc>
+    <loc id="1158" name="Getram the Armorer" type="Vendor" NS="17.4" EW="63.5"></loc>
+    <loc id="1159" name="Gharuya al-Dhul the Grocer" type="Vendor" NS="-74.5" EW="19.3"></loc>
+    <loc id="1160" name="Girdweld the Shopkeeper" type="Vendor" NS="7.6" EW="58.4"></loc>
+    <loc id="1161" name="Goro Yu-Ban the Provisioner" type="Vendor" NS="-39.4" EW="83.6"></loc>
+    <loc id="1162" name="Greta Danby the Bowyer" type="Vendor" NS="23.4" EW="-28.7"></loc>
+    <loc id="1163" name="Grethoric of all Trades" type="Vendor" NS="-0.4" EW="0.5"></loc>
+    <loc id="1164" name="Grocer Cortarn" type="Vendor" NS="0.5" EW="51"></loc>
+    <loc id="1165" name="Grocer Nan-Yu-Yenbuto" type="Vendor" NS="-12.2" EW="42.4"></loc>
+    <loc id="1166" name="Grocer Parsal" type="Vendor" NS="17.5" EW="63.5"></loc>
+    <loc id="1167" name="Grocer Pon Hau-jo" type="Vendor" NS="-28.5" EW="59.2"></loc>
+    <loc id="1168" name="Grocer Riku Ryu" type="Vendor" NS="-61.8" EW="81.8"></loc>
+    <loc id="1169" name="Grocer Sina bint Idnun" type="Vendor" NS="-47.8" EW="24.8"></loc>
+    <loc id="1170" name="Grocer Tashhir ibn Najrak" type="Vendor" NS="-14.9" EW="5.9"></loc>
+    <loc id="1171" name="Gylfolma the Scribe" type="Vendor" NS="0.5" EW="51"></loc>
+    <loc id="1172" name="Hau Ji Tan the Grocer" type="Vendor" NS="-33.3" EW="73.1"></loc>
+    <loc id="1173" name="Healer" type="Vendor" NS="-15.1" EW="50.4"></loc>
+    <loc id="1174" name="Healer" type="Vendor" NS="-26.7" EW="65.1"></loc>
+    <loc id="1175" name="Healer" type="Vendor" NS="-34.6" EW="59.7"></loc>
+    <loc id="1176" name="Healer" type="Vendor" NS="42.4" EW="32.2"></loc>
+    <loc id="1177" name="Healer Beysta" type="Vendor" NS="0.7" EW="51.4"></loc>
+    <loc id="1178" name="Healer Burah bint Fathlan" type="Vendor" NS="-2.8" EW="19.5"></loc>
+    <loc id="1179" name="Healer Fan Lun-Kou" type="Vendor" NS="-49.6" EW="62.6"></loc>
+    <loc id="1180" name="Healer Fridroth" type="Vendor" NS="29.7" EW="25.9"></loc>
+    <loc id="1181" name="Healer Hansur al-Hirwak" type="Vendor" NS="7.2" EW="4.6"></loc>
+    <loc id="1182" name="Healer Hisuf ibn Shudir" type="Vendor" NS="13.9" EW="0.1"></loc>
+    <loc id="1183" name="Healer Jilrisi ibn Makhur" type="Vendor" NS="-14.6" EW="6.3"></loc>
+    <loc id="1184" name="Healer Kai Kou" type="Vendor" NS="-54.2" EW="74"></loc>
+    <loc id="1185" name="Healer Kai Tonweh" type="Vendor" NS="-12.6" EW="46.2"></loc>
+    <loc id="1186" name="Healer Kana of Kara" type="Vendor" NS="-83.4" EW="47.1"></loc>
+    <loc id="1187" name="Healer of Stonehold" type="Vendor" NS="68.8" EW="-21.5"></loc>
+    <loc id="1188" name="Healer Rili Sou" type="Vendor" NS="-28.1" EW="95.8"></loc>
+    <loc id="1189" name="Healer Sanami Siohiro" type="Vendor" NS="-74.5" EW="85"></loc>
+    <loc id="1190" name="Healer Sunwi" type="Vendor" NS="-31.3" EW="13.8"></loc>
+    <loc id="1191" name="Healer Tonsho Ha" type="Vendor" NS="-61.9" EW="81.9"></loc>
+    <loc id="1192" name="Healer Windotha Sofyld" type="Vendor" NS="-74.4" EW="19.5"></loc>
+    <loc id="1193" name="Healer Xidan Fensen" type="Vendor" NS="-28.7" EW="59.5"></loc>
+    <loc id="1194" name="Helford Beldryn the Grocer" type="Vendor" NS="-7.9" EW="73.1"></loc>
+    <loc id="1195" name="Henrid the Grocer" type="Vendor" NS="-0.4" EW="0.5"></loc>
+    <loc id="1196" name="Hinnabqiq the Jeweler" type="Vendor" NS="-31.3" EW="13.5"></loc>
+    <loc id="1197" name="Hiruhi Fensen the Scribe" type="Vendor" NS="-28.7" EW="59.5"></loc>
+    <loc id="1198" name="Hon Fo the Shopkeeper" type="Vendor" NS="-52.4" EW="85.3"></loc>
+    <loc id="1199" name="Hudriffa the Shopkeeper" type="Vendor" NS="39.5" EW="33.4"></loc>
+    <loc id="1200" name="Hunderth the Provisioner" type="Vendor" NS="29.6" EW="27.5"></loc>
+    <loc id="1201" name="Hydeatha the Shopkeeper" type="Vendor" NS="10.2" EW="61.4"></loc>
+    <loc id="1202" name="Ichi Ji" type="Vendor" NS="10.6" EW="58.3"></loc>
+    <loc id="1203" name="Idenne Sulmad the Seamstress" type="Vendor" NS="29.6" EW="27.5"></loc>
+    <loc id="1204" name="Iquba al-Julmud the Barkeeper" type="Vendor" NS="-74.3" EW="19.1"></loc>
+    <loc id="1205" name="Ite Kenzen the Barkeeper" type="Vendor" NS="-28.8" EW="59.2"></loc>
+    <loc id="1206" name="Itir ibn Ativ the Barkeep" type="Vendor" NS="-31.1" EW="14.1"></loc>
+    <loc id="1207" name="Jaikite Sanzen the Barkeeper" type="Vendor" NS="-33.7" EW="72.5"></loc>
+    <loc id="1208" name="Jasin of the Arcanum" type="Vendor" NS="-2.2" EW="50.7"></loc>
+    <loc id="1209" name="Jeweler Fathlan ibn Nuril" type="Vendor" NS="-2.8" EW="19.5"></loc>
+    <loc id="1210" name="Jeweler Hawtala bint Arsha" type="Vendor" NS="-47.5" EW="24.6"></loc>
+    <loc id="1211" name="Combat Focus Trainer" type="Vendor" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1212" name="Jeweler Liman Pon" type="Vendor" NS="-61.3" EW="82.1"></loc>
+    <loc id="1213" name="Jeweler Lo Dai-Ou" type="Vendor" NS="-28" EW="95.6"></loc>
+    <loc id="1214" name="Jeweler Ryuhan Wu" type="Vendor" NS="-12.2" EW="42.6"></loc>
+    <loc id="1215" name="Jeweler Suya bint Habil" type="Vendor" NS="25.7" EW="49.1"></loc>
+    <loc id="1216" name="Ji Tenxien the Tailor" type="Vendor" NS="10.7" EW="59.2"></loc>
+    <loc id="1217" name="Jizal al-Nurla the Scribe" type="Vendor" NS="13.9" EW="0.1"></loc>
+    <loc id="1218" name="Jo Gau the Grocer" type="Vendor" NS="-52.5" EW="82.4"></loc>
+    <loc id="1219" name="Jumzik al-Budim the Archmage" type="Vendor" NS="-74.4" EW="19.4"></loc>
+    <loc id="1220" name="Ka Ku-To the Tailor" type="Vendor" NS="40.6" EW="-41.7"></loc>
+    <loc id="1221" name="Kai Go-Sou the Scribe" type="Vendor" NS="-12.6" EW="46.2"></loc>
+    <loc id="1222" name="Kento Do the Grocer" type="Vendor" NS="-39.4" EW="83.6"></loc>
+    <loc id="1223" name="Kifandal the Imbuer" type="Vendor" NS="-77.5" EW="27.9"></loc>
+    <loc id="1224" name="Kiun Baicho the Barkeeper" type="Vendor" NS="-49.5" EW="62.7"></loc>
+    <loc id="1225" name="Koro of Kara, Farmer" type="Vendor" NS="-83.3" EW="47.2"></loc>
+    <loc id="1226" name="Kouxao Ei the Healer" type="Vendor" NS="-38.9" EW="83.4"></loc>
+    <loc id="1227" name="Krage the Blacksmith" type="Vendor" NS="-77.9" EW="27.8"></loc>
+    <loc id="1228" name="Kuyalal al-A'ma the Jeweler" type="Vendor" NS="-74.3" EW="19.3"></loc>
+    <loc id="1229" name="Ladim al-Faji the Bowyer" type="Vendor" NS="-21.5" EW="-1.6"></loc>
+    <loc id="1230" name="Lai Jhong the Archmage" type="Vendor" NS="-27.5" EW="96.5"></loc>
+    <loc id="1231" name="Lai Konsho the Armorsmith" type="Vendor" NS="-39.1" EW="83"></loc>
+    <loc id="1232" name="Lalid al-Jasi the Jeweler" type="Vendor" NS="-13.8" EW="5.5"></loc>
+    <loc id="1233" name="Landeth Colson the Jeweler" type="Vendor" NS="-8.2" EW="73"></loc>
+    <loc id="1234" name="Le Ben the Healer" type="Vendor" NS="-52.3" EW="81.8"></loc>
+    <loc id="1235" name="Lich Archmage" type="Vendor" NS="-84.4" EW="25.6"></loc>
+    <loc id="1236" name="Lisatha the Bowyer" type="Vendor" NS="69.6" EW="17.5"></loc>
+    <loc id="1237" name="Lo Ma the Jeweler" type="Vendor" NS="-54.4" EW="73.1"></loc>
+    <loc id="1238" name="Lobu Shui the Armorer" type="Vendor" NS="-49.3" EW="62.3"></loc>
+    <loc id="1239" name="Londigul Ellic the Armorer" type="Vendor" NS="29.9" EW="27.1"></loc>
+    <loc id="1240" name="Lu'zura the Shopkeeper" type="Vendor" NS="-21.3" EW="1.3"></loc>
+    <loc id="1241" name="Ludora the Healer" type="Vendor" NS="-8" EW="73.2"></loc>
+    <loc id="1242" name="Luthin the Smith" type="Vendor" NS="10.8" EW="58.6"></loc>
+    <loc id="1243" name="Farner" type="Vendor" NS="21.7" EW="61.6"></loc>
+    <loc id="1244" name="Maftaltub al-Sur the Bowyer" type="Vendor" NS="13.9" EW="0.7"></loc>
+    <loc id="1245" name="Magus Gondibyr Langarl" type="Vendor" NS="25.8" EW="49.4"></loc>
+    <loc id="1246" name="Magus Ku Min" type="Vendor" NS="-50" EW="62.5"></loc>
+    <loc id="1247" name="Maqura al-Waryah the Blacksmith" type="Vendor" NS="-13.9" EW="5"></loc>
+    <loc id="1248" name="Maryata bint Daris the Barkeep" type="Vendor" NS="-25.7" EW="28.2"></loc>
+    <loc id="1249" name="Master Celdiseth the Archmage" type="Vendor" NS="86.6" EW="21.5"></loc>
+    <loc id="1250" name="Master Shoyanen Kenchu the Archmage" type="Vendor" NS="-63.4" EW="85.9"></loc>
+    <loc id="1251" name="Melia Thorn the Archmage" type="Vendor" NS="66.4" EW="49.8"></loc>
+    <loc id="1252" name="About3" type="Custom" NS="101.9" EW="101.9">
+	To Do:
+	so much stuff im not gonna list in the 1.0 release.
+	</loc>
+    <loc id="1253" name="Merchant" type="Vendor" NS="41.7" EW="35.2"></loc>
+    <loc id="1254" name="Merchant Ledine" type="Vendor" NS="25.5" EW="49.2"></loc>
+    <loc id="1255" name="Mi Chi the Barkeep" type="Vendor" NS="-28" EW="95.5"></loc>
+    <loc id="1256" name="Minthada the Librarian" type="Vendor" NS="26" EW="47"></loc>
+    <loc id="1257" name="Mishiya al-Abdi the Barkeeper" type="Vendor" NS="-2.8" EW="19.6"></loc>
+    <loc id="1258" name="Miya bint Atwab the Bowyer" type="Vendor" NS="-74.4" EW="19.2"></loc>
+    <loc id="1259" name="Monyra the Jeweler" type="Vendor" NS="42.6" EW="33.9"></loc>
+    <loc id="1260" name="Muda bint Qalakh the Tailor" type="Vendor" NS="13.9" EW="0.6"></loc>
+    <loc id="1261" name="Mulud al-Iyar the Healer" type="Vendor" NS="-21.4" EW="-1.6"></loc>
+    <loc id="1262" name="Muoyen Han the Grocer" type="Vendor" NS="-49.3" EW="62.5"></loc>
+    <loc id="1263" name="Muta al-Mai the Bowyer" type="Vendor" NS="-31" EW="13.7"></loc>
+    <loc id="1264" name="Myrlat the Physician" type="Vendor" NS="-77.8" EW="28.3"></loc>
+    <loc id="1265" name="Najsuf al-Afan the Shopkeeper" type="Vendor" NS="-47.5" EW="24.6"></loc>
+    <loc id="1266" name="Nashima al-Haruq the Healer" type="Vendor" NS="-25.5" EW="28.3"></loc>
+    <loc id="1267" name="Nasruya al-Khanjan the Tailor" type="Vendor" NS="-2.9" EW="19.3"></loc>
+    <loc id="1268" name="Nelvaine the Brewer" type="Vendor" NS="69.7" EW="17.6"></loc>
+    <loc id="1269" name="Nen Gou the Shopkeeper" type="Vendor" NS="-33.5" EW="69.9"></loc>
+    <loc id="1270" name="Nerezi ibn Risad" type="Vendor" NS="-73.9" EW="19.1"></loc>
+    <loc id="1271" name="Nin Hong the Barkeeper" type="Vendor" NS="-33.5" EW="73"></loc>
+    <loc id="1272" name="Ivory Trader" type="Vendor" NS="10.4" EW="58.2">T2</loc>
+    <loc id="1273" name="Nun Hong the Jeweler" type="Vendor" NS="-52.6" EW="82.1"></loc>
+    <loc id="1274" name="Nuru Misho the Jeweler" type="Vendor" NS="-49.6" EW="62.3"></loc>
+    <loc id="1275" name="Nuya bint Mulud the Grocer" type="Vendor" NS="-21.4" EW="-1.6"></loc>
+    <loc id="1276" name="Oi Ra the Shopkeeper" type="Vendor" NS="-36.6" EW="75.8"></loc>
+    <loc id="1277" name="Old Wylfed the Scribe" type="Vendor" NS="-7.9" EW="73.1"></loc>
+    <loc id="1278" name="Omerik the Bowyer" type="Vendor" NS="-77.5" EW="28.2"></loc>
+    <loc id="1279" name="Oneros the Gem Seller" type="Vendor" NS="-52.4" EW="81.8"></loc>
+    <loc id="1280" name="Ortun Trell the Jeweler" type="Vendor" NS="29.8" EW="27.4"></loc>
+    <loc id="1281" name="Ostentatious Farmer" type="Vendor" NS="-37.4" EW="75.5"></loc>
+    <loc id="1282" name="Peddler" type="Vendor" NS="-57.9" EW="40"></loc>
+    <loc id="1283" name="Peddler" type="Vendor" NS="-59.7" EW="48.5"></loc>
+    <loc id="1284" name="Peddler" type="Vendor" NS="22.5" EW="43.9"></loc>
+    <loc id="1285" name="Peddler" type="Vendor" NS="40.8" EW="36.5"></loc>
+    <loc id="1286" name="Peddler" type="Vendor" NS="42.4" EW="32.2"></loc>
+    <loc id="1287" name="Peddler" type="Vendor" NS="9.9" EW="58.5"></loc>
+    <loc id="1288" name="Rithwic Attunement Device" type="Bindstone" NS="10.9" EW="58.3"></loc>
+    <loc id="1289" name="Pondenn the Armorer" type="Vendor" NS="29.9" EW="25.8"></loc>
+    <loc id="1290" name="Provisioner Murdo" type="Vendor" NS="66.3" EW="49.8"></loc>
+    <loc id="1291" name="Qufana al-Khurti the Blacksmith" type="Vendor" NS="13.9" EW="0.7"></loc>
+    <loc id="1292" name="Rah bint Khurdig the Bowyer" type="Vendor" NS="7.6" EW="5"></loc>
+    <loc id="1293" name="Rahira bint Hisan the Shopkeeper" type="Vendor" NS="-21.6" EW="-1.6"></loc>
+    <loc id="1294" name="Ran Le the Librarian" type="Vendor" NS="-39.2" EW="81.6"></loc>
+    <loc id="1295" name="Rayyib al-Afij the Armorer" type="Vendor" NS="-39.3" EW="83.5"></loc>
+    <loc id="1296" name="Ri-Gau Ro the Bowyer" type="Vendor" NS="-54.6" EW="72.9"></loc>
+    <loc id="1297" name="Riflyffa the Shopkeeper" type="Vendor" NS="1" EW="54.2"></loc>
+    <loc id="1298" name="Rindelle the Shopkeeper" type="Vendor" NS="-8.2" EW="73"></loc>
+    <loc id="1299" name="Riseldor the Bowyer" type="Vendor" NS="10.6" EW="58.3"></loc>
+    <loc id="1300" name="Roaming Bowyer" type="Vendor" NS="79.2" EW="-15.6"></loc>
+    <loc id="1301" name="Rou Beh the Bowyer" type="Vendor" NS="-28" EW="95.7"></loc>
+    <loc id="1302" name="Rundiscar the Weaponsmith" type="Vendor" NS="17.4" EW="63.5"></loc>
+    <loc id="1303" name="Rushiya bint Anruq" type="Vendor" NS="-0.6" EW="0"></loc>
+    <loc id="1304" name="Ruza bint Tinun the Armorer" type="Vendor" NS="-25.4" EW="28.2"></loc>
+    <loc id="1305" name="Sathagg the Jeweler" type="Vendor" NS="0.7" EW="51"></loc>
+    <loc id="1306" name="Scildith Dyrson the Bowyer" type="Vendor" NS="25.3" EW="49.1"></loc>
+    <loc id="1307" name="Scribe Finaver" type="Vendor" NS="44.1" EW="-43.5"></loc>
+    <loc id="1308" name="Scribe Lashi Oi" type="Vendor" NS="-52.3" EW="81.8"></loc>
+    <loc id="1309" name="Scribe Renald the Younger" type="Vendor" NS="42.1" EW="33.8"></loc>
+    <loc id="1310" name="Scribe Tashwi ibn Sayat" type="Vendor" NS="-47.5" EW="24.6"></loc>
+    <loc id="1311" name="Sedor Wystan the Blacksmith" type="Vendor" NS="42.6" EW="33.6"></loc>
+    <loc id="1312" name="Selflora the Barkeep" type="Vendor" NS="0.5" EW="51.4"></loc>
+    <loc id="1313" name="Shen Ai-Shen the Weaponsmith" type="Vendor" NS="-49.3" EW="62.3"></loc>
+    <loc id="1314" name="Shi Ki-Yong the Armorer" type="Vendor" NS="66.5" EW="49.8"></loc>
+    <loc id="1315" name="Shopkeep Bubtil al-Taywi" type="Vendor" NS="-15.1" EW="4.4"></loc>
+    <loc id="1316" name="Shopkeep Ginan Wah" type="Vendor" NS="-49.4" EW="62.6"></loc>
+    <loc id="1317" name="Shopkeep Julsama bint Sakim" type="Vendor" NS="-2.9" EW="19.6"></loc>
+    <loc id="1318" name="Shopkeep Kuro of Kara" type="Vendor" NS="-83.4" EW="47.1"></loc>
+    <loc id="1319" name="Shopkeep Qufar ibn Ijtalwa" type="Vendor" NS="-31.1" EW="14.1"></loc>
+    <loc id="1320" name="Shopkeep Yudi ibn Zayrim" type="Vendor" NS="13.7" EW="0.7"></loc>
+    <loc id="1321" name="Shopkeep Yunen Ye" type="Vendor" NS="-28.6" EW="59.2"></loc>
+    <loc id="1322" name="Shopkeeper Gonjoku Ryumi" type="Vendor" NS="-33.7" EW="72.8"></loc>
+    <loc id="1323" name="Shopkeeper Renald the Elder" type="Vendor" NS="42.1" EW="33.8"></loc>
+    <loc id="1324" name="Shui Tentou the Bowyer" type="Vendor" NS="-61.8" EW="82"></loc>
+    <loc id="1325" name="Sialla Jiro" type="Vendor" NS="10.6" EW="58.3"></loc>
+    <loc id="1326" name="Sidzika the Grocer" type="Vendor" NS="-31" EW="14"></loc>
+    <loc id="1327" name="Sifida bint Naril the Scribe" type="Vendor" NS="-41.8" EW="16"></loc>
+    <loc id="1328" name="Arikas, Warden of Knorr" type="NPC" NS="0" EW="0"></loc>
+    <loc id="1329" name="Sitrath the Smith" type="Vendor" NS="0.8" EW="51.5"></loc>
+    <loc id="1330" name="Smith Ashaira bint Maisa" type="Vendor" NS="-41.9" EW="16.3"></loc>
+    <loc id="1331" name="Smith Baltiff" type="Vendor" NS="0.8" EW="51.5"></loc>
+    <loc id="1332" name="Smith Dah bint Nas" type="Vendor" NS="-31" EW="13.7"></loc>
+    <loc id="1333" name="Sodyla Thurmad the Healer" type="Vendor" NS="17.3" EW="63.4"></loc>
+    <loc id="1334" name="Soldona Wotmad the Jeweler" type="Vendor" NS="10.8" EW="59.3"></loc>
+    <loc id="1335" name="Son Jaiken the Armorer" type="Vendor" NS="-28.9" EW="59.3"></loc>
+    <loc id="1336" name="Sontella Dagroff the Bowyer" type="Vendor" NS="42.6" EW="33.7"></loc>
+    <loc id="1337" name="Sordan Edelson the Smithy" type="Vendor" NS="-8" EW="73"></loc>
+    <loc id="1338" name="Ivory Trader" type="Vendor" NS="-49.4" EW="62.4">T2</loc>
+    <loc id="1339" name="Su`nah bint Arfiz the Shopkeeper" type="Vendor" NS="7.6" EW="4.8"></loc>
+    <loc id="1340" name="Suma bint Nayn the Librarian" type="Vendor" NS="13.9" EW="0.1"></loc>
+    <loc id="1341" name="Suntar al-Tashqat the Shopkeep" type="Vendor" NS="-74.3" EW="19.3"></loc>
+    <loc id="1342" name="Sutaiya bint Yil the Scribe" type="Vendor" NS="-2.9" EW="19.3"></loc>
+    <loc id="1343" name="Tailor Chueh Jian" type="Vendor" NS="-39.5" EW="83.1"></loc>
+    <loc id="1344" name="Tailor Fadnuj ibn Samil" type="Vendor" NS="-14.8" EW="5.9"></loc>
+    <loc id="1345" name="Tailor Istima al-Mahat" type="Vendor" NS="-25.5" EW="28.2"></loc>
+    <loc id="1346" name="Tailor Ka Shen-Ku" type="Vendor" NS="-61.8" EW="81.8"></loc>
+    <loc id="1347" name="Tailor Ma Shih" type="Vendor" NS="-33.2" EW="73"></loc>
+    <loc id="1348" name="Tailor Najsun" type="Vendor" NS="-31" EW="14"></loc>
+    <loc id="1349" name="Tailor Yajyi San" type="Vendor" NS="-52.6" EW="82.1"></loc>
+    <loc id="1350" name="Tailor Zayjah" type="Vendor" NS="-48" EW="24.6"></loc>
+    <loc id="1351" name="Tailor Zhoyong Wa-son" type="Vendor" NS="-49.4" EW="62.4"></loc>
+    <loc id="1352" name="Tamar Ibn Rashid" type="Vendor" NS="7.1" EW="3"></loc>
+    <loc id="1353" name="Tamara bint Atwab the Armorer" type="Vendor" NS="-74.4" EW="19.2"></loc>
+    <loc id="1354" name="Tariqana bint Hin the Jeweler" type="Vendor" NS="-21.6" EW="-1.6"></loc>
+    <loc id="1355" name="Taryla the Bowyer" type="Vendor" NS="0.7" EW="51.2"></loc>
+    <loc id="1356" name="Te Kenten the Barkeep" type="Vendor" NS="-61.4" EW="81.9"></loc>
+    <loc id="1357" name="Tekai Shou the Scribe" type="Vendor" NS="-54.4" EW="73.1"></loc>
+    <loc id="1358" name="Thawasa al-La'ud the Bowyer" type="Vendor" NS="-2.9" EW="19.6"></loc>
+    <loc id="1359" name="Thelnoth Cort the Healer" type="Vendor" NS="42.7" EW="33.4"></loc>
+    <loc id="1360" name="Tilutha Beldryn the Tailor" type="Vendor" NS="-7.9" EW="73.1"></loc>
+    <loc id="1361" name="To Za-I the Weaponsmith" type="Vendor" NS="-54.6" EW="73.2"></loc>
+    <loc id="1362" name="To-ping Ra the Tailor" type="Vendor" NS="-28.5" EW="59.2"></loc>
+    <loc id="1363" name="Tong La-chin the Weaponsmith" type="Vendor" NS="-28.9" EW="59.3"></loc>
+    <loc id="1364" name="Tromylda the Shopkeeper" type="Vendor" NS="1" EW="48.4"></loc>
+    <loc id="1365" name="Trothyd Fletcher" type="Vendor" NS="10.5" EW="58.4"></loc>
+    <loc id="1366" name="Tumina the Healer" type="Vendor" NS="-47.8" EW="24.6"></loc>
+    <loc id="1367" name="Ulib ibn Ghunir the Weaponsmith" type="Vendor" NS="-25.4" EW="28.2"></loc>
+    <loc id="1368" name="Urnolt the Jeweler" type="Vendor" NS="10.6" EW="58.4"></loc>
+    <loc id="1369" name="Ushad al-Fasam the Grocer" type="Vendor" NS="-2.9" EW="19.3"></loc>
+    <loc id="1370" name="Uthab ibn Yafij the Scribe" type="Vendor" NS="-74.3" EW="19.3"></loc>
+    <loc id="1371" name="Ven Ounan the Blacksmith" type="Vendor" NS="-33.5" EW="72.6"></loc>
+    <loc id="1372" name="Viamasa the Weaponsmith" type="Vendor" NS="69.5" EW="17.6"></loc>
+    <loc id="1373" name="Vivaina, Shopkeep of Stonehold" type="Vendor" NS="68.8" EW="-21.7"></loc>
+    <loc id="1374" name="Vuo Nin the Barkeep" type="Vendor" NS="-54.5" EW="72.7"></loc>
+    <loc id="1375" name="Wah Chon the Barkeep" type="Vendor" NS="-52.4" EW="82"></loc>
+    <loc id="1376" name="Waham ibn Fadyat the Shopkeeper" type="Vendor" NS="-25.9" EW="28.2"></loc>
+    <loc id="1377" name="Wandering Bowyer" type="Vendor" NS="-21.7" EW="52.1"></loc>
+    <loc id="1378" name="Tatuso of Kara" type="Vendor" NS="-82.8" EW="47.2"></loc>
+    <loc id="1379" name="Wantorth the Shopkeeper" type="Vendor" NS="42.4" EW="30.8"></loc>
+    <loc id="1380" name="Wasifa al-Kani the Scribe" type="Vendor" NS="-21.6" EW="-1.6"></loc>
+    <loc id="1381" name="Weaponsmith" type="Vendor" NS="38.6" EW="30.4"></loc>
+    <loc id="1382" name="Weaponsmith Ayiz ibn Khayt" type="Vendor" NS="-2.9" EW="19.5"></loc>
+    <loc id="1383" name="Weaponsmith Baizai En" type="Vendor" NS="10.3" EW="58.3"></loc>
+    <loc id="1384" name="Weaponsmith Hideo Sasaki" type="Vendor" NS="23.5" EW="-28.8"></loc>
+    <loc id="1385" name="Weaponsmith Mura bint Mu`ja" type="Vendor" NS="-47.4" EW="25"></loc>
+    <loc id="1386" name="Weary-looking Man" type="Vendor" NS="10.8" EW="59.4"></loc>
+    <loc id="1387" name="Butcher" type="Vendor" NS="29.8" EW="27.4">T1</loc>
+    <loc id="1388" name="Wedding Planner" type="Vendor" NS="-3.1" EW="19.2"></loc>
+    <loc id="1389" name="Wedding Planner" type="Vendor" NS="-31.6" EW="13.5"></loc>
+    <loc id="1390" name="Wedding Planner" type="Vendor" NS="-52.9" EW="82.5"></loc>
+    <loc id="1391" name="Wedding Planner" type="Vendor" NS="0.6" EW="50.6"></loc>
+    <loc id="1392" name="Wedding Planner" type="Vendor" NS="10" EW="58.4"></loc>
+    <loc id="1393" name="Weldub Finol the Jeweler" type="Vendor" NS="64.9" EW="13.5"></loc>
+    <loc id="1394" name="Wuo Ha the Provisioner" type="Vendor" NS="-52.6" EW="82"></loc>
+    <loc id="1395" name="Wylreda the Scribe" type="Vendor" NS="10.6" EW="58.4"></loc>
+    <loc id="1396" name="Katsumoto, Master of Multi-Shot" type="NPC" NS="-28.6" EW="59.2"></loc>
+    <loc id="1397" name="Yahr ibn Ajaj the Bowyer" type="Vendor" NS="-25.3" EW="28.3"></loc>
+    <loc id="1398" name="Yao Lun the Shopkeeper" type="Vendor" NS="-49.1" EW="81.7"></loc>
+    <loc id="1399" name="Yaohan Tong the Healer" type="Vendor" NS="-33.8" EW="73"></loc>
+    <loc id="1400" name="Yatenyu Zhuong the Bowyer" type="Vendor" NS="-39.5" EW="82.9"></loc>
+    <loc id="1401" name="Ye Te the Bowyer" type="Vendor" NS="-52.7" EW="82.4"></loc>
+    <loc id="1402" name="Ynarre the Grocer" type="Vendor" NS="10.2" EW="58.5"></loc>
+    <loc id="1403" name="Ystig Marson the Barkeeper" type="Vendor" NS="29.4" EW="27.2"></loc>
+    <loc id="1404" name="Zhofon No the Bowyer" type="Vendor" NS="-33.4" EW="72.5"></loc>
+    <loc id="1405" name="Ziya bint Balun the Grocer" type="Vendor" NS="-25.7" EW="28.3"></loc>
+    <loc id="1406" name="Zubid ibn Ifi the Grocer" type="Vendor" NS="13.9" EW="0.6"></loc>
+    <loc id="1407" name="High Mountain Valley Portal" type="WildernessPortal" NS="26.3" EW="63.9" exitNS="-65.2" exitEW="60.3"></loc>
+    <loc id="1408" name="Renegade Chest" type="Landmark" NS="-31.2" EW="58.9"></loc>
+    <loc id="1409" name="Renegade Chest" type="Landmark" NS="-34.7" EW="12.1"></loc>
+    <loc id="1410" name="Al-Jalima to Zaikhal" type="TownPortal" NS="7.5" EW="4.6" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="1411" name="Karwin, the Lunatic" type="NPC" NS="66.4" EW="50"></loc>
+    <loc id="1412" name="Alison Dulane" type="NPC" NS="66.3" EW="49.8"></loc>
+    <loc id="1413" name="Leikotha" type="NPC" NS="-10.2" EW="31.3"></loc>
+    <loc id="1414" name="Qath al-Haddash" type="NPC" NS="-74.2" EW="19.2"></loc>
+    <loc id="1415" name="Leather Trader" type="Vendor" NS="29.9" EW="27.1">T1</loc>
+    <loc id="1416" name="Majestic Pumpkin" type="NPC" NS="30.7" EW="27.8"></loc>
+    <loc id="1417" name="Captain Nyino" type="NPC" NS="29.9" EW="27.4"></loc>
+    <loc id="1418" name="Rogg, Master of Fury" type="NPC" NS="29.9" EW="27.1"></loc>
+    <loc id="1419" name="Captain Savano" type="NPC" NS="13.4" EW="0.7"></loc>
+    <loc id="1420" name="Captain Anrayl" type="NPC" NS="33.6" EW="55.8"></loc>
+    <loc id="1421" name="Shin Ou-Ye the Shopkeep" type="Vendor" NS="-12.1" EW="42.3"></loc>
+    <loc id="1422" name="Nu Sha the Weaponsmith" type="Vendor" NS="-12.8" EW="46.2"></loc>
+    <loc id="1423" name="Viamont Staging Area Portal" type="Dungeon" NS="27.3" EW="27.9"></loc>
+    <loc id="1424" name="Obsidian Pillars" type="Landmark" NS="74.3" EW="58.6"></loc>
+    <loc id="1425" name="Outpost Lifestone" type="Lifestone" NS="46" EW="-8"></loc>
+    <loc id="1426" name="Leather Trader" type="Vendor" NS="-39.4" EW="83">T1</loc>
+    <loc id="1427" name="Rat Cave" type="Landmark" NS="-32.9" EW="70.5"></loc>
+    <loc id="1428" name="Cells of the Black Book bunker" type="Landmark" NS="-10.3" EW="50.3"></loc>
+    <loc id="1429" name="Hassha" type="NPC" NS="-10.3" EW="50.3"></loc>
+    <loc id="1430" name="Empyrean Workshop" type="Dungeon" NS="66.9" EW="15.9" dungeonId="110"></loc>
+    <loc id="1431" name="Butcher" type="Vendor" NS="-7.9" EW="73.1">T2</loc>
+    <loc id="1432" name="Stone of Yanshi" type="Landmark" NS="-12.8" EW="46.4"></loc>
+    <loc id="1433" name="Aun Saritea" type="NPC" NS="82.7" EW="21.1"></loc>
+    <loc id="1434" name="Jolly Snowman" type="Vendor" NS="-65.4" EW="44.1"></loc>
+    <loc id="1435" name="Xarabydun Attunement Device" type="Bindstone" NS="-41.7" EW="15.8"></loc>
+    <loc id="1436" name="Kara to Hebian-To" type="TownPortal" NS="-83.4" EW="47" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1437" name="Temple of Forgetfulness" type="Dungeon" NS="88.8" EW="0" dungeonId="23880"></loc>
+    <loc id="1438" name="Cydna Wren" type="NPC" NS="4.9" EW="23.8"></loc>
+    <loc id="1439" name="Balor" type="NPC" NS="-77.2" EW="28.5"></loc>
+    <loc id="1440" name="Oubliette Gatekeeper" type="NPC" NS="69.2" EW="-17.2"></loc>
+    <loc id="1441" name="Platinum Golem" type="NPC" NS="57.7" EW="48.4"></loc>
+    <loc id="1442" name="Asheron`s Platinum Golem" type="NPC" NS="57.7" EW="48.4"></loc>
+    <loc id="1443" name="Alfrin" type="NPC" NS="42.2" EW="33.6"></loc>
+    <loc id="1444" name="Worcer" type="NPC" NS="42.2" EW="33.7"></loc>
+    <loc id="1445" name="Flinrala Ryndmad" type="NPC" NS="42.2" EW="33.7"></loc>
+    <loc id="1446" name="Branwyn" type="NPC" NS="29.1" EW="57.9"></loc>
+    <loc id="1447" name="Merchant" type="Vendor" NS="-80.7" EW="19.7"></loc>
+    <loc id="1448" name="Healer" type="Vendor" NS="-80.7" EW="19.7"></loc>
+    <loc id="1449" name="Lord Kresovus" type="NPC" NS="-77.6" EW="28"></loc>
+    <loc id="1450" name="Captain K`rank" type="NPC" NS="-77.7" EW="28"></loc>
+    <loc id="1451" name="Royal Guard Gabrielle" type="NPC" NS="10.5" EW="58.2"></loc>
+    <loc id="1452" name="Wah Fo-Za the Armorer" type="Vendor" NS="-12.8" EW="46.2"></loc>
+    <loc id="1453" name="Master Sonji Pan, Archmage" type="Vendor" NS="-11.9" EW="42.5"></loc>
+    <loc id="1454" name="Wedding Planner" type="Vendor" NS="-11.9" EW="42.7"></loc>
+    <loc id="1455" name="Farmer" type="Vendor" NS="-12.8" EW="42.6"></loc>
+    <loc id="1456" name="Yanshi Attunement Device" type="Bindstone" NS="-12.7" EW="46.2"></loc>
+    <loc id="1457" name="Edobar the Esoteric" type="NPC" NS="26" EW="47"></loc>
+    <loc id="1458" name="Bretself the Translator" type="NPC" NS="26" EW="47"></loc>
+    <loc id="1459" name="Alec" type="NPC" NS="25.8" EW="49.2"></loc>
+    <loc id="1460" name="G-TN to Al-Jalima" type="TownPortal" NS="13.7" EW="0.6" exitNS="7.5" exitEW="4.8"></loc>
+    <loc id="1461" name="Apprentice Cook" type="NPC" NS="-28" EW="95.5"></loc>
+    <loc id="1462" name="Nawamara Ujio" type="NPC" NS="-28" EW="95.7"></loc>
+    <loc id="1463" name="Abandoned House" type="Lifestone" NS="27.8" EW="62.9"></loc>
+    <loc id="1464" name="Lanaith" type="NPC" NS="70.4" EW="50.5" exitNS="79.7" exitEW="54.4"></loc>
+    <loc id="1465" name="Life Stone" type="Lifestone" NS="55.9" EW="-52.2" exitNS="75.8" exitEW="70.2"></loc>
+    <loc id="1466" name="Blacksmith" type="Vendor" NS="55.9" EW="-52.3" exitNS="75.8" exitEW="70.2"></loc>
+    <loc id="1467" name="Archmage" type="Vendor" NS="55.9" EW="-52.3" exitNS="75.8" exitEW="70.2"></loc>
+    <loc id="1468" name="House" type="Landmark" NS="55.9" EW="-52.3" exitNS="75.8" exitEW="70.2"></loc>
+    <loc id="1469" name="Thorolf" type="NPC" NS="42.2" EW="33.7"></loc>
+    <loc id="1470" name="Pathwarden Koro Ijida" type="NPC" NS="-33.5" EW="72.8"></loc>
+    <loc id="1471" name="Combat Ability Trainer" type="Vendor" NS="-21.7" EW="-1.6"></loc>
+    <loc id="1472" name="Raxanza Folthid" type="NPC" NS="-8.8" EW="53.7"></loc>
+    <loc id="1473" name="Mountain Retreat Collector" type="NPC" NS="59.7" EW="-4.1"></loc>
+    <loc id="1474" name="Apprentice Alchemist" type="NPC" NS="-54.4" EW="73.5"></loc>
+    <loc id="1475" name="Asheron`s Servant - Guardian of the White Tower" type="NPC" NS="0" EW="0"></loc>
+    <loc id="1476" name="Kiriel Shadowborn" type="NPC" NS="66.3" EW="50"></loc>
+    <loc id="1477" name="Pathwarden Thorolf" type="NPC" NS="42.2" EW="33.6"></loc>
+    <loc id="1478" name="Abandoned Buildings" type="Landmark" NS="21.4" EW="-12.8"></loc>
+    <loc id="1479" name="Meng Zi, the Sage, Master of Alchemy" type="NPC" NS="-38.9" EW="83.4">Master Alchemist</loc>
+    <loc id="1480" name="Al-Arqas Attunement Device" type="Bindstone" NS="-31.3" EW="13.7"></loc>
+    <loc id="1481" name="Sergeant Huang" type="NPC" NS="-28.9" EW="59.3"></loc>
+    <loc id="1482" name="Fledgling Mukkir Nest" type="Landmark" NS="-20.3" EW="-0.2"></loc>
+    <loc id="1483" name="Empty Caves" type="Landmark" NS="-31.3" EW="74.8"></loc>
+    <loc id="1484" name="Unfriendly Barkeeper" type="NPC" NS="-25.3" EW="56.6"></loc>
+    <loc id="1485" name="Bandit Fort" type="Landmark" NS="-24.7" EW="52.7"></loc>
+    <loc id="1486" name="Silencia`s Magma Golem (Motey)" type="NPC" NS="64.8" EW="13.5"></loc>
+    <loc id="1487" name="Diamond Guardian" type="NPC" NS="0" EW="0"></loc>
+    <loc id="1488" name="Fledgling Mukkir Nest" type="Landmark" NS="43.5" EW="36.1"></loc>
+    <loc id="1489" name="Renald the Eldest" type="NPC" NS="42.1" EW="33.8"></loc>
+    <loc id="1490" name="Sawato to Hebian-To" type="TownPortal" NS="-28.7" EW="59.1" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1491" name="Portal to Hilltop" type="WildernessPortal" NS="40.1" EW="60.3" exitNS="32.8" exitEW="34.7"></loc>
+    <loc id="1492" name="Town Crier" type="NPC" NS="10.8" EW="58.2"></loc>
+    <loc id="1493" name="The Royal Firkin" type="_Unknown" NS="10.7" EW="58.2"></loc>
+    <loc id="1494" name="Apprentice Fletcher" type="NPC" NS="10.4" EW="58.2"></loc>
+    <loc id="1495" name="Lady of Blades" type="_Unknown" NS="10.3" EW="58.2"></loc>
+    <loc id="1496" name="Grocer" type="Vendor" NS="10.2" EW="58.4"></loc>
+    <loc id="1497" name="Town Crier" type="NPC" NS="10.4" EW="58.3"></loc>
+    <loc id="1498" name="The Gilded Tome" type="_Unknown" NS="10.6" EW="58.3"></loc>
+    <loc id="1499" name="Fishing Shack" type="Landmark" NS="10.7" EW="58.7"></loc>
+    <loc id="1500" name="Tenxien`s Garments" type="_Unknown" NS="10.7" EW="59.2"></loc>
+    <loc id="1501" name="Town Crier" type="NPC" NS="10.8" EW="59.3"></loc>
+    <loc id="1502" name="Skull and Flagons" type="_Unknown" NS="10.9" EW="59.4"></loc>
+    <loc id="1503" name="Town Crier" type="NPC" NS="10.4" EW="57.5"></loc>
+    <loc id="1504" name="Advocate Tower" type="Landmark" NS="10" EW="57.5"></loc>
+    <loc id="1505" name="Kira Sojini" type="NPC" NS="10.6" EW="58.2"></loc>
+    <loc id="1506" name="Remmick" type="NPC" NS="10.6" EW="58.2"></loc>
+    <loc id="1507" name="Timon Rae" type="NPC" NS="10.6" EW="58.2"></loc>
+    <loc id="1508" name="Josef" type="NPC" NS="10.6" EW="58.2"></loc>
+    <loc id="1509" name="Julian Bartok" type="NPC" NS="10.6" EW="58.2"></loc>
+    <loc id="1510" name="Leandra" type="NPC" NS="10.6" EW="58.3"></loc>
+    <loc id="1511" name="Hibdin Velos" type="NPC" NS="10.6" EW="58.3"></loc>
+    <loc id="1512" name="Ambrosia Roe" type="NPC" NS="10.6" EW="58.3"></loc>
+    <loc id="1513" name="Dwennon" type="NPC" NS="42.6" EW="33.5"></loc>
+    <loc id="1514" name="Denterra the Healer" type="Vendor" NS="41.1" EW="56.4"></loc>
+    <loc id="1515" name="Surnad the Peddler" type="Vendor" NS="41.1" EW="56.4"></loc>
+    <loc id="1516" name="Apprentice Alchemist" type="NPC" NS="33.5" EW="56.8"></loc>
+    <loc id="1517" name="Farmer" type="Vendor" NS="22.6" EW="37.1"></loc>
+    <loc id="1518" name="Apprentice Fletcher" type="NPC" NS="-2.9" EW="19.6"></loc>
+    <loc id="1519" name="Grocer Rodega Tyning" type="Vendor" NS="33.8" EW="56.9"></loc>
+    <loc id="1520" name="Town Crier" type="NPC" NS="-28.1" EW="95.8"></loc>
+    <loc id="1521" name="Tower Tavern" type="_Unknown" NS="-28.1" EW="95.5"></loc>
+    <loc id="1522" name="Town Crier" type="NPC" NS="-28.1" EW="95.4"></loc>
+    <loc id="1523" name="Town Crier" type="NPC" NS="7.1" EW="4.4"></loc>
+    <loc id="1524" name="Wisdom`s Way" type="_Unknown" NS="7.2" EW="4.6"></loc>
+    <loc id="1525" name="Janda`s Apprentice" type="NPC" NS="7.4" EW="4.6"></loc>
+    <loc id="1526" name="Town Crier" type="NPC" NS="7.7" EW="5"></loc>
+    <loc id="1527" name="Town Crier" type="NPC" NS="7.3" EW="5"></loc>
+    <loc id="1528" name="Town Crier" type="NPC" NS="-48.1" EW="24.6"></loc>
+    <loc id="1529" name="Zayjay`s Clothing" type="_Unknown" NS="-48" EW="24.5"></loc>
+    <loc id="1530" name="Desert`s Respite" type="_Unknown" NS="-47.7" EW="24.6"></loc>
+    <loc id="1531" name="The Skeleton`s Mug" type="_Unknown" NS="-47.6" EW="24.7"></loc>
+    <loc id="1532" name="Apprentice Fletcher" type="NPC" NS="-47.1" EW="24.7"></loc>
+    <loc id="1533" name="Najmima the Archmage" type="Vendor" NS="-47.2" EW="24.9"></loc>
+    <loc id="1534" name="Khayyaban to Zaikhal" type="TownPortal" NS="-47.4" EW="24.9" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="1535" name="Town Crier" type="NPC" NS="-47.4" EW="25.5"></loc>
+    <loc id="1536" name="Hidden Valley to High Mountain Valley" type="WildernessPortal" NS="-61.9" EW="40" exitNS="-65.2" exitEW="60.3"></loc>
+    <loc id="1537" name="The Olthoi`s Eye" type="_Unknown" NS="-74.5" EW="84.5"></loc>
+    <loc id="1538" name="The Wildsong Inn" type="_Unknown" NS="-74.4" EW="84.3"></loc>
+    <loc id="1539" name="The Magi`s Refuge" type="_Unknown" NS="-74.5" EW="84.1"></loc>
+    <loc id="1540" name="Saqat" type="NPC" NS="-3.3" EW="22.1"></loc>
+    <loc id="1541" name="Ashqa the Shopkeeper" type="Vendor" NS="-3.1" EW="22.1"></loc>
+    <loc id="1542" name="Blue Ghost Falls" type="Landmark" NS="-53.2" EW="80.9"></loc>
+    <loc id="1543" name="Town Crier" type="NPC" NS="-53" EW="81.9"></loc>
+    <loc id="1544" name="Ji Ra Ping" type="NPC" NS="-49.1" EW="81.7"></loc>
+    <loc id="1545" name="Destroyed Training Academy" type="Landmark" NS="-52.5" EW="85.4"></loc>
+    <loc id="1546" name="Inuo KonKou" type="NPC" NS="-52.4" EW="85.4"></loc>
+    <loc id="1547" name="Tackle Master" type="NPC" NS="-52.6" EW="80.8"></loc>
+    <loc id="1548" name="Town Crier" type="NPC" NS="-52.3" EW="81.3"></loc>
+    <loc id="1549" name="Combat Focus Trainer" type="Vendor" NS="-33.5" EW="72.8"></loc>
+    <loc id="1550" name="The Oak Talisman" type="_Unknown" NS="-52.2" EW="81.6"></loc>
+    <loc id="1551" name="The Touch of Healing" type="_Unknown" NS="-52.2" EW="81.8"></loc>
+    <loc id="1552" name="Southern End Tavern" type="_Unknown" NS="-52.4" EW="82.1"></loc>
+    <loc id="1553" name="Combat Ability Trainer" type="Vendor" NS="-33.5" EW="72.8"></loc>
+    <loc id="1554" name="Butcher" type="Vendor" NS="-33.3" EW="73.1">T1</loc>
+    <loc id="1555" name="Mayoi to Hebian-To" type="TownPortal" NS="-61.8" EW="82.3" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1556" name="Jewels of the South" type="_Unknown" NS="-52.5" EW="82.1"></loc>
+    <loc id="1557" name="Southern Town Bows" type="_Unknown" NS="-52.6" EW="82.4"></loc>
+    <loc id="1558" name="Town Crier" type="NPC" NS="-52.6" EW="82.4"></loc>
+    <loc id="1559" name="The Full Net" type="_Unknown" NS="-52.5" EW="82.4"></loc>
+    <loc id="1560" name="Town Crier" type="NPC" NS="-52.2" EW="82.5"></loc>
+    <loc id="1561" name="Cragstone Library" type="_Unknown" NS="26.1" EW="47.1"></loc>
+    <loc id="1562" name="Abandoned Building" type="_Unknown" NS="24.5" EW="46.9"></loc>
+    <loc id="1563" name="Farmer Pogget's Barn" type="_Unknown" NS="23.4" EW="46.2"></loc>
+    <loc id="1564" name="Roaming Bowyer's House" type="_Unknown" NS="23.6" EW="46.2"></loc>
+    <loc id="1565" name="Hildar House" type="_Unknown" NS="25.6" EW="48.6"></loc>
+    <loc id="1566" name="Thorsten's Rest" type="_Unknown" NS="25.6" EW="48.8"></loc>
+    <loc id="1567" name="Gems and Jewels" type="_Unknown" NS="25.7" EW="49.2"></loc>
+    <loc id="1568" name="Arms and Armor" type="_Unknown" NS="25.7" EW="49.2"></loc>
+    <loc id="1569" name="Gondibyr Langarl's Magic Supplies" type="_Unknown" NS="25.7" EW="49.4"></loc>
+    <loc id="1570" name="Ledine's Wares" type="_Unknown" NS="25.5" EW="49.1"></loc>
+    <loc id="1571" name="Empty Barn" type="_Unknown" NS="25.4" EW="49.2"></loc>
+    <loc id="1572" name="Scildith's Bows" type="_Unknown" NS="25.4" EW="49"></loc>
+    <loc id="1573" name="Augmentation House" type="_Unknown" NS="25.5" EW="48.5"></loc>
+    <loc id="1574" name="Shot in the Arm Bowyers" type="_Unknown" NS="-87.5" EW="-67"></loc>
+    <loc id="1575" name="The Healer's Home" type="_Unknown" NS="-87.5" EW="-67"></loc>
+    <loc id="1576" name="House of Bones" type="_Unknown" NS="-87.6" EW="-66.9"></loc>
+    <loc id="1577" name="Empty Hut" type="_Unknown" NS="-87.6" EW="-66.9"></loc>
+    <loc id="1578" name="Auroch Farm" type="_Unknown" NS="-87.8" EW="-67"></loc>
+    <loc id="1579" name="Town Mason and Storage" type="_Unknown" NS="-87.3" EW="-67.2"></loc>
+    <loc id="1580" name="Night Club Attendant" type="NPC" NS="25.6" EW="49.2"></loc>
+    <loc id="1581" name="Ungrim the Unpleasant Smelling" type="NPC" NS="29.4" EW="27.2"></loc>
+    <loc id="1582" name="Town Crier" type="NPC" NS="-15.5" EW="5.4"></loc>
+    <loc id="1583" name="House of the Seven Stars" type="_Unknown" NS="-15.2" EW="5.5"></loc>
+    <loc id="1584" name="Town Crier" type="NPC" NS="-14.5" EW="6.5"></loc>
+    <loc id="1585" name="Gabal Feteh" type="NPC" NS="-13.3" EW="5.1"></loc>
+    <loc id="1586" name="Town Crier" type="NPC" NS="-13.4" EW="5.3"></loc>
+    <loc id="1587" name="The Bursting Quiver" type="_Unknown" NS="-14" EW="5.5"></loc>
+    <loc id="1588" name="Tufa Crater Falls" type="Landmark" NS="-13.9" EW="5.3"></loc>
+    <loc id="1589" name="Town Crier" type="NPC" NS="-14.9" EW="4.6"></loc>
+    <loc id="1590" name="Lifestone" type="Lifestone" NS="-57.9" EW="40"></loc>
+    <loc id="1591" name="A-TN to Stonehold" type="TownPortal" NS="25.6" EW="49.2" exitNS="68.7" exitEW="-21.8"></loc>
+    <loc id="1592" name="Baishi to Hebian-To" type="TownPortal" NS="-49.6" EW="62.7" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1593" name="A-TN to Zaikhal" type="TownPortal" NS="25.6" EW="49.2" exitNS="13.7" exitEW="0.6"></loc>
+    <loc id="1594" name="Lin Attunement Device" type="Bindstone" NS="-54.5" EW="73.3"></loc>
+    <loc id="1595" name="Lin to Hebian-To" type="TownPortal" NS="-54.3" EW="73.3" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1596" name="Town Crier" type="NPC" NS="-12.6" EW="46.3"></loc>
+    <loc id="1597" name="Ribusha Sennei the Bowyer" type="Vendor" NS="-12.5" EW="46.2"></loc>
+    <loc id="1598" name="Zan Wah-Shabu the Tailor" type="Vendor" NS="-12.5" EW="46.4"></loc>
+    <loc id="1599" name="Yanshi to Hebian-To" type="TownPortal" NS="-12.5" EW="46.3" exitNS="-39.1" exitEW="83.2"></loc>
+    <loc id="1600" name="Yanshi Lifestone" type="Lifestone" NS="-12.8" EW="45.1"></loc>
+    <loc id="1601" name="Bank" type="Outpost" NS="-39.4" EW="83"></loc>
+    <loc id="1602" name="Butcher" type="Vendor" NS="-47.5" EW="24.6">T2</loc>
+    <loc id="1603" name="Chen, the Tinker, Master of Blacksmithing" type="NPC" NS="-39.5" EW="83.3">Master Blacksmith</loc>
+    <loc id="1604" name="Trophy Collector" type="NPC" NS="-38.9" EW="83.2"></loc>
+    <loc id="1605" name="Leather Trader" type="Vendor" NS="-49.4" EW="62.4">T2</loc>
+    <loc id="1606" name="Ivory Trader" type="Vendor" NS="-41.7" EW="16.3">T2</loc>
+    <loc id="1607" name="Butcher" type="Vendor" NS="-83.4" EW="47.1">T3</loc>
+    <loc id="1608" name="Ivory Trader" type="Vendor" NS="-83.3" EW="47.2">T3</loc>
+    <loc id="1609" name="Ivory Trader" type="Vendor" NS="-54.4" EW="72.9">T2</loc>
+    <loc id="1610" name="Leather Trader" type="Vendor" NS="-39.4" EW="83">T2</loc>
+    <loc id="1611" name="Butcher" type="Vendor" NS="-54.5" EW="72.7">T2</loc>
+    <loc id="1612" name="Butcher" type="Vendor" NS="-61.8" EW="81.8">T2</loc>
+    <loc id="1613" name="Leather Trader" type="Vendor" NS="-61.4" EW="81.9">T2</loc>
+    <loc id="1614" name="Ivory Trader" type="Vendor" NS="-61.4" EW="81.9">T2</loc>
+    <loc id="1615" name="Butcher" type="Vendor" NS="-52.5" EW="82.4">T2</loc>
+    <loc id="1616" name="Leather Trader" type="Vendor" NS="-52.4" EW="82">T2</loc>
+    <loc id="1617" name="Ivory Trader" type="Vendor" NS="-52.4" EW="82">T2</loc>
+    <loc id="1618" name="Ivory Trader" type="Vendor" NS="-33.5" EW="72.6">T1</loc>
+    <loc id="1619" name="Leather Trader" type="Vendor" NS="-33.2" EW="73">T1</loc>
+    <loc id="1620" name="Ivory Trader" type="Vendor" NS="-28" EW="95.8">T1</loc>
+    <loc id="1621" name="Butcher" type="Vendor" NS="-28" EW="95.5">T1</loc>
+    <loc id="1622" name="Butcher" type="Vendor" NS="25.7" EW="48.5">T1</loc>
+    <loc id="1623" name="Chef Martel, Master of Cooking" type="NPC" NS="25.7" EW="48.5">Master Cook</loc>
+    <loc id="1624" name="William Fletcher, Master of Woodworking" type="NPC" NS="25.3" EW="49.1">Master Woodworker</loc>
+    <loc id="1625" name="Emissary of Asheron" type="NPC" NS="25.6" EW="49.2">Shroud</loc>
+    <loc id="1626" name="Healer Dragando the Leech" type="Vendor" NS="33.3" EW="56.7"></loc>
+    <loc id="1627" name="Town Crier" type="NPC" NS="33.4" EW="56.7"></loc>
+    <loc id="1628" name="Town Crier" type="NPC" NS="33.7" EW="56.9"></loc>
+    <loc id="1629" name="Barkeep Lienne" type="Vendor" NS="33.4" EW="56.6"></loc>
+    <loc id="1630" name="Barkeep Mae Lilidag" type="Vendor" NS="33.4" EW="56.6"></loc>
+    <loc id="1631" name="Claude, Master of Parry" type="NPC" NS="33.4" EW="56.6"></loc>
+    <loc id="1632" name="Town Crier" type="NPC" NS="33.5" EW="56.4"></loc>
+    <loc id="1633" name="Shopkeep Mirinda" type="Vendor" NS="33.6" EW="56.6"></loc>
+    <loc id="1634" name="Butcher" type="Vendor" NS="33.6" EW="56.6">T2</loc>
+    <loc id="1635" name="Ivory Trader" type="Vendor" NS="33.6" EW="56.6">T2</loc>
+    <loc id="1636" name="Leather Trader" type="Vendor" NS="33.6" EW="56.6">T2</loc>
+    <loc id="1637" name="Olthoi Hunter" type="NPC" NS="33.6" EW="56.6"></loc>
+    <loc id="1638" name="Laqisha the Scribe" type="Vendor" NS="33.7" EW="56.6"></loc>
+    <loc id="1639" name="Davis the Tailor" type="Vendor" NS="33.8" EW="56.7"></loc>
+    <loc id="1640" name="Olthoi Depot" type="Landmark" NS="33.8" EW="56.8"></loc>
+    <loc id="1641" name="Cateril Carsmad the Armorer" type="Vendor" NS="33.6" EW="56.9"></loc>
+    <loc id="1642" name="Demetrius, Master of the Phalanx" type="NPC" NS="33.6" EW="56.9"></loc>
+    <loc id="1643" name="Carsith the Weaponsmith" type="Vendor" NS="33.6" EW="56.9"></loc>
+    <loc id="1644" name="Harald the Fletcher" type="Vendor" NS="33.4" EW="56.9"></loc>
+    <loc id="1645" name="Arwic to Cragstone" type="TownPortal" NS="33.3" EW="56.9" exitNS="26" exitEW="48.4"></loc>
+    <loc id="1646" name="Belthew Shearstone the Jeweler" type="Vendor" NS="33.3" EW="56.8"></loc>
+    <loc id="1647" name="Magus Guthima the Wise" type="Vendor" NS="33.3" EW="56.8"></loc>
+    <loc id="1648" name="Leather Trader" type="Vendor" NS="-7.9" EW="73.1">T2</loc>
+    <loc id="1649" name="Dryreach to Cragstone" type="TownPortal" NS="-7.9" EW="73.2" exitNS="26" exitEW="48.4"></loc>
+    <loc id="1650" name="Town Crier" type="NPC" NS="17.4" EW="63.3"></loc>
+    <loc id="1651" name="Ivory Trader" type="Vendor" NS="17.5" EW="63.5">T2</loc>
+    <loc id="1652" name="Leather Trader" type="Vendor" NS="17.5" EW="63.5">T2</loc>
+    <loc id="1653" name="Butcher" type="Vendor" NS="17.5" EW="63.5">T2</loc>
+    <loc id="1654" name="Degel Parson the Scrivener" type="Vendor" NS="17.5" EW="63.5"></loc>
+    <loc id="1655" name="Town Crier" type="NPC" NS="17.8" EW="63.3"></loc>
+    <loc id="1656" name="Eastham to Cragstone" type="TownPortal" NS="-7.9" EW="73.2" exitNS="26" exitEW="48.4"></loc>
+    <loc id="1657" name="Eastham Attunement Device" type="Bindstone" NS="17.3" EW="63.3"></loc>
+    <loc id="1658" name="Yaraq to Shoushi" type="TownPortal" NS="-21.6" EW="-1.8" exitNS="-33.6" exitEW="72.8"></loc>
+    <loc id="1659" name="Yaraq to Holtburg" type="TownPortal" NS="-21.6" EW="-1.8" exitNS="42.1" exitEW="33.6"></loc>
+    <loc id="1660" name="Al-Arqas to Zaikhal" type="TownPortal" NS="-31.3" EW="13.8" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="1661" name="Habiba, Master of Reflect" type="Vendor" NS="-31.1" EW="13.9"></loc>
+    <loc id="1662" name="Hasaam al-Suttanabi, Master of Enchant" type="Vendor" NS="-31.1" EW="13.9"></loc>
+    <loc id="1663" name="Ivory Trader" type="Vendor" NS="-31" EW="14">T1</loc>
+    <loc id="1664" name="Leather Trader" type="Vendor" NS="-31" EW="14">T1</loc>
+    <loc id="1665" name="Butcher" type="Vendor" NS="-31.1" EW="14.1">T1</loc>
+    <loc id="1666" name="Butcher" type="Vendor" NS="-74.3" EW="19.3">T3</loc>
+    <loc id="1667" name="Leather Trader" type="Vendor" NS="-74.3" EW="19.3">T3</loc>
+    <loc id="1668" name="Ivory Trader" type="Vendor" NS="-74.3" EW="19.3">T3</loc>
+    <loc id="1669" name="Samsur to Zaikhal" type="TownPortal" NS="-3.1" EW="19.2" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="1670" name="Butcher" type="Vendor" NS="-2.9" EW="19.6">T2</loc>
+    <loc id="1671" name="Leather Trader" type="Vendor" NS="-2.9" EW="19.6">T2</loc>
+    <loc id="1672" name="Ivory Trader" type="Vendor" NS="-2.9" EW="19.6">T2</loc>
+    <loc id="1673" name="Samsur Attunement Device" type="Bindstone" NS="-2.8" EW="19.4"></loc>
+    <loc id="1674" name="Tufa to Zaikhal" type="TownPortal" NS="-14.2" EW="5.5" exitNS="13.5" exitEW="0.7"></loc>
+    <loc id="1675" name="Salma bint Mahmoud, Master of Backstab" type="NPC" NS="-13.9" EW="5.3"></loc>
+    <loc id="1676" name="Ivory Trader" type="Vendor" NS="-14" EW="5.5">T1</loc>
+    <loc id="1677" name="Leather Trader" type="Vendor" NS="-14" EW="5.5">T1</loc>
+    <loc id="1678" name="Tufa Attunement Device" type="Bindstone" NS="-14.1" EW="5.2"></loc>
+    <loc id="1679" name="Leather Trader" type="Vendor" NS="-41.7" EW="16.3">T2</loc>
+    <loc id="1680" name="Ivory Trader" type="Vendor" NS="-21.4" EW="-1.6">T1</loc>
+    <loc id="1681" name="G-TN to Uziz" type="TownPortal" NS="13.7" EW="0.6" exitNS="-25.2" exitEW="28.3"></loc>
+    <loc id="1682" name="G-TN to Xarabydun" type="TownPortal" NS="13.7" EW="0.6" exitNS="-41.8" exitEW="16.1"></loc>
+    <loc id="1683" name="G-TN to Yaraq" type="TownPortal" NS="13.7" EW="0.6" exitNS="-21.5" exitEW="-1.8"></loc>
+    <loc id="1684" name="Trophy Collector" type="NPC" NS="13.8" EW="0.7"></loc>
+    <loc id="1685" name="Al-Jalima Menhir Ring" type="Landmark" NS="8.2" EW="5.4"></loc>
+    <loc id="1686" name="Colier Menhir Ring" type="Landmark" NS="61.7" EW="34.1"></loc>
+    <loc id="1687" name="Mount Alphus Menhir Ring" type="Landmark" NS="19.3" EW="17.7"></loc>
+    <loc id="1688" name="Yanshi Menhir Ring" type="Landmark" NS="-11.2" EW="43.6"></loc>
+    <loc id="1689" name="Olthoi Menhir Ring" type="Landmark" NS="60.2" EW="72"></loc>
+    <loc id="1690" name="Land Bridge Menhir Ring" type="Landmark" NS="-86.7" EW="5.5"></loc>
+    <loc id="1691" name="Lake Thraysl Menhir Ring" type="Landmark" NS="-69.7" EW="40.1"></loc>
+    <loc id="1692" name="Esper Mountains Menhir Ring" type="Landmark" NS="66.8" EW="-10.3"></loc>
+    <loc id="1693" name="Butcher" type="Vendor" NS="-13.9" EW="5.3">T1</loc>
+    <loc id="1694" name="Abu bin Abi Sulma, Master of Overload" type="NPC" NS="-15.3" EW="5.4"></loc>
+    <loc id="1695" name="Yamamoto, Master of Steady Shot" type="NPC" NS="-28" EW="95.5"></loc>
+    <loc id="1696" name="Kuro, Master of the Smokescreen" type="NPC" NS="-28" EW="95.5"></loc>
+    <loc id="1697" name="Shih, Master of Battery" type="NPC" NS="-28.4" EW="59.6"></loc>
+    <loc id="1698" name="Almira bint Qan'ra, Master of Tailoring" type="NPC" NS="13.9" EW="0.6">Master Tailor</loc>
+    <loc id="1699" name="Al-Hasan ibn Sulaiman, Master of Jewelcrafting" type="NPC" NS="13.7" EW="0.7">Master Jewelcrafter</loc>
+    <loc id="1700" name="Lifestone" type="Lifestone" NS="70.2" EW="65.6"></loc>
+    <loc id="1701" name="Northern Camp Attunement Device" type="Bindstone" NS="68" EW="67"></loc>
+    <loc id="1702" name="Merewin" type="NPC" NS="67.9" EW="67"></loc>
+    <loc id="1703" name="Southeast Camp Attunement Device" type="Bindstone" NS="46.2" EW="70.8"></loc>
+    <loc id="1704" name="Jabir" type="NPC" NS="46.2" EW="70.8"></loc>
+    <loc id="1705" name="Lifestone" type="Lifestone" NS="46.2" EW="70.8"></loc>
+</locations>
