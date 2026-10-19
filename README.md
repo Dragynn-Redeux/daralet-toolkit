@@ -29,8 +29,10 @@ Type `/dap` to open and close the window. Hover over almost anything for a toolt
 
 - **Decal 2.9.8.3.** Older versions, including "Decal 3.0" (which reports itself as 2.9.7.5), can't run this plugin.
   The Decal agent's title bar shows which version you have.
-- **[UtilityBelt](https://utilitybelt.gitlab.io/).** Daralet draws its window with UtilityBelt's interface, so
-  UtilityBelt has to be installed, but you don't have to use UtilityBelt's own features.
+- **[UtilityBelt](https://utilitybelt.gitlab.io/) and
+  [UtilityBelt.Service 2.2.12](https://gitlab.com/utilitybelt/utilitybelt.service/-/releases/v2.2.12).** Daralet draws
+  its window with UtilityBelt.Service, which is a **separate install** from UtilityBelt itself. You need both installed,
+  but you don't have to use UtilityBelt's own features.
 - **A Daralet account.** The plugin only works on the Daralet server.
 
 ## Installing
@@ -38,15 +40,19 @@ Type `/dap` to open and close the window. Hover over almost anything for a toolt
 1. **Update Decal if you need to.** Open the Decal agent (the icon in your system tray) and look at the version in its
    title bar. If it isn't 2.9.8.x, install [Decal 2.9.8.3](https://www.decaldev.com/) over it. Install the Visual C++ 2017
    (x86) runtime it links to as well. Your other plugins keep working.
-2. **Install UtilityBelt** from [utilitybelt.gitlab.io](https://utilitybelt.gitlab.io/) if you don't have it. This also
-   installs Managed DirectX and UtilityBelt.Service, which Daralet needs.
-3. **Download `Daralet.dll`** from the
+2. **Install UtilityBelt** from [utilitybelt.gitlab.io](https://utilitybelt.gitlab.io/) if you don't have it.
+3. **Install UtilityBelt.Service**, even if you already have UtilityBelt: UtilityBelt's installer doesn't include it.
+   Close the game and the Decal agent, then run
+   [UtilityBelt.Service-Installer-2.2.12.exe](https://gitlab.com/utilitybelt/utilitybelt.service/-/releases/v2.2.12/downloads/packages/UtilityBelt.Service-Installer-2.2.12.exe).
+   Afterwards the Decal agent should show **UtilityBelt.Service** under **Services**, ticked. (UtilityBelt itself shows
+   under **Network Filters**.)
+4. **Download `Daralet.dll`** from the
    [latest release](https://github.com/daralet-ac/daralet-player-plugin/releases/latest) (under **Assets**).
-4. **Put it somewhere it can stay**, for example `C:\Games\Decal Plugins\Daralet\`. Decal loads the file from wherever you
+5. **Put it somewhere it can stay**, for example `C:\Games\Decal Plugins\Daralet\`. Decal loads the file from wherever you
    put it, so don't leave it in your Downloads folder.
-5. **Add it to Decal.** In the Decal agent, click **Add**, then **Browse**, and pick `Daralet.dll`.
-6. **Make sure Daralet is ticked** under **Plugins** in the Decal agent.
-7. **Start the game** through Decal and log in. Type `/dap` to open the window.
+6. **Add it to Decal.** In the Decal agent, click **Add**, then **Browse**, and pick `Daralet.dll`.
+7. **Make sure Daralet is ticked** under **Plugins** in the Decal agent.
+8. **Start the game** through Decal and log in. Type `/dap` to open the window.
 
 ## Updating
 
@@ -83,9 +89,13 @@ on the other end.
 ## Problems
 
 - **"Failed to register plugin" when adding the dll:** Decal is older than 2.9.8. See step 1 of Installing.
-- **Daralet isn't in Decal's list, or isn't ticked:** add it again (step 5) and tick it.
-- **Nothing happens when you type `/dap`:** check that UtilityBelt is installed, and that Daralet is ticked under
-  **Plugins** in the Decal agent. Then restart the game.
+- **Daralet isn't in Decal's list, or isn't ticked:** add it again (step 6) and tick it.
+- **"Could not load file or assembly 'UtilityBelt.Service'" in chat or `log.txt`, or no UtilityBelt bar in game:**
+  UtilityBelt.Service isn't installed. See step 3 of Installing. Having UtilityBelt alone isn't enough. (Decal's
+  **Add/Remove Plugins** window saying UtilityBelt is "Not Installed" doesn't matter: it only knows about things
+  installed from that window.)
+- **Nothing happens when you type `/dap`:** check that UtilityBelt.Service is under **Services** in the Decal agent, and
+  that Daralet is ticked under **Plugins**. Then restart the game.
 - **A tab says the server is too old:** the server hasn't been updated for that part of the plugin yet. The rest still
   works.
 - **Lines starting with `DAP1|` show up in chat:** those are messages from the server to the plugin, and the plugin
