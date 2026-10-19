@@ -10,7 +10,7 @@ using Decal.Adapter;
 
 namespace DaraletPlayer.Loader {
     /// <summary>
-    /// Development only: a Decal network filter that loads DaraletPlayer.dll itself and loads it again whenever it's rebuilt,
+    /// Development only: a Decal network filter that loads Daralet.dll itself and loads it again whenever it's rebuilt,
     /// so changes show up without restarting the client. Based on UtilityBelt's HotDecalPluginTemplate.
     ///
     /// Enable this under Network Filters in Decal and disable Daralet under Plugins, or there will be two copies running.
@@ -18,7 +18,7 @@ namespace DaraletPlayer.Loader {
     [FriendlyName("Daralet Loader")]
     public class LoaderCore : FilterBase {
         // System.IO.Path is written out in full in here: FilterBase has a Path property of its own
-        private const string PluginAssemblyName = "DaraletPlayer.dll";
+        private const string PluginAssemblyName = "Daralet.dll";
         private const string PluginTypeName = "DaraletPlayer.PluginCore";
 
         private Assembly pluginAssembly;

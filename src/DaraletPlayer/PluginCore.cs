@@ -6,7 +6,7 @@ using DaraletPlayer.Ui;
 
 namespace DaraletPlayer {
     /// <summary>
-    /// The Daralet plugin. Startup() runs when Decal loads the plugin, or when the hot-reload loader (DaraletPlayer.Loader)
+    /// The Daralet plugin. Startup() runs when Decal loads the plugin, or when the hot-reload loader (Daralet.Loader.dll)
     /// loads a new build, and Shutdown() when it's unloaded. Only CoreManager.Current is used, never PluginBase.Host / Core,
     /// because a hot-reloaded copy isn't registered with Decal and those are never set up for it.
     /// </summary>

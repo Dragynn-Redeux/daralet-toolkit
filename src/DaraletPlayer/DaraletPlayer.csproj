@@ -5,7 +5,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>12</LangVersion>
     <RootNamespace>DaraletPlayer</RootNamespace>
-    <AssemblyName>DaraletPlayer</AssemblyName>
+    <!-- the dll players install, named for the plugin (the code keeps the DaraletPlayer namespace) -->
+    <AssemblyName>Daralet</AssemblyName>
     <Version>0.1.0</Version>
     <Product>Daralet</Product>
     <OutputPath>..\..\bin\</OutputPath>
