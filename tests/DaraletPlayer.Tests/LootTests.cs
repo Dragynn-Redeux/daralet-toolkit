@@ -25,6 +25,82 @@ namespace DaraletPlayer.Tests {
         }
 
         [TestMethod]
+        public void ExampleProfileOnlyUsesFiltersThatExist() {
+            var example = ExampleLoot.Make();
+            Assert.IsTrue(example.Rules.Count > 5);
+
+            foreach (var rule in example.Rules) {
+                foreach (var key in rule.Values.Keys) {
+                    var filter = MarketSearch.Filters.SingleOrDefault(f => f.Key == key);
+                    Assert.IsNotNull(filter, $"{rule.Name}: no filter {key}");
+                    Assert.IsTrue(filter.Category == null || filter.Category == rule.Category, $"{rule.Name}: {key} isn't a {rule.Category} filter");
+
+                    if (filter.Kind == FilterKind.Choice) {
+                        Assert.IsTrue(filter.Options.Any(o => o.Value == rule.Values[key]), $"{rule.Name}: {rule.Values[key]} isn't a choice of {key}");
+                    }
+                }
+
+                foreach (var key in rule.RollFilters) {
+                    Assert.IsTrue(Loot.UsesRoll(rule, MarketSearch.Filters.Single(f => f.Key == key)), $"{rule.Name}: {key} can't be a roll filter");
+                }
+            }
+
+            // new settings have it after an empty profile, which stays the one in use
+            var data = new LootData();
+            Assert.AreEqual(ExampleLoot.Name, data.Lists[1].Name);
+            Assert.AreSame(data.Lists[0], data.ActiveFor("Someone"));
+        }
+
+        [TestMethod]
+        public void ProfilesSaveToFilesAndLoadBack() {
+            var folder = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "daralet-loot-" + System.Guid.NewGuid().ToString("N"));
+
+            try {
+                Assert.AreEqual(0, LootFiles.List(folder).Count);
+
+                var path = LootFiles.Save(ExampleLoot.Make(), folder);
+                Assert.AreEqual("Example Loot Profile.json", System.IO.Path.GetFileName(path));
+                Assert.AreEqual(1, LootFiles.List(folder).Count);
+
+                var loaded = LootFiles.Load(path, out var problem);
+                Assert.IsNull(problem);
+                Assert.AreEqual(ExampleLoot.Make().Rules.Count, loaded.Rules.Count);
+                Assert.IsTrue(loaded.Rules[0].UnlearnedSpellsOnly);
+
+                Assert.AreEqual("a_b_.json", LootFiles.FileName("a/b?"));
+                Assert.AreEqual("Loot profile.json", LootFiles.FileName("  "));
+            }
+            finally {
+                if (System.IO.Directory.Exists(folder)) {
+                    System.IO.Directory.Delete(folder, true);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UnlearnedSpellsOnlyTakesScrollsTheCharacterDoesntKnow() {
+            var rule = new LootRule { Category = "Misc", UnlearnedSpellsOnly = true };
+            CorpseItemInfo Scroll(uint guid) => new CorpseItemInfo { Guid = guid, Name = "Scroll", Item = new MarketListing { ItemCategory = "Misc", MiscType = "Scroll" } };
+            var gem = new CorpseItemInfo { Guid = 9, Name = "Ruby", Item = new MarketListing { ItemCategory = "Misc", MiscType = "Gem" } };
+
+            try {
+                // 1 is known, 2 isn't, 3 can't be told
+                Loot.KnowsScrollSpell = guid => guid == 1 ? true : guid == 2 ? false : (bool?)null;
+
+                Assert.IsFalse(Loot.Matches(rule, Scroll(1)));
+                Assert.IsTrue(Loot.Matches(rule, Scroll(2)));
+                Assert.IsTrue(Loot.Matches(rule, Scroll(3)), "a scroll whose spell can't be told counts as unlearned");
+                Assert.IsFalse(Loot.Matches(rule, gem), "only scrolls");
+
+                rule.UnlearnedSpellsOnly = false;
+                Assert.IsTrue(Loot.Matches(rule, Scroll(1)));
+            }
+            finally {
+                Loot.KnowsScrollSpell = null;
+            }
+        }
+
+        [TestMethod]
         public void ARuleNeedsEveryConditionFilledIn() {
             var rule = new LootRule { Category = "Weapon", MinTier = "6", Values = { [Key("Weapon", "minAttackMod")] = "10", [Key("Weapon", "weaponClass")] = "Martial" } };
 

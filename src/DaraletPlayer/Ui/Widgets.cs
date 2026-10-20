@@ -187,6 +187,15 @@ namespace DaraletPlayer.Ui {
         /// <summary>
         /// A vital as a filled bar with "current / max" on it. A height of 0 is the normal line height.
         /// </summary>
+        /// <summary>
+        /// A width for vital bars that fits "current / max" for the biggest of these maximums in the font as drawn now, or
+        /// the given width when that's wider: bars that line up, with their numbers inside them at any font size.
+        /// </summary>
+        public static float VitalBarWidth(float width, params uint[] maximums) {
+            var widest = maximums.Length == 0 ? 0 : maximums.Max();
+            return Math.Max(width, ImGui.CalcTextSize($"{widest} / {widest}").X + ImGui.GetStyle().FramePadding.X * 2 + 4);
+        }
+
         public static void VitalBar(uint current, uint max, Vector4 color, float width = BarWidth, float height = 0) {
             var fraction = max == 0 ? 0f : Math.Min(1f, (float)current / max);
 
@@ -194,6 +203,12 @@ namespace DaraletPlayer.Ui {
         }
 
         public static void Bar(float fraction, Vector4 color, string text, float width = BarWidth, float height = 0) {
+            // never shorter than its text: a bigger font (the game's resolution, a font size setting) than the bar's height
+            // was chosen for wrote each bar's numbers over the next
+            if (height > 0) {
+                height = Math.Max(height, ImGui.GetTextLineHeight());
+            }
+
             ImGui.PushStyleColor(ImGuiCol.PlotHistogram, color);
             ImGui.ProgressBar(fraction, new Vector2(width, height), text);
             ImGui.PopStyleColor();

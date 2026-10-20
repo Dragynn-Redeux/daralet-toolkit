@@ -416,12 +416,60 @@ namespace DaraletPlayer.Ui {
 
             ImGui.SetNextItemWidth(220);
             ImGui.InputTextWithHint("##bank-inscription", "weapons, swords t6...", ref inscription, 100);
+            Widgets.Tip("What this pack collects: category, type and tier words, in comma-separated groups (\"swords t6\" is tier 6 swords). Pick words from Tags, or type them.");
+            ImGui.SameLine();
+            RenderTagList();
             ImGui.SameLine();
 
             if (ImGui.Button("Tag pack")) {
                 feed.SendCommand(BankCommands.Inscribe(holder.PackNumber, inscription));
             }
             Widgets.Tip($"Inscribes this pack with what it should collect, for deposits, withdrawals and sorts: category, type and tier words. Sends {BankCommands.Inscribe(holder.PackNumber, "...")}. Empty clears it.");
+        }
+
+        /// <summary>
+        /// The Tags drop-down: every word /bank inscribe knows, ticked when the box has it; ticking one adds it to the box
+        /// and unticking takes it out. Nothing is sent until Tag pack.
+        /// </summary>
+        private void RenderTagList() {
+            ImGui.SetNextItemWidth(ImGui.CalcTextSize("Tags").X + ImGui.GetFrameHeight() + ImGui.GetStyle().FramePadding.X * 2);
+
+            // the list is four columns wide, not as narrow as the box
+            ImGui.SetNextWindowSizeConstraints(new Vector2(ImGui.GetFontSize() * 33, 0), new Vector2(float.MaxValue, ImGui.GetFontSize() * 30));
+
+            if (!ImGui.BeginCombo("##bank-tag-list", "Tags", ImGuiComboFlags.HeightLarge)) {
+                Widgets.Tip("Pick the words this pack collects from a list, instead of typing them. Then press Tag pack.");
+                return;
+            }
+
+            TagSection("Categories", BankCommands.Categories);
+
+            foreach (var (category, types) in BankCommands.Types) {
+                TagSection(category, types);
+            }
+
+            TagSection("Tiers (with a category or type: \"swords t6\"; alone: any gear of that tier)", BankCommands.Tiers);
+            ImGui.EndCombo();
+        }
+
+        private void TagSection(string heading, string[] tags) {
+            Widgets.TextDisabled(heading);
+
+            for (var i = 0; i < tags.Length; i++) {
+                var tag = tags[i];
+                var has = BankCommands.HasTag(inscription, tag);
+
+                // a few to a row: the list would be very long one to a line
+                if (i % 4 != 0) {
+                    ImGui.SameLine(ImGui.GetFontSize() * 8 * (i % 4) + ImGui.GetStyle().WindowPadding.X);
+                }
+
+                if (ImGui.Checkbox($"{tag}##tag-{heading}-{tag}", ref has)) {
+                    inscription = BankCommands.ToggleTag(inscription, tag);
+                }
+            }
+
+            ImGui.Spacing();
         }
 
         private void DragSource(Item item) {

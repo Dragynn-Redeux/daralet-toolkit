@@ -25,6 +25,9 @@ namespace DaraletPlayer.Ui {
         private readonly FloatingWindow selectedWindow;
         private readonly FloatingWindow trackedWindow;
 
+        /// <summary>Set when a threat table row was clicked this frame, so the window's own click doesn't count too.</summary>
+        private bool threatClicked;
+
         public TargetTab(PlayerFeed feed, Settings settings) {
             this.feed = feed;
             this.settings = settings;
@@ -237,9 +240,19 @@ namespace DaraletPlayer.Ui {
                 var attacking = target.AttackTarget == entry.Guid ? " <" : "";
 
                 Widgets.Bar(Display.ThreatShare(entry.Threat, highest), color, $"{entry.Name}  {entry.Threat}{attacking}", barWidth, barHeight);
-            }
 
-            Widgets.Tip("Who the creature wants to attack, and how much. It picks from those near the top; < marks the one it's attacking.");
+                // clicking someone in the table selects them, player or creature
+                if (ImGui.IsItemHovered()) {
+                    ImGui.GetWindowDrawList().AddRect(ImGui.GetItemRectMin(), ImGui.GetItemRectMax(), ImGui.GetColorU32(ImGuiCol.ButtonHovered));
+                }
+
+                if (ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
+                    CoreManager.Current.Actions.SelectItem(unchecked((int)entry.Guid));
+                    threatClicked = true;
+                }
+
+                Widgets.Tip($"Click to select {entry.Name}. The creature picks who to attack from those near the top of its threat table; < marks the one it's attacking.");
+            }
 
             if (target.Threat.Count > rows) {
                 Widgets.TextDisabled($"and {target.Threat.Count - rows} more");
@@ -287,12 +300,14 @@ namespace DaraletPlayer.Ui {
                 return;
             }
 
-            // clicking the tracked creature selects it, like a fellow in the fellowship window
+            // clicking the tracked creature selects it, like a fellow in the fellowship window, unless the click was on
+            // someone in its threat table, who's selected instead
+            threatClicked = false;
             ImGui.BeginGroup();
             RenderCompact(tracker.Tracked, trackedWindow.Scale);
             ImGui.EndGroup();
 
-            if (ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
+            if (!threatClicked && ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
                 CoreManager.Current.Actions.SelectItem(unchecked((int)tracker.Tracked));
             }
 
@@ -306,9 +321,9 @@ namespace DaraletPlayer.Ui {
         /// One creature in a floating window: the name, vital bars, then debuffs, buffs and threat as the settings say.
         /// </summary>
         private void RenderCompact(uint guid, float scale) {
-            var width = WindowWidth * scale;
-            var barHeight = WindowBarHeight * scale;
             var target = feed.Target(guid);
+            var width = target?.IsOk == true ? Widgets.VitalBarWidth(WindowWidth * scale, target.MaxHealth, target.MaxStamina, target.MaxMana) : WindowWidth * scale;
+            var barHeight = WindowBarHeight * scale;
 
             if (!RenderHeader(guid, target, width, barHeight)) {
                 return;

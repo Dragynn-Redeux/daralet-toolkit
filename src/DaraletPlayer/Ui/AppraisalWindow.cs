@@ -75,6 +75,9 @@ namespace DaraletPlayer.Ui {
             fromCorpse = described;
             compareWith = 0;
 
+            // in front of the main window, which it's often opened over
+            window.BringToFront();
+
             if (described == null) {
                 feed.Describe(item);
             }

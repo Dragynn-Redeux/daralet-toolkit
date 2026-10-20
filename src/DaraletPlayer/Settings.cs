@@ -29,6 +29,14 @@ namespace DaraletPlayer {
         [DataMember(Name = "scale")] public float Scale;
         /// <summary>Shown only while it has something to show (Only when needed).</summary>
         [DataMember(Name = "onlyInUse")] public bool OnlyInUse;
+        /// <summary>
+        /// How solid the window's background is, 0 (none: only what's in it shows) to 1; null for the way it's always been
+        /// (fainter when locked).
+        /// </summary>
+        [DataMember(Name = "background")] public float? Background;
+
+        /// <summary>The background's opacity: the one chosen, or the old fixed ones.</summary>
+        public float BackgroundAlpha => Background.HasValue ? Math.Max(0, Math.Min(1, Background.Value)) : Locked ? 0.55f : 0.85f;
 
         public WindowPlacement() {
             SetDefaults();
@@ -59,12 +67,27 @@ namespace DaraletPlayer {
         [DataMember(Name = "fellowGuid")] public uint? FellowGuid;
     }
 
+    /// <summary>
+    /// Which vitals the fellowship window shows for one fellow, each null to follow the window's own Stamina and Mana
+    /// checkboxes (health: shown).
+    /// </summary>
+    [DataContract]
+    public class FellowVitals {
+        [DataMember(Name = "health")] public bool? Health;
+        [DataMember(Name = "stamina")] public bool? Stamina;
+        [DataMember(Name = "mana")] public bool? Mana;
+
+        public bool IsDefault => !Health.HasValue && !Stamina.HasValue && !Mana.HasValue;
+    }
+
     [DataContract]
     public class SettingsData {
         [DataMember(Name = "windows")] public Dictionary<string, WindowPlacement> Windows;
 
         [DataMember(Name = "fellowshipShowStamina")] public bool FellowshipShowStamina;
         [DataMember(Name = "fellowshipShowMana")] public bool FellowshipShowMana;
+        /// <summary>Vitals shown or hidden for one fellow, by character name; a fellow not here shows what the checkboxes say.</summary>
+        [DataMember(Name = "fellowVitals")] public Dictionary<string, FellowVitals> FellowVitals;
 
         [DataMember(Name = "targetShowBuffs")] public bool TargetShowBuffs;
         [DataMember(Name = "targetShowDebuffs")] public bool TargetShowDebuffs;
@@ -78,6 +101,10 @@ namespace DaraletPlayer {
         [DataMember(Name = "mapShowLabels")] public bool MapShowLabels;
         [DataMember(Name = "mapTextScale")] public float MapTextScale;
         [DataMember(Name = "mapFollow")] public bool MapFollow;
+        /// <summary>The map window (the World tab's map on its own) keeps centred on you.</summary>
+        [DataMember(Name = "mapWindowFollow")] public bool MapWindowFollow;
+        /// <summary>The arrow window shows the destination's name, distance and direction beside the arrow, not the arrow alone.</summary>
+        [DataMember(Name = "arrowShowDetails")] public bool ArrowShowDetails;
         /// <summary>Where the arrow points, or null.</summary>
         [DataMember(Name = "destination")] public Destination Destination;
 
@@ -122,6 +149,39 @@ namespace DaraletPlayer {
             SetDefaults();
         }
 
+        /// <summary>
+        /// The vitals the fellowship window shows for a fellow: their own choice where they have one, else health and what
+        /// the Stamina and Mana checkboxes say.
+        /// </summary>
+        public (bool Health, bool Stamina, bool Mana) FellowShows(string name) {
+            FellowVitals own = null;
+
+            if (name != null) {
+                FellowVitals?.TryGetValue(name, out own);
+            }
+
+            return (own?.Health ?? true, own?.Stamina ?? FellowshipShowStamina, own?.Mana ?? FellowshipShowMana);
+        }
+
+        /// <summary>The fellow's own choice of vitals, made when asked for; RemoveDefaultFellowVitals tidies up after.</summary>
+        public FellowVitals FellowVitalsFor(string name) {
+            FellowVitals = FellowVitals ?? new Dictionary<string, FellowVitals>(StringComparer.OrdinalIgnoreCase);
+
+            if (!FellowVitals.TryGetValue(name, out var own) || own == null) {
+                own = new FellowVitals();
+                FellowVitals[name] = own;
+            }
+
+            return own;
+        }
+
+        /// <summary>Forgets a fellow with no choices of their own left, so the file only keeps the ones that matter.</summary>
+        public void RemoveDefaultFellowVitals(string name) {
+            if (name != null && FellowVitals != null && FellowVitals.TryGetValue(name, out var own) && (own == null || own.IsDefault)) {
+                FellowVitals.Remove(name);
+            }
+        }
+
         [OnDeserializing]
         private void OnDeserializing(StreamingContext context) {
             SetDefaults();
@@ -131,6 +191,7 @@ namespace DaraletPlayer {
             Windows = new Dictionary<string, WindowPlacement>();
             FellowshipShowStamina = true;
             FellowshipShowMana = true;
+            FellowVitals = new Dictionary<string, FellowVitals>(StringComparer.OrdinalIgnoreCase);
             TargetShowBuffs = true;
             TargetShowDebuffs = true;
             TargetShowThreat = true;
@@ -139,6 +200,8 @@ namespace DaraletPlayer {
             MapShowFellows = true;
             MapShowLabels = true;
             MapTextScale = 1;
+            MapWindowFollow = true;
+            ArrowShowDetails = true;
             AppraiseInPlugin = true;
             BankShowWorn = true;
             Loot = new LootData();
@@ -265,6 +328,7 @@ namespace DaraletPlayer {
                 // a file can say null outright
                 Data.Windows = Data.Windows ?? new Dictionary<string, WindowPlacement>();
                 Data.MapTypes = Data.MapTypes ?? new Dictionary<string, bool>();
+                Data.FellowVitals = new Dictionary<string, FellowVitals>(Data.FellowVitals ?? new Dictionary<string, FellowVitals>(), StringComparer.OrdinalIgnoreCase);
                 Data.Loot = Data.Loot ?? new LootData();
             }
             catch (Exception ex) {

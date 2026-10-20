@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using Decal.Adapter;
 using DaraletPlayer.Feed;
@@ -23,7 +24,56 @@ namespace DaraletPlayer.Ui {
             this.feed = feed;
             this.settings = settings;
 
-            window = new FloatingWindow("fellowship", "Fellowship", settings, new Vector2(20, 200), RenderWindow, inUse: FellowshipInUse);
+            window = new FloatingWindow("fellowship", "Fellowship", settings, new Vector2(20, 200), RenderWindow, inUse: FellowshipInUse,
+                menuItems: RenderMenuMember);
+        }
+
+        /// <summary>The fellow right-clicked in the window, whose vitals its menu offers; null when it wasn't on a fellow.</summary>
+        private string menuMember;
+
+        /// <summary>
+        /// The window's right-click menu, over a fellow: which of their vitals it shows, for them alone.
+        /// </summary>
+        private void RenderMenuMember() {
+            if (menuMember == null) {
+                return;
+            }
+
+            Widgets.TextDisabled(menuMember);
+            RenderVitalChoices(menuMember);
+            ImGui.Separator();
+        }
+
+        /// <summary>
+        /// Menu items for which vitals one fellow's bars show (with Default, back to the Stamina and Mana checkboxes).
+        /// </summary>
+        private void RenderVitalChoices(string name) {
+            var data = settings.Data;
+            var (health, stamina, mana) = data.FellowShows(name);
+
+            if (ImGui.MenuItem("Health", null, health)) {
+                data.FellowVitalsFor(name).Health = !health;
+                settings.Changed();
+            }
+
+            if (ImGui.MenuItem("Stamina", null, stamina)) {
+                data.FellowVitalsFor(name).Stamina = !stamina;
+                settings.Changed();
+            }
+
+            if (ImGui.MenuItem("Mana", null, mana)) {
+                data.FellowVitalsFor(name).Mana = !mana;
+                settings.Changed();
+            }
+
+            var own = data.FellowVitals.TryGetValue(name, out var vitals) && vitals != null && !vitals.IsDefault;
+
+            if (ImGui.MenuItem("Default vitals", null, false, own)) {
+                data.FellowVitals.Remove(name);
+                settings.Changed();
+            }
+
+            data.RemoveDefaultFellowVitals(name);
         }
 
         public void Render() {
@@ -67,7 +117,7 @@ namespace DaraletPlayer.Ui {
             if (ImGui.Checkbox("Mana##fellowship", ref data.FellowshipShowMana)) {
                 settings.Changed();
             }
-            Widgets.Tip("Shows each member's mana in the fellowship window. Health is always shown.");
+            Widgets.Tip("Shows each member's mana in the fellowship window. Right-click a member, here or in the window, to choose their health, stamina and mana bars for them alone.");
         }
 
         private static string Describe(FellowshipInfo fellowship) {
@@ -142,11 +192,17 @@ namespace DaraletPlayer.Ui {
 
             var data = settings.Data;
             var scale = window.Scale;
-            var width = WindowBarWidth * scale;
+            var members = fellowship.Members;
+            var width = Widgets.VitalBarWidth(WindowBarWidth * scale, members.SelectMany(m => new[] { m.MaxHealth, m.MaxStamina, m.MaxMana }).ToArray());
             var height = WindowBarHeight * scale;
             var selected = unchecked((uint)CoreManager.Current.Actions.CurrentSelection);
 
-            foreach (var member in fellowship.Members) {
+            // a right-click is on a fellow (their vitals join the window's menu) or not
+            if (ImGui.IsMouseClicked(ImGuiMouseButton.Right) && ImGui.IsWindowHovered()) {
+                menuMember = null;
+            }
+
+            foreach (var member in members) {
                 ImGui.PushID((int)member.Guid);
 
                 // the name and bars are one group, so clicking anywhere on a member selects them, the way the game's own
@@ -156,13 +212,17 @@ namespace DaraletPlayer.Ui {
                 var far = !member.Distance.HasValue;
                 Widgets.TextColored(far ? Colors.Muted : member.Guid == selected ? Colors.Info : Colors.Text, MemberLabel(member, fellowship));
 
-                Widgets.VitalBar(member.Health, member.MaxHealth, Colors.Health, width, height);
+                var (health, stamina, mana) = data.FellowShows(member.Name);
 
-                if (data.FellowshipShowStamina) {
+                if (health) {
+                    Widgets.VitalBar(member.Health, member.MaxHealth, Colors.Health, width, height);
+                }
+
+                if (stamina) {
                     Widgets.VitalBar(member.Stamina, member.MaxStamina, Colors.Stamina, width, height);
                 }
 
-                if (data.FellowshipShowMana) {
+                if (mana) {
                     Widgets.VitalBar(member.Mana, member.MaxMana, Colors.Mana, width, height);
                 }
 
@@ -174,6 +234,10 @@ namespace DaraletPlayer.Ui {
 
                 if (ImGui.IsItemClicked(ImGuiMouseButton.Left)) {
                     Select(member);
+                }
+
+                if (ImGui.IsItemClicked(ImGuiMouseButton.Right)) {
+                    menuMember = member.Name;
                 }
 
                 MemberTip(member);
@@ -201,6 +265,12 @@ namespace DaraletPlayer.Ui {
             }
 
             MemberTip(member);
+
+            if (ImGui.BeginPopupContextItem($"member-menu-{member.Guid}")) {
+                Widgets.TextDisabled($"{member.Name}'s bars in the fellowship window");
+                RenderVitalChoices(member.Name);
+                ImGui.EndPopup();
+            }
         }
 
         private static string MemberLabel(FellowInfo member, FellowshipInfo fellowship) {
@@ -208,9 +278,10 @@ namespace DaraletPlayer.Ui {
         }
 
         private static void MemberTip(FellowInfo member) {
-            Widgets.Tip(member.Distance.HasValue
+            Widgets.Tip((member.Distance.HasValue
                 ? $"Click to select {member.Name}, {Display.Distance(member.Distance)} away."
-                : $"{member.Name} is too far away to select. {member.Location}");
+                : $"{member.Name} is too far away to select. {member.Location}")
+                + " Right-click to choose which of their vitals the fellowship window shows.");
         }
 
         private static void Select(FellowInfo member) {

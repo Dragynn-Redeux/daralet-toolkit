@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Decal.Adapter;
+using Decal.Adapter.Wrappers;
 using DaraletPlayer.Feed;
 using DaraletPlayer.Ui;
 
@@ -43,6 +44,7 @@ namespace DaraletPlayer {
         protected override void Startup() {
             try {
                 settings = new Settings(log: Log);
+                Loot.KnowsScrollSpell = KnowsScrollSpell;
                 feed = new PlayerFeed();
                 hud = new PlayerHud(feed, settings);
 
@@ -66,6 +68,22 @@ namespace DaraletPlayer {
             ShutdownStep(() => hud?.Dispose());
             ShutdownStep(() => feed?.Dispose());
             ShutdownStep(() => settings?.SaveIfChanged());
+            ShutdownStep(() => Loot.KnowsScrollSpell = null);
+        }
+
+        /// <summary>
+        /// Whether the character has learned the spell on a scroll, for loot rules' Unlearned spells only: the scroll's spell
+        /// comes with it when the client learns of it (Decal's AssociatedSpell); null when it didn't.
+        /// </summary>
+        private static bool? KnowsScrollSpell(uint guid) {
+            try {
+                var spell = CoreManager.Current.WorldFilter[unchecked((int)guid)]?.Values(LongValueKey.AssociatedSpell, 0) ?? 0;
+                return spell == 0 ? (bool?)null : CoreManager.Current.CharacterFilter.IsSpellKnown(spell);
+            }
+            catch (Exception ex) {
+                Log(ex);
+                return null;
+            }
         }
 
         private static void ShutdownStep(Action step) {

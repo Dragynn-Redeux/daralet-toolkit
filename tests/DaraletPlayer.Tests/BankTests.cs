@@ -21,6 +21,21 @@ namespace DaraletPlayer.Tests {
         }
 
         [TestMethod]
+        public void TagListAddsAndRemovesWordsKeepingTheRest() {
+            Assert.AreEqual("weapons", BankCommands.ToggleTag("", "weapons"));
+            Assert.AreEqual("weapons", BankCommands.ToggleTag("clear", "weapons"));
+            Assert.AreEqual("weapons, swords t6, gems", BankCommands.ToggleTag("weapons, swords t6", "gems"));
+            Assert.IsTrue(BankCommands.HasTag("weapons, swords t6", "T6"));
+            Assert.IsFalse(BankCommands.HasTag("weapons, swords t6", "t5"));
+
+            // taken out of the group it's in, and a group left empty goes
+            Assert.AreEqual("weapons, swords", BankCommands.ToggleTag("weapons, swords t6", "t6"));
+            Assert.AreEqual("swords t6", BankCommands.ToggleTag("weapons, swords t6", "weapons"));
+            Assert.AreEqual("", BankCommands.ToggleTag("weapons", "weapons"));
+            Assert.IsTrue(BankCommands.HasTag("two-handed", "two-handed"));
+        }
+
+        [TestMethod]
         public void TypedTextCantStartAnotherCommand() {
             // a second line becomes more words for the same command, which the server reads as an unknown category
             Assert.AreEqual("/bank deposit gems /bank withdraw all", BankCommands.Deposit("gems\r\n/bank withdraw all"));
