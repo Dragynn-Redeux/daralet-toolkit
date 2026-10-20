@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using DaraletPlayer.Feed;
@@ -25,8 +26,10 @@ namespace DaraletPlayer.Ui {
         private readonly SelfPosition self;
         private readonly MapView map = new MapView();
         private readonly FloatingWindow arrowWindow;
-        private readonly List<Location> locations;
-        private readonly string locationsSource;
+        private readonly WorldData worldData;
+        private int worldDataVersion;
+        private List<Location> locations;
+        private string locationsSource;
 
         private string search = "";
         private Location highlight;
@@ -36,7 +39,14 @@ namespace DaraletPlayer.Ui {
             this.settings = settings;
 
             self = new SelfPosition(feed);
-            locations = Locations.LoadDefault(PluginCore.AssemblyDirectory, PluginCore.Log, out locationsSource);
+
+            worldData = new WorldData(WorldDataFolder(), new[] { Locations.FileName, MapView.ImageFileName }, BuiltInWorldFile, CheckWorldFile);
+            MapView.DownloadedImage = worldData.PathFor(MapView.ImageFileName);
+            locations = Locations.LoadDefault(PluginCore.AssemblyDirectory, worldData.PathFor(Locations.FileName), PluginCore.Log, out locationsSource);
+            worldDataVersion = worldData.Version;
+            // once each time the plugin starts; the Show... menu checks again on demand
+            worldData.Start();
+
             map.DestinationChosen += SetDestination;
             map.Panned += Map_Panned;
 
@@ -51,7 +61,45 @@ namespace DaraletPlayer.Ui {
         private readonly MapView windowMap = new MapView();
         private readonly FloatingWindow mapWindow;
 
+        /// <summary>
+        /// Where downloaded map data is kept: Documents\Decal Plugins\Daralet\world-data, so every character on this computer
+        /// shares it.
+        /// </summary>
+        private static string WorldDataFolder() {
+            return DataFolder.For("world-data");
+        }
+
+        private static Stream BuiltInWorldFile(string name) {
+            var resource = name == Locations.FileName ? Locations.ResourceName : name == MapView.ImageFileName ? MapView.ImageResource : null;
+            return resource == null ? null : typeof(WorldTab).Assembly.GetManifestResourceStream(resource);
+        }
+
+        private static string CheckWorldFile(string name, byte[] bytes) {
+            return name == Locations.FileName ? Locations.Check(bytes) : name == MapView.ImageFileName ? WorldData.CheckSquarePng(bytes) : null;
+        }
+
+        /// <summary>
+        /// Loads whatever a check changed. Done on the game's thread, by whichever of the tab or the map window draws first.
+        /// </summary>
+        private void ApplyWorldData() {
+            var version = worldData.Version;
+
+            if (version == worldDataVersion) {
+                return;
+            }
+
+            worldDataVersion = version;
+            MapView.DownloadedImage = worldData.PathFor(MapView.ImageFileName);
+            map.Reload();
+            windowMap.Reload();
+
+            locations = Locations.LoadDefault(PluginCore.AssemblyDirectory, worldData.PathFor(Locations.FileName), PluginCore.Log, out locationsSource);
+            highlight = null;
+        }
+
         public void Render() {
+            ApplyWorldData();
+
             if (settings.Data.MapShowFellows) {
                 feed.Refresh(PlayerFeed.KindFellowship, FellowshipRefresh);
             }
@@ -90,6 +138,8 @@ namespace DaraletPlayer.Ui {
         /// places, names, fellows, text size) is set in the World tab.
         /// </summary>
         private void RenderMapWindow() {
+            ApplyWorldData();
+
             if (settings.Data.MapShowFellows) {
                 feed.Refresh(PlayerFeed.KindFellowship, FellowshipRefresh);
             }
@@ -221,7 +271,22 @@ namespace DaraletPlayer.Ui {
             }
             Widgets.Tip("Writes town names on the map, and every place's name once you zoom in.");
 
+            ImGui.Separator();
+            RenderWorldDataStatus();
+
             ImGui.EndPopup();
+        }
+
+        private void RenderWorldDataStatus() {
+            Widgets.TextDisabled($"Places: {locations.Count}, from {locationsSource}");
+            Widgets.TextDisabled(worldData.Status);
+
+            ImGui.BeginDisabled(worldData.Busy);
+            if (ImGui.Button("Check for map updates")) {
+                worldData.Start();
+            }
+            ImGui.EndDisabled();
+            Widgets.Tip($"Downloads the newest map and places (locations.xml) if they've changed. This happens by itself each time the plugin starts. They're kept in {worldData.Folder}. A dereth-map.png or locations.xml next to Daralet.dll is still used instead.");
         }
 
         private void RenderDestinationLine() {
@@ -452,6 +517,7 @@ namespace DaraletPlayer.Ui {
             windowMap.Panned -= WindowMap_Panned;
             mapWindow.Dispose();
             windowMap.Dispose();
+            worldData.Dispose();
         }
     }
 }

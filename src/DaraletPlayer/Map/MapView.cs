@@ -37,7 +37,7 @@ namespace DaraletPlayer.Map {
     /// can do there (point the arrow at it). Based on Daralet Admin's map.
     /// </summary>
     internal class MapView : IDisposable {
-        private const string ImageResource = "DaraletPlayer.Resources.dereth-map.png";
+        public const string ImageResource = "DaraletPlayer.Resources.dereth-map.png";
 
         /// <summary>The file next to the plugin dll that's drawn instead of the built-in map, when it's there.</summary>
         public const string ImageFileName = "dereth-map.png";
@@ -89,6 +89,10 @@ namespace DaraletPlayer.Map {
         private volatile Exception loadError;
         private bool loadErrorLogged;
         private volatile string loadNote;
+        private bool reloadWanted;
+
+        /// <summary>The map image downloaded by WorldData, or null to use the built-in one. Read when the map loads.</summary>
+        public static volatile string DownloadedImage;
 
         /// <summary>The map coordinates at the middle of the view.</summary>
         private Vector2 center = Vector2.Zero;
@@ -472,6 +476,15 @@ namespace DaraletPlayer.Map {
         /// frame becomes a texture (which has to happen on the game's thread, once its graphics device exists).
         /// </summary>
         private void LoadTiles() {
+            // a reload waits for the load before it to finish, so tiles from the two can't be mixed up
+            if (reloadWanted && (tilesMade == TileGrid * TileGrid || loadError != null)) {
+                reloadWanted = false;
+                loadStarted = false;
+                tilesMade = 0;
+                loadError = null;
+                loadErrorLogged = false;
+            }
+
             if (!loadStarted) {
                 loadStarted = true;
 
@@ -507,6 +520,8 @@ namespace DaraletPlayer.Map {
             if (decodedTiles.TryDequeue(out var tile)) {
                 try {
                     using (tile.Bitmap) {
+                        // on a reload, the old map stays up until each tile of the new one replaces it
+                        tiles[tile.Row, tile.Column]?.Dispose();
                         tiles[tile.Row, tile.Column] = new ManagedTexture(tile.Bitmap);
                     }
 
@@ -519,14 +534,24 @@ namespace DaraletPlayer.Map {
         }
 
         /// <summary>
+        /// Loads the map image again (WorldData downloaded a new one), keeping the old one up until the new one's ready.
+        /// </summary>
+        public void Reload() {
+            reloadWanted = true;
+        }
+
+        /// <summary>
         /// The map image: a dereth-map.png next to the plugin dll if there is one (so an edited map can be tried without a new
-        /// build), otherwise the one built in. Either has to be square and laid out like the built-in one (MapProjection: 4
-        /// pixels of sea round 2040 of map, at 2048); one that isn't square is skipped.
+        /// build), then the one downloaded from the world data release, otherwise the one built in. Any of them has to be
+        /// square and laid out like the built-in one (MapProjection: 4 pixels of sea round 2040 of map, at 2048); one that
+        /// isn't square is skipped.
         /// </summary>
         private Bitmap OpenImage() {
-            var file = Path.Combine(PluginCore.AssemblyDirectory ?? "", ImageFileName);
+            foreach (var file in new[] { Path.Combine(PluginCore.AssemblyDirectory ?? "", ImageFileName), DownloadedImage }) {
+                if (string.IsNullOrEmpty(file) || !File.Exists(file)) {
+                    continue;
+                }
 
-            if (File.Exists(file)) {
                 try {
                     // copied out of the file so the file isn't held open, and can be saved over while the game runs
                     using (var loaded = new Bitmap(file)) {
@@ -534,11 +559,11 @@ namespace DaraletPlayer.Map {
                             return new Bitmap(loaded);
                         }
 
-                        loadNote = $"{file} is {loaded.Width}x{loaded.Height}, not square, so the built-in map is used.";
+                        loadNote = $"{file} is {loaded.Width}x{loaded.Height}, not square, so it isn't used.";
                     }
                 }
                 catch (Exception ex) {
-                    loadNote = $"Couldn't read {file}, so the built-in map is used: {ex.Message}";
+                    loadNote = $"Couldn't read {file}, so it isn't used: {ex.Message}";
                 }
             }
 

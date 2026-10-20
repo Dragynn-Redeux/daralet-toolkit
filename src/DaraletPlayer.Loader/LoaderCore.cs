@@ -167,7 +167,10 @@ namespace DaraletPlayer.Loader {
 
         private void Log(string message) {
             try {
-                File.AppendAllText(System.IO.Path.Combine(AssemblyDirectory, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
+                // the plugin's log.txt (DaraletPlayer.DataFolder, which the loader can't reference)
+                var folder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Decal Plugins", "Daralet");
+                Directory.CreateDirectory(folder);
+                File.AppendAllText(System.IO.Path.Combine(folder, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
                 CoreManager.Current.Actions.AddChatText($"[Daralet Loader] {message}", 1);
             }
             catch {

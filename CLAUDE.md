@@ -206,6 +206,18 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   Photoshop source for that edit (not built into the plugin). To change it, edit that file and rebuild. Or, to try an edit first, put a `dereth-map.png`
   next to the plugin dll: it's drawn instead (`MapView.OpenImage`), once the plugin next starts. It has to keep the same
   layout, or places land in the wrong spots, and be square (one that isn't is skipped, with a line in chat).
+- **World data** (`Map/WorldData.cs`, `.github/workflows/world-data.yml`): the map image and `locations.xml` update
+  without a new plugin. On every push to `main` that changes either file, the workflow uploads them, then a
+  `manifest.json` (`format`, `published`, `commit`, and each file's `name`, `sha256` and `size`), to the
+  `world-data` pre-release (fixed tag, files replaced with `--clobber`). When the plugin starts, `WorldData` reads the
+  manifest from `releases/download/world-data/`, downloads any file whose hash differs from what it has, checks the hash
+  and the contents (`Locations.Check`, `WorldData.CheckSquarePng`), and saves it in
+  `Documents\Decal Plugins\Daralet\world-data`. A file that matches the built-in one isn't downloaded. This all runs off
+  the game's thread; `WorldData.Version` going up is the World tab's cue to reload the places and the maps
+  (`MapView.Reload`), on the game's thread. Lookup order for both files: next to the dll, then downloaded, then built in.
+  Daralet Admin has copies of `WorldData.cs` and `Locations.cs` and reads the same release: keep them the same. Raise
+  `WorldData.Format` (and the workflow's `format`) only when old plugins couldn't read the files; they then keep what
+  they have.
 - **Item tooltips** (`Feed/ItemLines.cs`, `Ui/ItemTooltip.cs`): every stat an item's market description has, as lines in
   sections; the bank, the Loot tab, the Corpse window and market search all draw them, so the layout changes in one place.
   An item you hold or loot is titled with its own name, which the server sends with its material in front
@@ -258,7 +270,7 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   `CharacterFilter.IsSpellKnown`), and a scroll whose spell can't be told counts as unlearned. New settings get the
   **Example Loot Profile** (`Feed/ExampleLoot.cs`) after "My loot"; the Example button adds it again, and a test checks its
   filter keys exist. **To file / From file** save and load profiles as `.json` in `Documents\Decal Plugins\Daralet\Loot
-  Profiles` (`LootFiles`; settings stay in `Documents\Asheron's Call\Daralet`).
+  Profiles` (`LootFiles`).
 
 - **Arena and Leaderboards tabs** (`Ui/ArenaTab.cs`, `Ui/LeaderboardsTab.cs`, `Feed/ArenaCommands.cs`,
   `Feed/Leaderboards.cs`): the leaderboards are the website's (`leaderboards.js`), read from `/api/leaderboards/...` with
@@ -308,7 +320,8 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   window's top line (`SettingsData.CompactLists`) hides them; a loot mark still shows, on its own.
 
 - **World tab** (`Ui/WorldTab.cs`, `Map/`): the map (Daralet Admin's `dereth-map.png`), the places in
-  `Resources/locations.xml` (a `locations.xml` next to the dll wins), you, your fellows, and a destination arrow window.
+  `Resources/locations.xml` (a `locations.xml` next to the dll wins, then a downloaded one: see World data), you, your
+  fellows, and a destination arrow window.
   The file also has 43 `_Unknown` entries (shops, taverns, halls): every type needs a row in `Locations.Types`, which a
   test checks.
 
@@ -343,8 +356,10 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   (`Widgets.VitalBarWidth`): a big font wrote each bar's numbers over the next. Clicking a threat row selects that
   creature or player. The **Map window** is the World tab's map in a `FloatingWindow` with its own `MapView` (its own pan,
   zoom and Follow me); the arrow window's **Details** box leaves the arrow alone.
-- **Settings** (`Settings.cs`) live in `Documents\Asheron's Call\Daralet\settings.json` (copied once from the
-  `Daralet Player` folder they had before the plugin was renamed, `Settings.CarryOver`), shared by every character:
+- **Everything the plugin writes** goes in `Documents\Decal Plugins\Daralet` (`DataFolder`): `settings.json`, `log.txt`,
+  `Loot Profiles`, `world-data`. Only files a player drops in by hand (`dereth-map.png`, `locations.xml`) are looked for
+  next to the dll (`PluginCore.AssemblyDirectory`).
+- **Settings** (`Settings.cs`) live in `settings.json` there, shared by every character:
   window positions and visibility, and display options. A DataContract reader skips field initialisers, so new settings
   get their defaults in `SetDefaults`, which runs before a file is read as well. Saved two seconds after the last change.
 
