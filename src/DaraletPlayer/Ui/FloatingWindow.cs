@@ -39,6 +39,12 @@ namespace DaraletPlayer.Ui {
         /// </summary>
         private readonly Action onClose;
 
+        /// <summary>
+        /// What the window's right-click menu has before its own items (Lock, Bigger...): what's under the mouse (a fellow's
+        /// vitals, say), or nothing. Null for no items of its own.
+        /// </summary>
+        private readonly Action menuItems;
+
         /// <summary>What the window was showing when it was closed: it stays away until it's showing something else.</summary>
         private object closedFor;
 
@@ -49,7 +55,8 @@ namespace DaraletPlayer.Ui {
         /// <param name="alwaysOnlyInUse">Only ever shown while in use, not a choice (a window about something you open).</param>
         /// <param name="onClose">What closing it does instead of hiding it for good; it then comes back for the next thing.</param>
         public FloatingWindow(string id, string title, Settings settings, Vector2 defaultPosition, Action render, bool visibleByDefault = true,
-            Vector2? defaultSize = null, Func<object> inUse = null, bool alwaysOnlyInUse = false, Action onClose = null) {
+            Vector2? defaultSize = null, Func<object> inUse = null, bool alwaysOnlyInUse = false, Action onClose = null, Action menuItems = null) {
+            this.menuItems = menuItems;
             this.id = id;
             this.settings = settings;
             this.defaultPosition = defaultPosition;
@@ -125,6 +132,9 @@ namespace DaraletPlayer.Ui {
         /// <summary>Shows or hides the window, from the setting, what it's showing, and whether that was closed.</summary>
         private void Core_RenderFrame(object sender, EventArgs e) {
             try {
+                // in case the window wasn't drawn after all, the border it took away comes back
+                RestoreBorder();
+
                 if (disposed) {
                     return;
                 }
@@ -237,6 +247,46 @@ namespace DaraletPlayer.Ui {
                 Scale = percent / 100f;
             }
             Widgets.Tip("How big the window's text and bars are drawn. Ctrl+click to type a size. You can also right-click the window for Bigger, Smaller and Normal size.");
+
+            ImGui.SameLine();
+            ImGui.SetNextItemWidth(110);
+            BackgroundSlider($"Background##{id}-background");
+        }
+
+        /// <summary>
+        /// The slider for how solid the window's background is, in its tab and in its right-click menu.
+        /// </summary>
+        private void BackgroundSlider(string label) {
+            var percent = (int)Math.Round(Placement.BackgroundAlpha * 100);
+
+            if (ImGui.SliderInt(label, ref percent, 0, 100, "%d%%")) {
+                Placement.Background = percent / 100f;
+                settings.Changed();
+            }
+            Widgets.Tip("How solid the window's background is. At 0% there's no box at all, only what's in it (lock the window too, to lose the title bar). Right-click what's left to get this back.");
+        }
+
+        /// <summary>Set by BringToFront: the window takes focus, in front of the others, the next time it's drawn.</summary>
+        private bool bringToFront;
+
+        /// <summary>
+        /// Puts the window in front of the others (the main window included) the next time it's drawn, for one just asked
+        /// for: these windows don't take focus when they appear, so as not to steal it while you play.
+        /// </summary>
+        public void BringToFront() {
+            bringToFront = true;
+        }
+
+        /// <summary>The border size the style had before a window with no background took it away for its Begin.</summary>
+        private float? savedBorderSize;
+
+        /// <summary>Puts the style's border back, once the window it was taken away for has begun.</summary>
+        private void RestoreBorder() {
+            if (savedBorderSize.HasValue) {
+                var style = ImGui.GetStyle();
+                style.WindowBorderSize = savedBorderSize.Value;
+                savedBorderSize = null;
+            }
         }
 
         private void Hud_OnPreRender(object sender, EventArgs e) {
@@ -267,7 +317,25 @@ namespace DaraletPlayer.Ui {
                     ImGui.SetNextWindowSizeConstraints(new Vector2(300, 200), new Vector2(float.MaxValue, float.MaxValue));
                 }
 
-                ImGui.SetNextWindowBgAlpha(Locked ? 0.55f : 0.85f);
+                var alpha = Placement.BackgroundAlpha;
+
+                if (alpha <= 0) {
+                    // no box at all: the border too, which the style draws in Begin, so it's put back as soon as the
+                    // window's drawing starts (Hud_OnRender), or the next frame at the latest (Core_RenderFrame)
+                    hud.WindowSettings = flags | ImGuiWindowFlags.NoBackground;
+                    RestoreBorder();
+                    savedBorderSize = ImGui.GetStyle().WindowBorderSize;
+                    var style = ImGui.GetStyle();
+                    style.WindowBorderSize = 0;
+                }
+                else {
+                    ImGui.SetNextWindowBgAlpha(alpha);
+                }
+
+                if (bringToFront) {
+                    ImGui.SetNextWindowFocus();
+                    bringToFront = false;
+                }
             }
             catch (Exception ex) {
                 PluginCore.Log(ex);
@@ -276,6 +344,8 @@ namespace DaraletPlayer.Ui {
 
         private void Hud_OnRender(object sender, EventArgs e) {
             try {
+                RestoreBorder();
+
                 // the window may still be drawn once after its plugin has been shut down (the loader swapping builds)
                 if (disposed) {
                     return;
@@ -297,6 +367,8 @@ namespace DaraletPlayer.Ui {
                 return;
             }
 
+            menuItems?.Invoke();
+
             if (ImGui.MenuItem(Locked ? "Unlock" : "Lock")) {
                 Locked = !Locked;
             }
@@ -312,6 +384,9 @@ namespace DaraletPlayer.Ui {
             if (ImGui.MenuItem($"Normal size ({Scale * 100:0}% now)")) {
                 Scale = 1;
             }
+
+            ImGui.SetNextItemWidth(ImGui.GetFontSize() * 8);
+            BackgroundSlider($"Background##{id}-menu-background");
 
             ImGui.Separator();
 

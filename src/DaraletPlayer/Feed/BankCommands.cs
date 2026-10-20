@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DaraletPlayer.Feed {
@@ -66,6 +67,47 @@ namespace DaraletPlayer.Feed {
         public static string Inscribe(int packNumber, string tags) {
             var cleaned = Clean(tags);
             return $"/bank inscribe {packNumber} {(cleaned.Length == 0 ? "clear" : cleaned)}";
+        }
+
+        /// <summary>
+        /// Whether an inscription has this tag word, alone or in a group ("swords t6" has both "swords" and "t6").
+        /// </summary>
+        public static bool HasTag(string inscription, string tag) {
+            return TagGroups(inscription).Any(g => g.Contains(tag, StringComparer.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
+        /// The inscription with a tag word added (on its own, after a comma) or, when it's there, taken out of every group it's
+        /// in, as ticking it in the tag list does. The rest is kept as written, in comma-separated groups.
+        /// </summary>
+        public static string ToggleTag(string inscription, string tag) {
+            var groups = TagGroups(inscription);
+
+            if (HasTag(inscription, tag)) {
+                groups = groups
+                    .Select(g => g.Where(w => !string.Equals(w, tag, StringComparison.OrdinalIgnoreCase)).ToList())
+                    .Where(g => g.Count > 0)
+                    .ToList();
+            }
+            else {
+                groups.Add(new List<string> { tag });
+            }
+
+            return string.Join(", ", groups.Select(g => string.Join(" ", g)));
+        }
+
+        /// <summary>An inscription's comma-separated groups of words, with "clear" (no tags) as none.</summary>
+        private static List<List<string>> TagGroups(string inscription) {
+            var cleaned = Clean(inscription);
+
+            if (cleaned.Equals("clear", StringComparison.OrdinalIgnoreCase)) {
+                return new List<List<string>>();
+            }
+
+            return cleaned.Split(',')
+                .Select(g => g.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList())
+                .Where(g => g.Count > 0)
+                .ToList();
         }
 
         /// <summary>

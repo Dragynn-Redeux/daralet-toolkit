@@ -41,7 +41,15 @@ namespace DaraletPlayer.Ui {
             map.Panned += Map_Panned;
 
             arrowWindow = new FloatingWindow("arrow", "Destination", settings, new Vector2(500, 300), RenderArrowWindow, visibleByDefault: false, inUse: () => CurrentDestination());
+
+            // the map on its own, to keep on screen beside the rest of the plugin: its own view, so panning one leaves the other
+            windowMap.DestinationChosen += SetDestination;
+            windowMap.Panned += WindowMap_Panned;
+            mapWindow = new FloatingWindow("map", "Map", settings, new Vector2(40, 80), RenderMapWindow, visibleByDefault: false, defaultSize: new Vector2(420, 440));
         }
+
+        private readonly MapView windowMap = new MapView();
+        private readonly FloatingWindow mapWindow;
 
         public void Render() {
             if (settings.Data.MapShowFellows) {
@@ -58,7 +66,12 @@ namespace DaraletPlayer.Ui {
             RenderDestinationLine();
             RenderSearchResults();
 
-            map.Render(ImGui.GetContentRegionAvail(), new MapScene {
+            map.Render(ImGui.GetContentRegionAvail(), Scene(hasSelf, x, y));
+        }
+
+        /// <summary>What both maps show: the places, you, your fellows, the destination.</summary>
+        private MapScene Scene(bool hasSelf, float x, float y) {
+            return new MapScene {
                 Locations = locations,
                 ShowType = IsShown,
                 ShowLabels = settings.Data.MapShowLabels,
@@ -69,7 +82,66 @@ namespace DaraletPlayer.Ui {
                 Heading = self.Heading,
                 Destination = CurrentDestination(),
                 Highlight = highlight,
-            });
+            };
+        }
+
+        /// <summary>
+        /// The map window: the World tab's map with a few of its buttons, sized however you like. What it shows (kinds of
+        /// places, names, fellows, text size) is set in the World tab.
+        /// </summary>
+        private void RenderMapWindow() {
+            if (settings.Data.MapShowFellows) {
+                feed.Refresh(PlayerFeed.KindFellowship, FellowshipRefresh);
+            }
+
+            var hasSelf = self.TryGet(out var x, out var y, out _);
+
+            if (settings.Data.MapWindowFollow && hasSelf) {
+                windowMap.Follow(new Vector2(x, y));
+            }
+
+            ImGui.BeginDisabled(!hasSelf);
+            if (ImGui.SmallButton("Me##map-window")) {
+                windowMap.CenterOn(x, y);
+            }
+            ImGui.EndDisabled();
+            Widgets.Tip(hasSelf ? "Centres the map on you." : "You're in a dungeon, which isn't on the map.");
+
+            ImGui.SameLine();
+            if (ImGui.SmallButton("Whole map##map-window")) {
+                windowMap.Fit();
+                SetWindowFollow(false);
+            }
+            Widgets.Tip("Zooms out to all of Dereth.");
+
+            ImGui.SameLine();
+            var follow = settings.Data.MapWindowFollow;
+            if (ImGui.Checkbox("Follow me##map-window", ref follow)) {
+                SetWindowFollow(follow);
+            }
+            Widgets.Tip("Keeps this map centred on you as you move. Dragging the map turns it off.");
+
+            var destination = CurrentDestination();
+
+            if (destination != null) {
+                ImGui.SameLine();
+                Widgets.TextDisabled(destination.Name);
+            }
+
+            windowMap.Render(ImGui.GetContentRegionAvail(), Scene(hasSelf, x, y));
+        }
+
+        private void SetWindowFollow(bool follow) {
+            if (settings.Data.MapWindowFollow == follow) {
+                return;
+            }
+
+            settings.Data.MapWindowFollow = follow;
+            settings.Changed();
+        }
+
+        private void WindowMap_Panned() {
+            SetWindowFollow(false);
         }
 
         private void RenderToolbar(bool hasSelf, float x, float y) {
@@ -170,6 +242,14 @@ namespace DaraletPlayer.Ui {
             }
 
             arrowWindow.RenderControls("Arrow window", "A small window with an arrow pointing to your destination from the way you're facing, and how far it is.");
+            ImGui.SameLine();
+
+            if (ImGui.Checkbox("Details##arrow-details", ref settings.Data.ArrowShowDetails)) {
+                settings.Changed();
+            }
+            Widgets.Tip("Shows the destination's name, distance and direction beside the arrow. Untick for the arrow alone; with the window's Background at 0% and Lock on, only the arrow is left on screen.");
+
+            mapWindow.RenderControls("Map window", "The map in a window of its own, to keep on screen alongside the rest of the plugin. Drag its corner to size it. What it shows is set here (Show..., Text).");
         }
 
         private void RenderSearchResults() {
@@ -239,7 +319,11 @@ namespace DaraletPlayer.Ui {
                 return;
             }
 
-            Widgets.Text(destination.Name);
+            var details = settings.Data.ArrowShowDetails;
+
+            if (details) {
+                Widgets.Text(destination.Name);
+            }
 
             if (destination.FellowGuid.HasValue) {
                 // following a fellow needs their position, even with the World tab closed
@@ -261,6 +345,11 @@ namespace DaraletPlayer.Ui {
             }
 
             DrawArrow(ArrowSize * scale, Navigation.Relative(bearing, self.Heading));
+            Widgets.Tip($"{destination.Name}: {Navigation.DistanceText(distance)}, {Navigation.Compass(bearing)}.");
+
+            if (!details) {
+                return;
+            }
 
             ImGui.SameLine();
             ImGui.BeginGroup();
@@ -359,6 +448,10 @@ namespace DaraletPlayer.Ui {
             map.Panned -= Map_Panned;
             map.Dispose();
             arrowWindow.Dispose();
+            windowMap.DestinationChosen -= SetDestination;
+            windowMap.Panned -= WindowMap_Panned;
+            mapWindow.Dispose();
+            windowMap.Dispose();
         }
     }
 }

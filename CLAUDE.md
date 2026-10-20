@@ -253,6 +253,12 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   the Corpse window, the Test tab and, with **Loot marks** (`SettingsData.BankLootMarks`), the Inventory tab, which has
   every listed item described to match it. The first rule that matches decides the mark too, so an earlier rule without
   one hides a later one's.
+  **Unlearned spells only** (`LootRule.UnlearnedSpellsOnly`, Misc) takes scrolls whose spell the character doesn't know:
+  `Loot.KnowsScrollSpell` is set by `PluginCore` from Decal (`LongValueKey.AssociatedSpell`,
+  `CharacterFilter.IsSpellKnown`), and a scroll whose spell can't be told counts as unlearned. New settings get the
+  **Example Loot Profile** (`Feed/ExampleLoot.cs`) after "My loot"; the Example button adds it again, and a test checks its
+  filter keys exist. **To file / From file** save and load profiles as `.json` in `Documents\Decal Plugins\Daralet\Loot
+  Profiles` (`LootFiles`; settings stay in `Documents\Asheron's Call\Daralet`).
 
 - **Arena and Leaderboards tabs** (`Ui/ArenaTab.cs`, `Ui/LeaderboardsTab.cs`, `Feed/ArenaCommands.cs`,
   `Feed/Leaderboards.cs`): the leaderboards are the website's (`leaderboards.js`), read from `/api/leaderboards/...` with
@@ -269,7 +275,8 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
 - **Inventory tab** (`Ui/BankTab.cs`, `Ui/BankBrowser.cs`, `Ui/BankCommandBar.cs`, `Feed/BankCommands.cs`): sub tabs Carried
   (your packs, anywhere) and Bank (the bank's packs, while it's open). The `/bank` buttons are a `BankCommandBar` above the
   items in each, and in the Bank window: one bar, shared, so its "what" box carries over. Deposit with the box empty
-  is Deposit packs (your "deposit"-tagged packs), with words in it a deposit of those; the bank's views add Withdraw, Sort
+  is Deposit packs (your "deposit"-tagged packs), with words in it a deposit of those. A bank pack's tag box has a **Tags**
+  drop-down of every `/bank` word, ticked when the box has it (`BankCommands.HasTag` / `ToggleTag`, comma-separated groups); the bank's views add Withdraw, Sort
   and Search; the rest are under More. The last command's first reply
   line shows under the buttons, and hovering it shows the whole reply. Carried and Bank are each a `BankBrowser`
   (`carried: true` for yours), with their own selected pack and search. **Show my packs** on the Bank view
@@ -326,7 +333,16 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   Those two also have `onClose`: their close button (X), Close in the right-click menu (a locked window has no X) and the Bank window's Close bank close
   the corpse or bank (a Use of it), and the window stays away until it shows something else (`closedFor`), without touching
   the setting. Nothing sets `Visible` behind the player's back any more, so Hide holds; Track and a new destination still
-  switch their windows on, as asked for.
+  switch their windows on, as asked for. **Background** (`WindowPlacement.Background`, null for the old 0.55 locked / 0.85
+  unlocked) fades each window's box; at 0% it's `NoBackground`, and the style's `WindowBorderSize` is zeroed for that
+  window's Begin and put back in `Hud_OnRender` (or the next `Core_RenderFrame`), since UB begins the window between the two.
+  These windows have `NoFocusOnAppearing`; `BringToFront` focuses one once (Appraisal uses it, so a new appraisal isn't
+  hidden behind the main window). `menuItems` adds to a window's right-click menu: the fellowship window's is the vitals of
+  the fellow right-clicked (`SettingsData.FellowVitals`, by name, each vital null to follow the Stamina/Mana checkboxes).
+  Vital and threat bars are never shorter than the font (`Widgets.Bar`), nor narrower than their numbers
+  (`Widgets.VitalBarWidth`): a big font wrote each bar's numbers over the next. Clicking a threat row selects that
+  creature or player. The **Map window** is the World tab's map in a `FloatingWindow` with its own `MapView` (its own pan,
+  zoom and Follow me); the arrow window's **Details** box leaves the arrow alone.
 - **Settings** (`Settings.cs`) live in `Documents\Asheron's Call\Daralet\settings.json` (copied once from the
   `Daralet Player` folder they had before the plugin was renamed, `Settings.CarryOver`), shared by every character:
   window positions and visibility, and display options. A DataContract reader skips field initialisers, so new settings

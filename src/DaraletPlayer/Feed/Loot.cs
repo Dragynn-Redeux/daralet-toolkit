@@ -50,6 +50,8 @@ namespace DaraletPlayer.Feed {
         [DataMember(Name = "nameContains")] public string NameContains;
         [DataMember(Name = "salvageableOnly")] public bool SalvageableOnly;
         [DataMember(Name = "carvedJewelOnly")] public bool CarvedJewelOnly;
+        /// <summary>Misc only: scrolls of spells this character hasn't learned (Loot.KnowsScrollSpell).</summary>
+        [DataMember(Name = "unlearnedSpellsOnly")] public bool UnlearnedSpellsOnly;
         [DataMember(Name = "values")] public Dictionary<string, string> Values;
         /// <summary>The colour of the frame round what it decides (LootMarks.Highlights), or "".</summary>
         [DataMember(Name = "highlight")] public string Highlight;
@@ -134,7 +136,7 @@ namespace DaraletPlayer.Feed {
 
         private void SetDefaults() {
             Mode = CorpseMode.HighlightPopup;
-            Lists = new List<LootList> { new LootList() };
+            Lists = new List<LootList> { new LootList(), ExampleLoot.Make() };
             ActiveList = new Dictionary<string, string>();
         }
 
@@ -431,6 +433,10 @@ namespace DaraletPlayer.Feed {
                 return false;
             }
 
+            if (category == "Misc" && rule.UnlearnedSpellsOnly && !IsUnlearnedScroll(item)) {
+                return false;
+            }
+
             foreach (var filter in MarketSearch.Filters) {
                 if (filter.Category != null && filter.Category != category) {
                     continue;
@@ -513,6 +519,25 @@ namespace DaraletPlayer.Feed {
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Whether the character knows the spell on a scroll, by the scroll's guid: true or false, or null when it can't be
+        /// told (the client doesn't know the scroll's spell). The plugin sets it from Decal's spellbook (PluginCore), which
+        /// tests can't load.
+        /// </summary>
+        public static Func<uint, bool?> KnowsScrollSpell;
+
+        /// <summary>
+        /// A scroll of a spell the character hasn't learned. One whose spell can't be told counts as unlearned: better looted
+        /// and looked at than left behind.
+        /// </summary>
+        private static bool IsUnlearnedScroll(CorpseItemInfo item) {
+            if (!string.Equals(item.Item?.MiscType, "Scroll", StringComparison.OrdinalIgnoreCase)) {
+                return false;
+            }
+
+            return KnowsScrollSpell?.Invoke(item.Guid) != true;
         }
 
         private static bool NameHas(string name, string words) {

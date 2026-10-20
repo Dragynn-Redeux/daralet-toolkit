@@ -217,6 +217,15 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip("Makes an empty loot profile and uses it.");
 
             ImGui.SameLine();
+            if (ImGui.SmallButton("Example")) {
+                var example = ExampleLoot.Make();
+                example.Name = data.UniqueName(example.Name);
+                AddList(example);
+                ShowListMessage($"Added \"{example.Name}\", and switched to it. Click its rules to see how each is made.");
+            }
+            Widgets.Tip("Adds the Example Loot Profile and uses it: rules showing off what loot rules can do (roll quality, marks, unlearned scrolls, each outcome), to copy from or change.");
+
+            ImGui.SameLine();
             if (ImGui.SmallButton("Copy")) {
                 var copy = Loot.Import(Loot.Export(active), out _);
                 copy.Name = data.UniqueName(active.Name);
@@ -243,6 +252,20 @@ namespace DaraletPlayer.Ui {
             Widgets.Tip("Copies this loot profile as text, to paste somewhere or give to someone.");
 
             ImGui.SameLine();
+            if (ImGui.SmallButton("To file")) {
+                importProblem = null;
+
+                try {
+                    var path = LootFiles.Save(active, LootFiles.DefaultFolder());
+                    ShowListMessage($"Saved \"{active.Name}\" to {path}.");
+                }
+                catch (Exception ex) {
+                    importProblem = $"Couldn't save the file: {ex.Message}";
+                }
+            }
+            Widgets.Tip($"Saves this loot profile as a file, named after it, in {LootFiles.DefaultFolder()}, to keep or send to someone. A file of the same name is replaced.");
+
+            ImGui.SameLine();
             if (ImGui.SmallButton("Import")) {
                 var imported = Loot.Import(ImGui.GetClipboardText(), out importProblem);
 
@@ -253,6 +276,15 @@ namespace DaraletPlayer.Ui {
                 }
             }
             Widgets.Tip("Adds a loot profile from text you've copied (an Export).");
+
+            ImGui.SameLine();
+            if (ImGui.SmallButton("From file")) {
+                profileFiles = LootFiles.List(LootFiles.DefaultFolder());
+                ImGui.OpenPopup("loot-profile-files");
+            }
+            Widgets.Tip($"Adds a loot profile from a file in {LootFiles.DefaultFolder()} (saved with To file, or put there by you).");
+
+            RenderProfileFiles();
 
             if (importProblem != null) {
                 Widgets.TextColored(Colors.Warning, importProblem);
@@ -273,6 +305,52 @@ namespace DaraletPlayer.Ui {
                 RenameActive(listName.Trim());
             }
             Widgets.Tip("Renames this loot profile. Characters that use it keep using it.");
+        }
+
+        /// <summary>The profile files From file found, listed when it was pressed.</summary>
+        private List<string> profileFiles = new List<string>();
+
+        /// <summary>
+        /// From file's list: the profile files in the folder, one click to add one, and a button to open the folder.
+        /// </summary>
+        private void RenderProfileFiles() {
+            if (!ImGui.BeginPopup("loot-profile-files")) {
+                return;
+            }
+
+            var folder = LootFiles.DefaultFolder();
+
+            if (profileFiles.Count == 0) {
+                Widgets.TextDisabled("No loot profile files yet. Save one with To file, or put .json files in the folder.");
+            }
+
+            foreach (var path in profileFiles) {
+                if (ImGui.Selectable($"{System.IO.Path.GetFileNameWithoutExtension(path)}##{path}")) {
+                    var loaded = LootFiles.Load(path, out importProblem);
+
+                    if (loaded != null) {
+                        loaded.Name = Data.UniqueName(loaded.Name);
+                        AddList(loaded);
+                        ShowListMessage($"Imported \"{loaded.Name}\" ({loaded.Rules.Count} rule{(loaded.Rules.Count == 1 ? "" : "s")}) from {System.IO.Path.GetFileName(path)}, and switched to it.");
+                    }
+                }
+                Widgets.Tip(path);
+            }
+
+            ImGui.Separator();
+
+            if (ImGui.SmallButton("Open folder")) {
+                try {
+                    System.IO.Directory.CreateDirectory(folder);
+                    System.Diagnostics.Process.Start("explorer.exe", $"\"{folder}\"");
+                }
+                catch (Exception ex) {
+                    importProblem = $"Couldn't open the folder: {ex.Message}";
+                }
+            }
+            Widgets.Tip($"Opens {folder} in Explorer, to add or remove profile files.");
+
+            ImGui.EndPopup();
         }
 
         private void AddList(LootList list) {
@@ -539,6 +617,11 @@ namespace DaraletPlayer.Ui {
             if (rule.Category == "Misc") {
                 ImGui.TableNextColumn();
                 changed |= ImGui.Checkbox("Carved jewels only", ref rule.CarvedJewelOnly);
+                Widgets.Tip("Only carved jewels.");
+
+                ImGui.TableNextColumn();
+                changed |= ImGui.Checkbox("Unlearned spells only", ref rule.UnlearnedSpellsOnly);
+                Widgets.Tip("Only scrolls of spells the character opening the corpse hasn't learned yet. A scroll whose spell the game hasn't told the client counts as unlearned.");
             }
 
             ImGui.EndTable();
