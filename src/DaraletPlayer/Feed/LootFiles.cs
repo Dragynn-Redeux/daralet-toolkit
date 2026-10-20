@@ -6,11 +6,11 @@ using System.Linq;
 namespace DaraletPlayer.Feed {
     /// <summary>
     /// Loot profiles as files, to keep or share: each one's Export text in a .json file named after it, in
-    /// Documents\Asheron's Call\Daralet\Loot Profiles.
+    /// Documents\Decal Plugins\Daralet\Loot Profiles.
     /// </summary>
     public static class LootFiles {
         public static string DefaultFolder() {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Asheron's Call", "Daralet", "Loot Profiles");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Decal Plugins", "Daralet", "Loot Profiles");
         }
 
         /// <summary>A profile's name made safe as a file name: characters Windows won't take become "_".</summary>

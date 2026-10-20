@@ -257,8 +257,8 @@ leave nulls out (`PlayerUiProtocol.BuildMessages(..., omitNulls: true)`): each i
   `Loot.KnowsScrollSpell` is set by `PluginCore` from Decal (`LongValueKey.AssociatedSpell`,
   `CharacterFilter.IsSpellKnown`), and a scroll whose spell can't be told counts as unlearned. New settings get the
   **Example Loot Profile** (`Feed/ExampleLoot.cs`) after "My loot"; the Example button adds it again, and a test checks its
-  filter keys exist. **To file / From file** save and load profiles as `.json` in `Documents\Asheron's Call\Daralet\Loot
-  Profiles` (`LootFiles`).
+  filter keys exist. **To file / From file** save and load profiles as `.json` in `Documents\Decal Plugins\Daralet\Loot
+  Profiles` (`LootFiles`; settings stay in `Documents\Asheron's Call\Daralet`).
 
 - **Arena and Leaderboards tabs** (`Ui/ArenaTab.cs`, `Ui/LeaderboardsTab.cs`, `Feed/ArenaCommands.cs`,
   `Feed/Leaderboards.cs`): the leaderboards are the website's (`leaderboards.js`), read from `/api/leaderboards/...` with
