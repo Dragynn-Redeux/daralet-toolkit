@@ -98,7 +98,7 @@ on the other end.
   that Daralet is ticked under **Plugins**. Then restart the game.
 - **A tab says the server is too old:** the server hasn't been updated for that part of the plugin yet. The rest still
   works.
-- **Lines starting with `DAP1|` show up in chat:** those are messages from the server to the plugin, and the plugin
+- **Lines starting with `DAP2|` (or `DAP1|`) show up in chat:** those are messages from the server to the plugin, and the plugin
   normally hides them. Report it, and include `log.txt` from the folder `Daralet.dll` is in.
 - **Anything else:** errors are written to `log.txt` in the same folder as `Daralet.dll`. Include that file when you
   report a problem.
