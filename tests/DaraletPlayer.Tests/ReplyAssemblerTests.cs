@@ -14,6 +14,44 @@ namespace DaraletPlayer.Tests {
         }
 
         [TestMethod]
+        public void Base64RepliesAreDecoded() {
+            var assembler = new ReplyAssembler();
+
+            // exactly what PlayerUiProtocol.BuildMessages in daralet-ACE writes for {"protocol":2}
+            Assert.IsTrue(assembler.TryAdd("DAP2|hello|7|1|1|eyJwcm90b2NvbCI6Mn0=\n", out var kind, out var json));
+            Assert.AreEqual("hello", kind);
+            Assert.AreEqual("{\"protocol\":2}", json);
+
+            Assert.IsFalse(assembler.TryAdd("DAP2|hello|8|3|3|Mn0=", out _, out _));
+            Assert.IsFalse(assembler.TryAdd("DAP2|hello|8|1|3|eyJwcm90", out _, out _));
+            Assert.IsTrue(assembler.TryAdd("DAP2|hello|8|2|3|b2NvbCI6", out _, out json));
+            Assert.AreEqual("{\"protocol\":2}", json);
+        }
+
+        [TestMethod]
+        public void OldAndNewRepliesWithTheSameIdDontMix() {
+            var assembler = new ReplyAssembler();
+
+            Assert.IsFalse(assembler.TryAdd("DAP1|hello|1|1|2|{\"proto", out _, out _));
+            Assert.IsFalse(assembler.TryAdd("DAP2|hello|1|1|2|eyJwcm90b2Nv", out _, out _));
+            Assert.IsTrue(assembler.TryAdd("DAP1|hello|1|2|2|col\":1}", out _, out var json));
+            Assert.AreEqual("{\"protocol\":1}", json);
+            Assert.IsTrue(assembler.TryAdd("DAP2|hello|1|2|2|bCI6Mn0=", out _, out json));
+            Assert.AreEqual("{\"protocol\":2}", json);
+        }
+
+        [TestMethod]
+        public void ReplyChatIsHiddenEvenWithATimestamp() {
+            Assert.IsTrue(ReplyAssembler.IsReplyChat("DAP2|fellowship|15|1|1|bnVsbA==\n"));
+            Assert.IsTrue(ReplyAssembler.IsReplyChat("17:07:03 DAP2|fellowship|15|1|1|bnVsbA==\n"));
+            Assert.IsTrue(ReplyAssembler.IsReplyChat("17:07:03 DAP1|fellowship|15|1|1|null\n"));
+
+            Assert.IsFalse(ReplyAssembler.IsReplyChat("17:07:03 DAA2|players|15|1|1|W10=\n"));
+            Assert.IsFalse(ReplyAssembler.IsReplyChat("Bob says, \"anyone want to group?\"\n"));
+            Assert.IsFalse(ReplyAssembler.IsReplyChat(null));
+        }
+
+        [TestMethod]
         public void ChunksArrivingOutOfOrderAreJoinedInOrder() {
             var assembler = new ReplyAssembler();
 
@@ -74,6 +112,8 @@ namespace DaraletPlayer.Tests {
 
             Assert.IsFalse(ReplyAssembler.IsFeedLine("DAA1|hello|1|1|1|{}"));
             Assert.IsFalse(assembler.TryAdd("DAA1|hello|1|1|1|{}", out _, out _));
+            Assert.IsFalse(ReplyAssembler.IsFeedLine("DAA2|hello|1|1|1|e30="));
+            Assert.IsFalse(assembler.TryAdd("DAA2|hello|1|1|1|e30=", out _, out _));
         }
 
         [TestMethod]

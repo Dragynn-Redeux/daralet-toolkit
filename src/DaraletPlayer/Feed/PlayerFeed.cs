@@ -309,9 +309,7 @@ namespace DaraletPlayer.Feed {
             try {
                 var text = e.Text ?? "";
 
-                // anywhere in the line, not just at its start: a reply that reached the chat window as more than one line (see
-                // PlayerUiProtocol.ChunkSize in daralet-ACE) must not show either
-                if (text.IndexOf(ReplyAssembler.Prefix, StringComparison.Ordinal) >= 0) {
+                if (ReplyAssembler.IsReplyChat(text)) {
                     e.Eat = true;
                     return;
                 }

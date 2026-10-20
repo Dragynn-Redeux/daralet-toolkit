@@ -114,16 +114,17 @@ Read from daralet-ACE; check before relying on it.
 There's no custom network message: the client and Decal don't know new opcodes. Instead:
 
 1. The plugin sends a chat command with `CoreManager.Current.Actions.InvokeChatParser("@playerui hello")`.
-2. The server replies with system chat lines `DAP1|kind|id|index|count|chunk`: camelCase JSON, split into 200-character
-   chunks (`PlayerUiProtocol.ChunkSize`; the same scheme as `AdminUiProtocol`, whose chunks are 4,000).
-3. The plugin reads them from the raw `0xF7E0` message (`e.Message.Value<string>("text")`), joins the chunks
+2. The server replies with system chat lines `DAP2|kind|id|index|count|chunk`: camelCase JSON in base64, split into
+   200-character chunks (`PlayerUiProtocol`, which uses `AdminUiProtocol`'s encoding and chunking with its own prefix).
+3. The plugin reads them from the raw `0xF7E0` message (`e.Message.Value<string>("text")`), joins and decodes the chunks
    (`Feed/ReplyAssembler.cs`), and hides them from chat with `CoreManager.Current.ChatBoxMessage` + `e.Eat = true`.
 
-**Why 200:** a fellowship reply of about a thousand characters on one chat line, every second, reached the chat window
-twice instead of being hidden, both times starting mid-reply (`lse,"members":...`), which looks like the client handling a
-long line in pieces the plugin's "starts with `DAP1|`" check didn't catch. With short chunks every line is whole; the
-plugin also hides any line containing `DAP1|`, and hides and logs once (to `log.txt` only) a line that looks like a piece of
-a reply (`ReplyAssembler.LooksLikeReplyPiece`). If that log line ever appears, the cause is still there.
+**Never put readable text in a chat line meant for a plugin.** Other chat plugins act on it before yours can hide it:
+Virindi Chat System posts its own copy of any line with coordinates in it ("Hebian-to (39.0S, 83.0E)", a fellow's
+location), and `e.Eat` doesn't stop that copy. That's why the JSON goes out in base64. Before it did, replies showed in
+chat, sometimes cut short and starting mid-reply (`lse,"members":...`), which was first taken for the client splitting
+long lines. `DAP1` lines (plain JSON) are still read from older servers, and a piece of one that reaches chat is hidden and
+logged once to `log.txt` (`ReplyAssembler.LooksLikeReplyPiece`).
 
 Server side, in daralet-ACE: `@playerui` is a Player-level command (`apps/server/Commands/PlayerCommands/PlayerUi.cs`, with
 its code in `apps/server/Entity/PlayerUi/`). `PlayerUiProtocol` uses `AdminUiProtocol`'s chunking with its own prefix.
