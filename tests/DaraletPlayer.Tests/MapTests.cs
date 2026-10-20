@@ -44,7 +44,7 @@ namespace DaraletPlayer.Tests {
 
         [TestMethod]
         public void TheBuiltInLocationsLoad() {
-            var locations = Locations.LoadDefault(Path.GetTempPath() + "no-such-folder", null, out var source);
+            var locations = Locations.LoadDefault(Path.GetTempPath() + "no-such-folder", null, null, out var source);
 
             Assert.AreEqual("built in", source);
             Assert.IsTrue(locations.Count > 1500, $"only {locations.Count}");
@@ -65,10 +65,21 @@ namespace DaraletPlayer.Tests {
                 File.WriteAllText(Path.Combine(folder, Locations.FileName),
                     "<locations><loc id=\"1\" name=\"Test Town\" type=\"Town\" NS=\"1\" EW=\"2\"></loc></locations>");
 
-                var locations = Locations.LoadDefault(folder, null, out var source);
+                var downloaded = Path.Combine(folder, "downloaded.xml");
+                File.WriteAllText(downloaded,
+                    "<locations><loc id=\"1\" name=\"New Town\" type=\"Town\" NS=\"1\" EW=\"2\"></loc><loc id=\"2\" name=\"Newer Town\" type=\"Town\" NS=\"1\" EW=\"2\"></loc></locations>");
+
+                // the file next to the plugin beats a downloaded one, which beats the built-in one
+                var locations = Locations.LoadDefault(folder, downloaded, null, out var source);
 
                 Assert.AreEqual(1, locations.Count);
                 Assert.AreEqual(Path.Combine(folder, Locations.FileName), source);
+
+                File.Delete(Path.Combine(folder, Locations.FileName));
+                locations = Locations.LoadDefault(folder, downloaded, null, out source);
+
+                Assert.AreEqual(2, locations.Count);
+                Assert.AreEqual(downloaded, source);
             }
             finally {
                 Directory.Delete(folder, true);

@@ -21,7 +21,8 @@ namespace DaraletPlayer {
         private PlayerHud hud;
 
         /// <summary>
-        /// The folder the plugin dll is in, where log.txt goes. The loader sets this, since a plugin loaded from bytes has no location.
+        /// The folder the plugin dll is in, where a dereth-map.png or locations.xml put there by hand is looked for. The loader sets
+        /// this, since a plugin loaded from bytes has no location. Everything the plugin writes goes in DataFolder instead.
         /// </summary>
         public static string AssemblyDirectory {
             get {
@@ -131,7 +132,8 @@ namespace DaraletPlayer {
         internal static void LogFile(string message) {
             // logging must never be what crashes the plugin
             try {
-                File.AppendAllText(System.IO.Path.Combine(AssemblyDirectory, "log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
+                Directory.CreateDirectory(DataFolder.Root);
+                File.AppendAllText(DataFolder.For("log.txt"), $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}\n");
             }
             catch {
             }

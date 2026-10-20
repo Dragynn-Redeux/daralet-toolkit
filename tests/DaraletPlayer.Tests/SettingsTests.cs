@@ -144,21 +144,8 @@ namespace DaraletPlayer.Tests {
         }
 
         [TestMethod]
-        public void SettingsFromBeforeTheRenameAreCarriedOver() {
-            var oldPath = Path.Combine(folder, "Daralet Player", "settings.json");
-            var newPath = Path.Combine(folder, "Daralet", "settings.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(oldPath));
-            File.WriteAllText(oldPath, "{\"threatRows\":7}");
-
-            Settings.CarryOver(oldPath, newPath, null);
-
-            Assert.AreEqual(7, new Settings(newPath).Data.ThreatRows);
-            Assert.IsTrue(File.Exists(oldPath), "the old file is left alone");
-
-            // once there are settings in the new place, the old ones are never copied over them again
-            File.WriteAllText(oldPath, "{\"threatRows\":2}");
-            Settings.CarryOver(oldPath, newPath, null);
-            Assert.AreEqual(7, new Settings(newPath).Data.ThreatRows);
+        public void SettingsAreInTheDecalPluginsFolder() {
+            StringAssert.EndsWith(Settings.DefaultPath(), Path.Combine("Decal Plugins", "Daralet", "settings.json"));
         }
 
         [TestMethod]

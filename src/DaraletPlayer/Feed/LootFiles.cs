@@ -10,7 +10,7 @@ namespace DaraletPlayer.Feed {
     /// </summary>
     public static class LootFiles {
         public static string DefaultFolder() {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Decal Plugins", "Daralet", "Loot Profiles");
+            return DataFolder.For("Loot Profiles");
         }
 
         /// <summary>A profile's name made safe as a file name: characters Windows won't take become "_".</summary>

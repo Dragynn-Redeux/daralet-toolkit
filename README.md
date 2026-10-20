@@ -67,11 +67,13 @@ as the same plugin. Then delete `DaraletPlayer.dll`. Your settings are kept.
 
 ## Your settings
 
-Window positions, display options and loot profiles are saved in
+Everything the plugin keeps is in
 
-    Documents\Asheron's Call\Daralet\settings.json
+    Documents\Decal Plugins\Daralet
 
-and shared by every character on your computer. To start fresh, close the game and delete that file.
+and shared by every character on your computer: window positions, display options and loot profiles in
+`settings.json`, loot profile files in `Loot Profiles`, the downloaded map and places in `world-data`, and
+`log.txt`. To start fresh, close the game and delete `settings.json`.
 
 To move your loot profiles to another computer, or share them with a friend, use **Export** on the Loot tab and **Import**
 on the other end.
@@ -83,8 +85,12 @@ on the other end.
 - **Market:** listing, cancelling and claiming only work when you're near a Market Broker (the market stand in
   Hebian-To). Searching works from anywhere. Market search and leaderboards come from the Daralet website, so they need
   an internet connection, the same as the website.
-- **Map:** to use your own copy of the map image, put a square `dereth-map.png` next to `Daralet.dll`. It has to
-  keep the original's layout. To use your own places, do the same with a GoArrow-style `locations.xml`.
+- **Map:** the map and its places update themselves: each time the plugin starts it checks GitHub for a newer map
+  image and `locations.xml`, and downloads them if they've changed (into `Documents\Decal Plugins\Daralet\world-data`).
+  **Show...** on the World tab says what it found and has a **Check for map updates** button. Without an internet
+  connection the plugin uses the ones it came with. To use your own copy of the map image instead, put a square
+  `dereth-map.png` next to `Daralet.dll`. It has to keep the original's layout. To use your own places, do the same
+  with a GoArrow-style `locations.xml`. Files next to the dll always win over downloaded ones.
 
 ## Problems
 
@@ -99,14 +105,14 @@ on the other end.
 - **A tab says the server is too old:** the server hasn't been updated for that part of the plugin yet. The rest still
   works.
 - **Lines starting with `DAP2|` (or `DAP1|`) show up in chat:** those are messages from the server to the plugin, and the plugin
-  normally hides them. Report it, and include `log.txt` from the folder `Daralet.dll` is in.
-- **Anything else:** errors are written to `log.txt` in the same folder as `Daralet.dll`. Include that file when you
+  normally hides them. Report it, and include `log.txt` from `Documents\Decal Plugins\Daralet`.
+- **Anything else:** errors are written to `log.txt` in `Documents\Decal Plugins\Daralet`. Include that file when you
   report a problem.
 
 ## Uninstalling
 
 In the Decal agent, select **Daralet** and click **Remove** (or just untick it). Then delete `Daralet.dll`, and
-`Documents\Asheron's Call\Daralet\` if you don't want your settings any more.
+`Documents\Decal Plugins\Daralet\` if you don't want your settings any more.
 
 ## For developers
 
@@ -122,3 +128,19 @@ dotnet test tests/DaraletPlayer.Tests/DaraletPlayer.Tests.csproj
 
 Both dlls end up in `bin/`. `Daralet.Loader.dll` is for development only: add it as a Decal network filter (with
 Daralet unticked) and it reloads the plugin every time you rebuild. Players only need `Daralet.dll`.
+
+### Publishing a new map or places
+
+Both Daralet plugins download the map image and `locations.xml` from this repository's
+[`world-data` release](https://github.com/daralet-ac/daralet-player-plugin/releases/tag/world-data). To update them for
+everyone, without a new plugin:
+
+1. Change `src/DaraletPlayer/Resources/locations.xml` or `src/DaraletPlayer/Resources/dereth-map.png` (keep the map
+   2048x2048 and laid out the same) and merge it into `main`.
+2. The **World data** workflow (`.github/workflows/world-data.yml`) uploads both files and a `manifest.json` of their
+   hashes to the release. It can also be run by hand from the Actions tab.
+3. Players get them the next time the plugin starts, or straight away with **Check for map updates**.
+
+The release is a pre-release with a fixed tag, so it never shows up as the plugin's latest release. Don't edit it by
+hand: the workflow replaces its files each time. Daralet Admin builds in the same files, so copy them over there too when
+you next release it (it downloads them anyway).

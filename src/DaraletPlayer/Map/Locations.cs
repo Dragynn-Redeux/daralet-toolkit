@@ -32,6 +32,7 @@ namespace DaraletPlayer.Map {
     /// <summary>
     /// The places the World tab shows, read from GoArrow's locations.xml (Phenyl's Daralet edition). The plugin carries a copy;
     /// a locations.xml next to the plugin dll is read instead, so an updated file can be dropped in without a new build.
+    /// Daralet Admin has a copy of this file for its Teleport tab: keep the two the same.
     /// </summary>
     public static class Locations {
         public const string ResourceName = "DaraletPlayer.Resources.locations.xml";
@@ -58,13 +59,27 @@ namespace DaraletPlayer.Map {
             ("_Unknown", "Other places", false),
         };
 
-        /// <summary>
-        /// Reads the file next to the plugin if there is one, otherwise the copy built into the plugin. Source says which.
-        /// </summary>
-        public static List<Location> LoadDefault(string pluginDirectory, Action<string> log, out string source) {
-            var file = Path.Combine(pluginDirectory ?? "", FileName);
+        /// <summary>What Types calls a type ('Towns'), or the type itself if it isn't one of them.</summary>
+        public static string Label(string type) {
+            foreach (var (name, label, _) in Types) {
+                if (name == type) {
+                    return label;
+                }
+            }
 
-            if (File.Exists(file)) {
+            return type;
+        }
+
+        /// <summary>
+        /// Reads the file next to the plugin if there is one (someone's own copy wins), then the one downloaded from the world
+        /// data release (WorldData), otherwise the copy built into the plugin. Source says which.
+        /// </summary>
+        public static List<Location> LoadDefault(string pluginDirectory, string downloadedFile, Action<string> log, out string source) {
+            foreach (var file in new[] { Path.Combine(pluginDirectory ?? "", FileName), downloadedFile }) {
+                if (string.IsNullOrEmpty(file) || !File.Exists(file)) {
+                    continue;
+                }
+
                 try {
                     using (var stream = File.OpenRead(file)) {
                         source = file;
@@ -72,7 +87,7 @@ namespace DaraletPlayer.Map {
                     }
                 }
                 catch (Exception ex) {
-                    log?.Invoke($"Couldn't read {file}, so the built-in locations are used: {ex.Message}");
+                    log?.Invoke($"Couldn't read {file}, so it isn't used: {ex.Message}");
                 }
             }
 
@@ -80,6 +95,21 @@ namespace DaraletPlayer.Map {
 
             using (var stream = typeof(Locations).Assembly.GetManifestResourceStream(ResourceName)) {
                 return stream == null ? new List<Location>() : Read(stream);
+            }
+        }
+
+        /// <summary>
+        /// Null if a downloaded locations.xml can be used, otherwise why not: one that won't read, or has no places in it,
+        /// would leave the map empty.
+        /// </summary>
+        public static string Check(byte[] bytes) {
+            try {
+                using (var stream = new MemoryStream(bytes)) {
+                    return Read(stream).Count > 0 ? null : "it has no places in it";
+                }
+            }
+            catch (XmlException ex) {
+                return $"it isn't readable XML ({ex.Message})";
             }
         }
 

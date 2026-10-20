@@ -209,7 +209,7 @@ namespace DaraletPlayer {
     }
 
     /// <summary>
-    /// The plugin's settings, in Documents\Asheron's Call\Daralet\settings.json, shared by every character on this computer.
+    /// The plugin's settings, in Documents\Decal Plugins\Daralet\settings.json, shared by every character on this computer.
     /// A change is saved two seconds after the last one, so dragging a window doesn't write the file every frame.
     /// </summary>
     public class Settings {
@@ -226,39 +226,11 @@ namespace DaraletPlayer {
         public Settings(string filePath = null, Action<string> log = null) {
             this.filePath = filePath ?? DefaultPath();
             this.log = log ?? (_ => { });
-
-            if (filePath == null) {
-                CarryOver(OldDefaultPath(), this.filePath, this.log);
-            }
-
             Load();
         }
 
         public static string DefaultPath() {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Asheron's Call", "Daralet", "settings.json");
-        }
-
-        /// <summary>Where the settings were while the plugin was called Daralet Player.</summary>
-        public static string OldDefaultPath() {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Asheron's Call", "Daralet Player", "settings.json");
-        }
-
-        /// <summary>
-        /// Copies the settings from where they used to be, when they're there and there are none here yet. The old file is
-        /// left where it is.
-        /// </summary>
-        public static void CarryOver(string oldPath, string newPath, Action<string> log) {
-            try {
-                if (File.Exists(newPath) || !File.Exists(oldPath)) {
-                    return;
-                }
-
-                Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                File.Copy(oldPath, newPath);
-            }
-            catch (Exception ex) {
-                log?.Invoke($"Couldn't copy the settings from {oldPath}: {ex.Message}");
-            }
+            return DataFolder.For("settings.json");
         }
 
         /// <summary>A window's placement by its id, made the first time it's asked for.</summary>

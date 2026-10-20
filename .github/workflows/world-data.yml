@@ -1,0 +1,60 @@
+# Publishes the map image and locations.xml as the "world-data" release, which both Daralet plugins download when they
+# start (Map/WorldData.cs here and in Daralet Admin). Runs whenever either file changes on main, or by hand from the
+# Actions tab (Run workflow).
+#
+# The release keeps its tag and has its files replaced each time. manifest.json goes up last, so it only ever names files
+# that are already there; a plugin that catches a file half-replaced sees its hash doesn't match and tries again next time.
+name: World data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - src/DaraletPlayer/Resources/locations.xml
+      - src/DaraletPlayer/Resources/dereth-map.png
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# one publish at a time, so two can't interleave their uploads
+concurrency:
+  group: world-data
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: world-data
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write manifest.json
+        run: |
+          mkdir out
+          cp src/DaraletPlayer/Resources/locations.xml src/DaraletPlayer/Resources/dereth-map.png out/
+
+          # format 1 is what WorldData.Format reads; raise both together only when old plugins couldn't read the files
+          files='[]'
+          for name in locations.xml dereth-map.png; do
+            files=$(jq -c --arg name "$name" --arg sha "$(sha256sum "out/$name" | cut -d' ' -f1)" --argjson size "$(stat -c %s "out/$name")" \
+              '. + [{name: $name, sha256: $sha, size: $size}]' <<< "$files")
+          done
+
+          jq -n --arg published "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --arg commit "$GITHUB_SHA" --argjson files "$files" \
+            '{format: 1, published: $published, commit: $commit, files: $files}' > out/manifest.json
+          cat out/manifest.json
+
+      - name: Make the release if there isn't one
+        run: |
+          # a pre-release, so it's never shown as the plugin's latest release
+          gh release view "$TAG" > /dev/null 2>&1 || gh release create "$TAG" --prerelease --target "$GITHUB_SHA" \
+            --title "World data" --notes "The map and places the Daralet plugins download. Published by .github/workflows/world-data.yml: don't edit by hand."
+
+      - name: Upload the files, then the manifest
+        run: |
+          gh release upload "$TAG" out/locations.xml out/dereth-map.png --clobber
+          gh release upload "$TAG" out/manifest.json --clobber
+          gh release edit "$TAG" --notes "The map and places the Daralet plugins download, from $GITHUB_SHA ($(date -u '+%Y-%m-%d %H:%M UTC')). Published by .github/workflows/world-data.yml: don't edit by hand."
